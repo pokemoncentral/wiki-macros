@@ -1,2 +1,2 @@
-# pcw
-Utility files for Pokémon Central Wiki
+# wiki-macros
+Macro runner for automated translations at Pokémon Central Wiki
