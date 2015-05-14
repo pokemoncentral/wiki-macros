@@ -1,2 +1,2 @@
 # wiki-macros
-Macro runner for automated translations at Pokémon Central Wiki
+Macro runner for automated translations of Bulbapedia source code at Pokémon Central Wiki
