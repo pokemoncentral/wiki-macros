@@ -2223,6 +2223,7 @@ macros.squadra = function(str) {
 	str = str.replace(/\{\{[Pp]arty\|/gi, '{{#invoke: Squadra | squadra |');
 	str = str.replace(/\{\{[Pp]arty\//gi, '{{#invoke: Squadra | ');
 	str = str.replace(/Battle Point\|BP/gi, 'Punti Lotta|PL');
+	str = str.replace(/\s*style="margin:\s*auto;?"\s*\|/gi, '');
 	str = str.replace(/\{\{#invoke:\s*colore\s*\|\s*([^\|]+)\s*\|?\s*(light|dark|normale)?\s*\}\}/gi, '$1 $2');
 	return str;
 }
