@@ -56,7 +56,6 @@ macros.tipi = function(str) {
 	str = str.replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico');
 	str = str.replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale');
 	str = str.replace(/[Pp]sichico\|[Ss]tato/g, 'Psico|Stato');
-	str = str.replace(/[Pp]sichico\|[Pp]sichico/g, 'Psichico|Psico');
 	str = str.replace(/specialee/g, 'speciale').replace(/Specialee/g, 'Speciale');
 	str = str.replace(/Normalee/g, 'Normale').replace(/normalee/g, 'normale');
 	str = str.replace(/Gale of [Bb]uioness/gi, 'Tempesta Oscura');
@@ -2082,12 +2081,6 @@ macros.learnlist = function(str) {
 		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6'};
 		return '{{learnlist/' + method + numbers[roman]; });
 
-	// Traduzione psico, header/footer e entry
-
-	// str = str.replace(/[Pp]sichico\|[Pp]sichico/g, 'Psico|Psico');
-	str = str.replace(/\{\{[Ll]earnlist\/(\w+[hf].+)[Pp]sichico(.+)\}\}/g, '{{learnlist/$1Psico$2}}');
-	str = str.replace(/\{\{[lL]earnlist\/level([1-6])\|(.+)\|(\w+)\|Psichico/gi, '{{Learnlist/level$1|$2|$3|Psico');
-
 	// Headers in doppio formato:
 	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
 	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
@@ -2142,6 +2135,14 @@ macros.learnlist = function(str) {
 	// Entry: traduzione null
 
 	str = str.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}');
+
+	// Traduzione psichico|psichico in header e footer
+
+	// str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
+
+	str = str.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
+		'learnlist$1|Psico|Psico$2}}');
+	str = str.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}');
 
 	// Eliminazione chiamata al modulo Render per gli entry null
 
