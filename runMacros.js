@@ -2294,12 +2294,14 @@ var opening = function(str) {
 
 Completamento della traduzione: sostituisce i
 newline con breakline per farli interpretare
-dai browser
+dai browser, limitando a due il numero di
+quelli consecutivi
 
 */
 
 var ending = function(str) {
-	return str.replace(/\n+/g, '<br>');
+	return str.replace(/\n{2,}/g, '<br><br>')
+		.replace(/\n/g, '<br>');
 };
 
 var runMacro = function() {
