@@ -4,64 +4,64 @@ macros.tipi = function(str) {
 
 	// Tipi
 
-	str = str.replace(/grass/g, 'erba').replace(/Grass/g, 'Erba');
-	str = str.replace(/Water/g, 'Acqua').replace(/water/g, 'acqua');
-	str = str.replace(/Fire/g, 'Fuoco').replace(/fire/g, 'fuoco');
-	str = str.replace(/Flying/g, 'Volante').replace(/flying/g, 'volante');
-	str = str.replace(/Fighting/g, 'Lotta').replace(/fighting/g, 'lotta');
-	str = str.replace(/Ground/g, 'Terra').replace(/ground/g, 'terra');
-	str = str.replace(/Dark/g, 'Buio').replace(/dark/g, 'buio');
-	str = str.replace(/Dragon/g, 'Drago').replace(/dragon/g, 'drago');
-	str = str.replace(/Rock/g, 'Roccia').replace(/rock/g, 'roccia');
-	str = str.replace(/Poison/g, 'Veleno').replace(/poison/g, 'veleno');
-	str = str.replace(/Ghost/g, 'Spettro').replace(/ghost/g, 'spettro');
-	str = str.replace(/Psychic/g, 'Psico').replace(/psychic/g, 'psico');
-	str = str.replace(/Electric/g, 'Elettro').replace(/electric/g, 'elettro');
-	str = str.replace(/Steel/g, 'Acciaio').replace(/steel/g, 'acciaio');
-	str = str.replace(/Normal/g, 'Normale').replace(/normal/g, 'normale');
-	str = str.replace(/Bug/g, 'Coleottero').replace(/bug/g, 'coleottero');
-	str = str.replace(/Fairy/g, 'Folletto').replace(/fairy/g, 'folletto');
-	str = str.replace(/Unknown/g, 'Sconosciuto').replace(/unknown/g, 'sconosciuto');
+	return str.replace(/grass/g, 'erba').replace(/Grass/g, 'Erba')
+		.replace(/Water/g, 'Acqua').replace(/water/g, 'acqua')
+		.replace(/Fire/g, 'Fuoco').replace(/fire/g, 'fuoco')
+		.replace(/Flying/g, 'Volante').replace(/flying/g, 'volante')
+		.replace(/Fighting/g, 'Lotta').replace(/fighting/g, 'lotta')
+		.replace(/Ground/g, 'Terra').replace(/ground/g, 'terra')
+		.replace(/Dark/g, 'Buio').replace(/dark/g, 'buio')
+		.replace(/Dragon/g, 'Drago').replace(/dragon/g, 'drago')
+		.replace(/Rock/g, 'Roccia').replace(/rock/g, 'roccia')
+		.replace(/Poison/g, 'Veleno').replace(/poison/g, 'veleno')
+		.replace(/Ghost/g, 'Spettro').replace(/ghost/g, 'spettro')
+		.replace(/Psychic/g, 'Psico').replace(/psychic/g, 'psico')
+		.replace(/Electric/g, 'Elettro').replace(/electric/g, 'elettro')
+		.replace(/Steel/g, 'Acciaio').replace(/steel/g, 'acciaio')
+		.replace(/Normal/g, 'Normale').replace(/normal/g, 'normale')
+		.replace(/Bug/g, 'Coleottero').replace(/bug/g, 'coleottero')
+		.replace(/Fairy/g, 'Folletto').replace(/fairy/g, 'folletto')
+		.replace(/Unknown/g, 'Sconosciuto').replace(/unknown/g, 'sconosciuto')
+		.replace(/Shadow/g, 'Ombra').replace(/shadow/g, 'ombra')
 
 	// Ghiaccio va trattato a parte, visto che '-ice-' si trova spesso in giro
 
-	str = str.replace(/ice color/g, 'ghiaccio color');
-	str = str.replace(/\|[\s\n]*[Ii]ce[\s\n]*\|[Ii]ce[\s\n]*\|/g, '|Ghiaccio|Ghiaccio|');
-	str = str.replace(/\|[\s\n]*[Ii]ce[\n\s]*\|/g, '|Ghiaccio|');
-	str = str.replace(/=[\s\n]*[Ii]ce[\s\n]*\|/g, '=Ghiaccio|');
-	str = str.replace(/=[\s\n]*[Ii]ce[\s\n]*\}/g, '=Ghiaccio}');
-	str = str.replace(/\|[\s\n]*[Ii]ce[\s\n]*\}/g, '|Ghiaccio}');
-	str = str.replace(/\{[\s\n]*[Ii]ce[\s\n]*\|/g, '{Ghiaccio|');
+		.replace(/ice color/g, 'ghiaccio color')
+		.replace(/\|[\s\n]*[Ii]ce[\s\n]*\|[Ii]ce[\s\n]*\|/g, '|Ghiaccio|Ghiaccio|')
+		.replace(/\|[\s\n]*[Ii]ce[\n\s]*\|/g, '|Ghiaccio|')
+		.replace(/=[\s\n]*[Ii]ce[\s\n]*\|/g, '=Ghiaccio|')
+		.replace(/=[\s\n]*[Ii]ce[\s\n]*\}/g, '=Ghiaccio}')
+		.replace(/\|[\s\n]*[Ii]ce[\s\n]*\}/g, '|Ghiaccio}')
+		.replace(/\{[\s\n]*[Ii]ce[\s\n]*\|/g, '{Ghiaccio|')
 
 	// Categorie danno
 
-	str = str.replace(/Special/g, 'Speciale').replace(/special/g, 'speciale');
-	str = str.replace(/Status/g, 'Stato').replace(/status/g, 'stato');
-	str = str.replace(/Physical/g, 'Fisico').replace(/physical/g, 'fisico');
+		.replace(/Special/g, 'Speciale').replace(/special/g, 'speciale')
+		.replace(/Status/g, 'Stato').replace(/status/g, 'stato')
+		.replace(/Physical/g, 'Fisico').replace(/physical/g, 'fisico')
 
 	// Correzione errori
 
-	str = str.replace(/Voloing/g, 'Volante').replace(/voloing/g, 'volante');
-	str = str.replace(/backterra/g, 'background');
-	str = str.replace(/Clefolletto/g, 'Clefairy');
-	str = str.replace(/Scattercoleottero/g, 'Scatterbug');
-	str = str.replace(/Regiroccia/g, 'Regirock');
-	str = str.replace(/Buiorai/g, 'Darkrai');
-	str = str.replace(/Acciaioix/g, 'Steelix');
-	str = str.replace(/Regiacciaio/g, 'Registeel');
-	str = str.replace(/Solroccia/g, 'Solrock');
-	str = str.replace(/Dragoair/g, 'Dragonair');
-	str = str.replace(/Dragoite/g, 'Dragonite');
-	str = str.replace(/Erbaospesso/gi, 'Grassospesso');
-	str = str.replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico');
-	str = str.replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale');
-	str = str.replace(/[Pp]sichico\|[Ss]tato/g, 'Psico|Stato');
-	str = str.replace(/specialee/g, 'speciale').replace(/Specialee/g, 'Speciale');
-	str = str.replace(/Normalee/g, 'Normale').replace(/normalee/g, 'normale');
-	str = str.replace(/Gale of [Bb]uioness/gi, 'Tempesta Oscura');
-	str = str.replace(/colore\s*\|?\s*(.+?)\s*\|?\s*buio\s*\}\}/gi,
-		'colore | $1 | dark }}');
-	return str;
+		.replace(/Voloing/g, 'Volante').replace(/voloing/g, 'volante')
+		.replace(/backterra/g, 'background')
+		.replace(/Clefolletto/g, 'Clefairy')
+		.replace(/Scattercoleottero/g, 'Scatterbug')
+		.replace(/Regiroccia/g, 'Regirock')
+		.replace(/Buiorai/g, 'Darkrai')
+		.replace(/Acciaioix/g, 'Steelix')
+		.replace(/Regiacciaio/g, 'Registeel')
+		.replace(/Solroccia/g, 'Solrock')
+		.replace(/Dragoair/g, 'Dragonair')
+		.replace(/Dragoite/g, 'Dragonite')
+		.replace(/Erbaospesso/gi, 'Grassospesso')
+		.replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico')
+		.replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale')
+		.replace(/[Pp]sichico\|[Ss]tato/g, 'Psico|Stato')
+		.replace(/specialee/g, 'speciale').replace(/Specialee/g, 'Speciale')
+		.replace(/Normalee/g, 'Normale').replace(/normalee/g, 'normale')
+		.replace(/Gale of [Bb]uioness/gi, 'Tempesta Oscura')
+		.replace(/colore\s*\|?\s*(.+?)\s*\|?\s*buio\s*\}\}/gi,
+				'colore | $1 | dark }}');
 };
 
 macros.mosse = function(str) {
@@ -678,6 +678,26 @@ macros.mosse = function(str) {
 	str = str.replace(/Magnetic Flux/g, 'Controllo Polare');
 	str = str.replace(/Happy Hour/g, 'Cuccagna');
 	str = str.replace(/Hold Hands/g, 'Mano nella Mano');
+
+	// Mosse ombra
+
+	str = str.replace(/Shadow Blast/g, 'Ombrolame');
+	str = str.replace(/Shadow Blitz/g, 'Ombrattacco');
+	str = str.replace(/Shadow Bolt/g, 'Fulminombra');
+	str = str.replace(/Shadow Break/g, 'Ombrospinta');
+	str = str.replace(/Shadow Chill/g, 'Gelodombra');
+	str = str.replace(/Shadow Down/g, 'Declinoscuro');
+	str = str.replace(/Shadow End/g, 'Fineoscuro');
+	str = str.replace(/Shadow Fire/g, 'Fuocoscuro');
+	str = str.replace(/Shadow Half/g, 'Iraoscura');
+	str = str.replace(/Shadow Mist/g, 'Nebbiascura');
+	str = str.replace(/Shadow Panic/g, 'Ombrapanico');
+	str = str.replace(/Shadow Rave/g, 'Ombrolancia');
+	str = str.replace(/Shadow Rush/g, 'Ombroraffica');
+	str = str.replace(/Shadow Shed/g, 'Ombrannulla');
+	str = str.replace(/Shadow Sky/g, 'Cieloscuro');
+	str = str.replace(/Shadow Storm/g, 'Turbinombra');
+	str = str.replace(/Shadow Wave/g, 'Ondascura');
 
     // Correzione errori
 
@@ -1330,6 +1350,11 @@ macros.strumenti = function(str, battleHeld) {
 		str = str.replace(/Discount Coupon/gi, 'Buono sconto');
 		str = str.replace(/Strange Souvenir/gi, 'Strano ninnolo');
 		str = str.replace(/Ability Capsule/gi, 'Capsula abilit&agrave;');
+		str = str.replace(/Joy Scent/gi, 'Olio di Pino');
+		str = str.replace(/Excite Scent/gi, 'Olio di Rosa');
+		str = str.replace(/Vivid Scent/gi, 'Olio Sublime');
+		str = str.replace(/Colognes Case/gi, 'Portaoli');
+		str = str.replace(/Colognes/gi, 'Oli');
 
 		// Varie ed eventuali
 
@@ -2201,25 +2226,28 @@ macros.movelist = function(str) {
 	// Traduzione movelist vero e proprio
 
 	str = str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#');
-	str = str.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Xyn])/g,
-		'|$1|$2|$3');
-	str = str.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Snf])/g,
-		'|$2|$1|$3');
-	str = str.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)£/g, '|$2|$1$');
-	str = str.replace(/\|\{\{tt\|(.+?)\|XY\}\}<br>\{\{tt\|(.+?)\|ORAS\}\}/g,
-		'|$1|ORAS=$2');
+	str = str.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|');
+	str = str.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1');
 	str = str.replace(/\{\{Moveheader\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}');
 	str = str.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor');
 	str = str.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}');
-	str = str.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|');
 	str = str.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-6])\|?(.*?)\}\}/g,
 		'{{#invoke: Movelist/hf | $1h |$2|$3|$4}}<br>{{#invoke: Render | entry | Movelist/entry.$1 |');
 	str = str.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-6])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>');
+	str = str.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
+		console.log(args);
+		if (args.search('B2W2') != -1)
+			args = args.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Xyn])/g, '|$1|$2|$3')
+				.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Snf])/g, '|$2|$1|$3')
+				.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)£/g, '|$2|$1$');
+		else
+			args = args.replace(/\|[xX]/, '|X|X');
+		return '[[&euro;' + args + '&pound;]]|';
+	});
 	str = str.replace(/\{\{[Mm]oveentry\/\w+([1-6])\|(.+)\|?\}\}/g,
 		'[[&euro;$1|$2&pound;]]|');
 	str = str.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
@@ -2274,6 +2302,16 @@ macros.squadra = function(str) {
 	str = str.replace(/Battle Point\|BP/gi, 'Punti Lotta|PL');
 	str = str.replace(/\s*style="margin:\s*auto;?"\s*\|/gi, '');
 	str = str.replace(/\{\{#invoke:\s*colore\s*\|\s*(.+?)\s*\|?\s*(light|dark|normale)?\s*\}\}/gi, '$1 $2');
+
+	// Allineamento Templates Pokémon
+
+	var nPokes = parseInt(new RegExp('\\|pokemon=([1-6])').exec(str)[1]);
+	var pokes = str.match(new RegExp('\\{\\{Pok\u00E9mon\\/[1-6](.|[\\r\\n])+?\\}\\}',
+			'gi'));
+	var poke4 = pokes[3].replace('}}', '<br>|align=' +
+		(nPokes == 5 ? 'right' : 'center') + '}}');
+	str = str.replace(pokes[3], poke4);
+
 	return str;
 };
 
