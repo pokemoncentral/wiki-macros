@@ -2036,15 +2036,15 @@ macros.forme = function(str, useful) {
 		.replace(/386S/g, '386V')
 		.replace(/351R/g, '351P')
 		.replace(/351H/g, '351N')
-		.replace(/710/g, '701L')
-		.replace(/710/g, '701S')
-		.replace(/710/g, '701XL')
-		.replace(/711/g, '701L')
-		.replace(/711/g, '701S')
-		.replace(/711/g, '701XL')
+		.replace(/710_0/g, '710L')
+		.replace(/710_1/g, '710S')
+		.replace(/710_2/g, '710XL')
+		.replace(/711_0/g, '711L')
+		.replace(/711_1/g, '711S')
+		.replace(/711_2/g, '711XL')
 		.replace(/681B/g, '681S')
 		.replace(/492S/g, '492C')
-		.replace(/720L/g, '492C');
+		.replace(/720U/g, '720L');
 };
 
 macros.intestazioni = function(str, type) {
@@ -2079,48 +2079,46 @@ macros['strumenti lotta'] = function(str) {
 macros['forme rilevanti'] = function(str) { return macros.forme(str, true); };
 
 macros['Aree Dream World'] = function(str) {
-	str = str.replace(/\{\{[Dd]wa\|(.+?)\}\}/g, '[[$1]]');
-	str = str.replace(/Pleasant Forest/g, 'Boschetto');
-	str = str.replace(/Windswept Sky/g, 'Settimo Cielo');
-	str = str.replace(/Sparkling Sea/g, 'Mar Brillante');
-	str = str.replace(/Spooky Manor/g, 'Maniero Antico');
-	str = str.replace(/Rugged Mountain/g, 'Monte Spigolo');
-	str = str.replace(/Icy Cave/g, 'Grotta Refrigerio');
-	str = str.replace(/Pokémon Café Forest/g, 'Foresta Pok&eacute;mon Caf&eacute;');
-	str = str.replace(/Dream Park/g, 'Parco Incanto');
-	return str;
+	return str.replace(/\{\{[Dd]wa\|(.+?)\}\}/g, '[[$1]]')
+		.replace(/Pleasant Forest/g, 'Boschetto')
+		.replace(/Windswept Sky/g, 'Settimo Cielo')
+		.replace(/Sparkling Sea/g, 'Mar Brillante')
+		.replace(/Spooky Manor/g, 'Maniero Antico')
+		.replace(/Rugged Mountain/g, 'Monte Spigolo')
+		.replace(/Icy Cave/g, 'Grotta Refrigerio')
+		.replace(/Pokémon Café Forest/g, 'Foresta Pok&eacutemon Caf&eacute')
+		.replace(/Dream Park/g, 'Parco Incanto');
 };
 
 macros['Aree Pokewalker'] = function(str) {
-	str = str.replace(/\{\{[Pp]w\|(.+?)\}\}/g, '[[$1]]');
-	str = str.replace(/Refreshing Field/g, 'Piana Tranquilla');
-	str = str.replace(/Noisy Forest/g, 'Bosco Cicaleccio');
-	str = str.replace(/Rugged Road/g, 'Sent. Impervio');
-	str = str.replace(/Beautiful Beach/g, 'Spiaggia Amena');
-	str = str.replace(/Suburban Area/g, 'Z. Residenziale');
-	str = str.replace(/Dim Cave/g, 'Caverna Penombra');
-	str = str.replace(/Blue Lake/g, 'Lago Turchese');
-	str = str.replace(/Town Outskirts/g, 'Periferia');
-	str = str.replace(/Hoenn Field/g, 'Piana di Hoenn');
-	str = str.replace(/Warm Beach/g, 'Spiag. Caliente');
-	str = str.replace(/Volcano Path/g, 'Sentiero Focoso');
-	str = str.replace(/Treehouse/g, 'Silvania');
-	str = str.replace(/Scary Cave/g, 'Grotta Terrore');
-	str = str.replace(/Sinnoh Field/g, 'Piana di Sinnoh');
-	str = str.replace(/Icy Mountain Rd./g, 'Dirupo Glaciale');
-	str = str.replace(/Big Forest/g, 'Grande Foresta');
-	str = str.replace(/White Lake/g, 'Lago Bruma');
-	str = str.replace(/Stormy Beach/g, 'Costa Tempestosa');
-	str = str.replace(/Resort/g, 'Riviera');
-	str = str.replace(/Quiet Cave/g, 'Grotta Pacifica');
-	str = str.replace(/Beyond the Sea/g, 'Oltremare');
-	str = str.replace(/Night Sky's Edge/g, 'Confinecielo');
-	str = str.replace(/Yellow Forest/g, 'Bosco Giallo');
-	str = str.replace(/Rally/g, 'Evento');
-	str = str.replace(/Sightseeing/g, 'A spasso');
-	str = str.replace(/Winner's Path/g, 'Via dei Campioni');
-	str = str.replace(/Amity Meadow/g, 'Campo Concordia');
-	return str;
+	return str.replace(/\{\{[Pp]w\|(.+?)\}\}/g, '[[$1]]')
+		.replace(/Refreshing Field/g, 'Piana Tranquilla')
+		.replace(/Noisy Forest/g, 'Bosco Cicaleccio')
+		.replace(/Rugged Road/g, 'Sent. Impervio')
+		.replace(/Beautiful Beach/g, 'Spiaggia Amena')
+		.replace(/Suburban Area/g, 'Z. Residenziale')
+		.replace(/Dim Cave/g, 'Caverna Penombra')
+		.replace(/Blue Lake/g, 'Lago Turchese')
+		.replace(/Town Outskirts/g, 'Periferia')
+		.replace(/Hoenn Field/g, 'Piana di Hoenn')
+		.replace(/Warm Beach/g, 'Spiag. Caliente')
+		.replace(/Volcano Path/g, 'Sentiero Focoso')
+		.replace(/Treehouse/g, 'Silvania')
+		.replace(/Scary Cave/g, 'Grotta Terrore')
+		.replace(/Sinnoh Field/g, 'Piana di Sinnoh')
+		.replace(/Icy Mountain Rd./g, 'Dirupo Glaciale')
+		.replace(/Big Forest/g, 'Grande Foresta')
+		.replace(/White Lake/g, 'Lago Bruma')
+		.replace(/Stormy Beach/g, 'Costa Tempestosa')
+		.replace(/Resort/g, 'Riviera')
+		.replace(/Quiet Cave/g, 'Grotta Pacifica')
+		.replace(/Beyond the Sea/g, 'Oltremare')
+		.replace(/Night Sky's Edge/g, 'Confinecielo')
+		.replace(/Yellow Forest/g, 'Bosco Giallo')
+		.replace(/Rally/g, 'Evento')
+		.replace(/Sightseeing/g, 'A spasso')
+		.replace(/Winner's Path/g, 'Via dei Campioni')
+		.replace(/Amity Meadow/g, 'Campo Concordia');
 };
 
 macros.learnlist = function(str) {
@@ -2137,30 +2135,30 @@ macros.learnlist = function(str) {
 
 	// Entry: traduzione numeri romani --> cifre arabe
 
-	str = str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
+	return str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
 		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6'};
-		return '{{learnlist/' + method + numbers[roman]; });
+		return '{{learnlist/' + method + numbers[roman]; })
 
 	// Headers in doppio formato:
 	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
 	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
 
-	str = str.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-6])\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |');
-	str = str.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-6])\|(.+)\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |');
+		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-6])\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
+		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-6])\|(.+)\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
 
 	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
 
-	str = str.replace(/\{\{[Ll]earnlist\/tm([1-6])\|TM/g, '{{learnlist/tm$1|MT');
-	str = str.replace(/\{\{[Ll]earnlist\/tm([1-6])\|HM/g, '{{learnlist/tm$1|MN');
-	str = str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#');
-	str = str.replace(/N\/A/g, 'Assente');
-	str = str.replace(/Start/g, 'Inizio');
-	str = str.replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, '$1');
-	str = str.replace(/\{\{tt\|.+\|(.+?)\}\}/g, '$1');
+		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|TM/g, '{{learnlist/tm$1|MT')
+		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|HM/g, '{{learnlist/tm$1|MN')
+		.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
+		.replace(/N\/A/g, 'Assente')
+		.replace(/Start/g, 'Inizio')
+		.replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, '$1')
+		.replace(/\{\{tt\|.+\|(.+?)\}\}/g, '$1')
 
 	// Entry: traduzioni generiche
 
-	str = str.replace(/\{\{[lL]earnlist\/(\w+)([1-6])\|(.+)\|?\}\}/g,
+		.replace(/\{\{[lL]earnlist\/(\w+)([1-6])\|(.+)\|?\}\}/g,
 		function(str, method, gen, args) {
 
 			// Raddoppiamento livelli se non lo sono già
@@ -2170,50 +2168,50 @@ macros.learnlist = function(str) {
 				return '[[&euro;' + args.replace(/^(Inizio|\d{1,3})\|/, '$1|$1|')
 					+ '&pound;]]|';
 			return '[[&euro;' + args + '&pound;]]|';
-		});
+		})
 
 	// Sostituzione del livello 1 con Inizio
 
-	str = str.replace(/&euro;1\|/g, '&euro;Inizio|');
-	str = str.replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, '&euro;$1|Inizio|');
+		.replace(/&euro;1\|/g, '&euro;Inizio|')
+		.replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, '&euro;$1|Inizio|')
 
 	// Footer in doppio formato:
 	// 		- {{learnlist/<method>f/<footergen>|etc}}
 	// 		- {{learnlist/<method>f|etc}}
 
-	str = str.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-6])\|(.+)\|([1-6])(.*?)\}\}/g,
+		.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-6])\|(.+)\|([1-6])(.*?)\}\}/g,
 		function(str, method, genf, args, genp, otherArgs) {
 			return '}}<br>{{#invoke: learnlist/hf | ' + method + 'f|' + args + '|' + genf
 				+ '|' + genp + (otherArgs.search('xy=') == -1 ? otherArgs : '') + '}}';
-		});
-	str = str.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}');
+		})
+		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
 
 	// Footer: inserimento della generazione dl footer se non presente, assumendo la sesta
 
-	str = str.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-6]+)\|([1-6])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|6|$3}}');
+		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-6]+)\|([1-6])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|6|$3}}')
 
 	// Entry: traduzione null
 
-	str = str.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}');
+		.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}')
 
 	// Traduzione psichico|psichico in header e footer
 
 	// str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
 
-	str = str.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
-		'learnlist$1|Psico|Psico$2}}');
-	str = str.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}');
+		.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
+		'learnlist$1|Psico|Psico$2}}')
+		.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}')
 
 	// Eliminazione chiamata al modulo Render per gli entry null
 
-	str = str.replace(/\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g, '$1');
+		.replace(/\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g, '$1')
 
 	// Eliminazione del parametro STAB e form e aggiustamenti sintattici
 
-	str = str.replace(/STAB=/g, '').replace(/form=[^\|£]+\|?(.*?)£/g, '$1£');
-	str = str.replace(/\}\}&pound;\]\]/g, '&pound;]]}}');
-	str = str.replace(/\|?\n?\}\}\|?/g, '}}');
-	return str;
+		.replace(/STAB=/g, '')
+		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
+		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
+		.replace(/\|?\n?\}\}\|?/g, '}}');
 };
 
 macros.movelist = function(str) {
@@ -2226,55 +2224,52 @@ macros.movelist = function(str) {
 
 	// Traduzione movelist vero e proprio
 
-	str = str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#');
-	str = str.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|');
-	str = str.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1');
-	str = str.replace(/\{\{Moveheader\/tutor\|(.+?)\}\}/gi,
-		'{{#invoke: Movelist/hf | tutorh | $1}}');
-	str = str.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
-		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor');
-	str = str.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}/gi,
-		'{{#invoke: Movelist/hf | tutor$1 | $2}}');
-	str = str.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-6])\|?(.*?)\}\}/g,
-		'{{#invoke: Movelist/hf | $1h |$2|$3|$4}}<br>{{#invoke: Render | entry | Movelist/entry.$1 |');
-	str = str.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-6])?\}\}/g,
-		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>');
-	str = str.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
-		console.log(args);
-		if (args.search('B2W2') != -1)
-			args = args.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Xyn])/g, '|$1|$2|$3')
-				.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Snf])/g, '|$2|$1|$3')
-				.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)£/g, '|$2|$1$');
-		else
-			args = args.replace(/\|[xX]/, '|X|X');
-		return '[[&euro;' + args + '&pound;]]|';
-	});
-	str = str.replace(/\{\{[Mm]oveentry\/\w+([1-6])\|(.+)\|?\}\}/g,
-		'[[&euro;$1|$2&pound;]]|');
-	str = str.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|');
-	str = str.replace(/\{\{[Mm]oveentryspeciale\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|');
-	str = str.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
-		'|form=$1&pound;]]}}');
-	str = str.replace(/\{\{(maschio|femmina)\}\}&pound;\]\]/gi,
-		'|form=$1&pound;]]');
-	str = str.replace(/\}\}&pound;\]\]/g, '&pound;]]}}');
-	str = str.replace(/\|?\n?\}\}\n?\|?/g, '}}');
+	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
+		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
+		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
+		.replace(/\{\{Moveheader\/tutor\|(.+?)\}\}/gi,
+		'{{#invoke: Movelist/hf | tutorh | $1}}')
+		.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
+		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor')
+		.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}/gi,
+		'{{#invoke: Movelist/hf | tutor$1 | $2}}')
+		.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-6])\|?(.*?)\}\}/g,
+		'{{#invoke: Movelist/hf | $1h |$2|$3|$4}}<br>{{#invoke: Render | entry | Movelist/entry.$1 |')
+		.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-6])?\}\}/g,
+		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
+		.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
+			if (args.search('B2W2') != -1)
+				args = args.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Xyn])/g, '|$1|$2|$3')
+					.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Snf])/g, '|$2|$1|$3')
+					.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)£/g, '|$2|$1$')
+			else
+				args = args.replace(/\|[xX]([\|\}])/, '|X|X$1')
+			return '[[&euro;' + args + '&pound;]]|'
+		})
+		.replace(/\{\{[Mm]oveentry\/\w+([1-6])\|(.+)\|?\}\}/g,
+		'[[&euro;$1|$2&pound;]]|')
+		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
+		'[[&euro;$1&pound;]]|')
+		.replace(/\{\{[Mm]oveentryspeciale\|(.+)\|?\}\}/g,
+		'[[&euro;$1&pound;]]|')
+		.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
+		'|form=$1&pound;]]}}')
+		.replace(/\{\{(maschio|femmina)\}\}&pound;\]\]/gi,
+		'|form=$1&pound;]]')
+		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
+		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
 
 	// Traduzioni delle note del breed più ricorrenti
 
-	str = str.replace(/Breed from TM or Move Tutor/gi,
-		'I padri devono aver appreso la mossa tramite MT o Insegnamosse');
-	str = str.replace(/chain breed(ing)?/gi, 'Catena di accoppiamenti');
-	str = str.replace(/breed from (Gen [1-6IV]+) TM( in \w+)?/gi,
-		function(str, gen, game) {
-			return 'I padri devono aver appreso la mossa tramite MT nella '
-				+ macros.generazioni(gen) + (game ? macros.giochi(game, true)
-				: '');
-	});
-
-	return str;
+		.replace(/Breed from TM or Move Tutor/gi,
+		'I padri devono aver appreso la mossa tramite MT o Insegnamosse')
+		.replace(/chain breed(ing)?/gi, 'Catena di accoppiamenti')
+		.replace(/breed from (Gen [1-6IV]+) TM( in \w+)?/gi,
+			function(str, gen, game) {
+				return 'I padri devono aver appreso la mossa tramite MT nella '
+					+ macros.generazioni(gen) + (game ? macros.giochi(game, true)
+					: '');
+		});
 };
 
 macros.squadra = function(str) {
@@ -2291,19 +2286,6 @@ macros.squadra = function(str) {
 	str = macros.colori(str);
 	str = macros.tipi(str);
 
-	// Traduzione squadra specifica
-
-	str = str.replace(/gender=maschio/gi, "gender=male");
-	str = str.replace(/gender=femmina/gi, "gender=female");
-	str = str.replace(/type([1-2])?=[Pp]sichico/gi, "type$1=Psico");
-	str = str.replace(/\{\{[Pp]arty\/[Ff]ooter\}\}/gi,
-		'|}<br>|}&lt;br style="clear: left;"&gt;');
-	str = str.replace(/\{\{[Pp]arty\|/gi, '{{#invoke: Squadra | squadra |');
-	str = str.replace(/\{\{[Pp]arty\//gi, '{{#invoke: Squadra | ');
-	str = str.replace(/Battle Point\|BP/gi, 'Punti Lotta|PL');
-	str = str.replace(/\s*style="margin:\s*auto;?"\s*\|/gi, '');
-	str = str.replace(/\{\{#invoke:\s*colore\s*\|\s*(.+?)\s*\|?\s*(light|dark|normale)?\s*\}\}/gi, '$1 $2');
-
 	// Allineamento Templates Pokémon
 
 	var nPokes = parseInt(new RegExp('\\|pokemon=([1-6])').exec(str)[1]);
@@ -2311,9 +2293,20 @@ macros.squadra = function(str) {
 			'gi'));
 	var poke4 = pokes[3].replace('}}', '<br>|align=' +
 		(nPokes == 5 ? 'right' : 'center') + '}}');
-	str = str.replace(pokes[3], poke4);
 
-	return str;
+	// Traduzione squadra specifica
+
+	return str.replace(/gender=maschio/gi, "gender=male")
+		.replace(/gender=femmina/gi, "gender=female")
+		.replace(/type([1-2])?=[Pp]sichico/gi, "type$1=Psico")
+		.replace(/\{\{[Pp]arty\/[Ff]ooter\}\}/gi,
+		'|}<br>|}&ltbr style="clear: left"&gt')
+		.replace(/\{\{[Pp]arty\|/gi, '{{#invoke: Squadra | squadra |')
+		.replace(/\{\{[Pp]arty\//gi, '{{#invoke: Squadra | ')
+		.replace(/Battle Point\|BP/gi, 'Punti Lotta|PL')
+		.replace(/\s*style="margin:\s*auto?"\s*\|/gi, '')
+		.replace(/\{\{#invoke:\s*colore\s*\|\s*(.+?)\s*\|?\s*(light|dark|normale)?\s*\}\}/gi, '$1 $2')
+		.replace(pokes[3], poke4);
 };
 
 /*
@@ -2339,7 +2332,7 @@ quelli consecutivi
 */
 
 var ending = function(str) {
-	return str.replace(/\n{2,}/g, '<br><br>')
+	return str.replace(/\n{2,}/g, '<br>')
 		.replace(/\n/g, '<br>');
 };
 
@@ -2347,16 +2340,11 @@ var runMacro = function() {
 
 	// Recupero della macro selezionata
 
-	var macro = document.getElementsByTagName('select')[0];
-	macro = macro.options[macro.selectedIndex].value;
+	var macro = menu.options[menu.selectedIndex].value;
 
 	// Applicazione della macro
 
-	var text = document.getElementsByTagName('textarea')[0].value;
-	var output = document.getElementById('output');
-	text = opening(text);
-	text = macros[macro](text);
-	output.innerHTML = ending(text);
+	output.innerHTML = ending(macros[macro](opening(textarea.value)));
 
 	// Selezione del testo
 
@@ -2395,3 +2383,12 @@ for (var k in macros) {
 	option.appendChild(document.createTextNode('Traduci ' + k));
 	menu.appendChild(option);
 }
+
+/*
+
+Assegnamenti di variabili contenenti oggetti DOM
+
+*/
+
+var output = document.getElementById('output');
+var textarea = document.getElementsByTagName('textarea')[0];
