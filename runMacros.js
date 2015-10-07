@@ -1735,13 +1735,24 @@ macros.strumenti = function(str, battleHeld) {
 		.replace(/Gamboy Hold/gi, 'Sticky Hold');
 };
 
-macros.generazioni = function(str) {
+macros.generazioni = function(str, lastConj) {
+	lastConj = lastConj || 'e';
+
 	var ordinals = {1 : 'prima', 2 : 'seconda',
 		3 : 'terza', 4 : 'quarta', 5 : 'quinta',
 		6 : 'sesta', I : 'prima', II : 'seconda',
 		III : 'terza', IV : 'quarta', V : 'quinta', VI: 'sesta'};
-	return str.replace(/gen(eration)? ([1-6IV]+)/gi, function(str, placeholder, gen) {
-		return ordinals[gen] + ' generazione';
+
+	return str.replace(/gen(eration)? ([1-6IV]+[-/1-6IV]*)+/gi,
+		function(str, placeholder, gens) {
+			gens = gens.match(/[1-6IV]+/gi);
+			for (var k = 0; k < gens.length; ++k)
+				gens[k] = ordinals[gens[k]];
+			if (gens.length == 1)
+				return gens[0] + ' generazione';
+			var lastGen = gens.pop();
+			return gens.join(', ') + ' ' + lastConj + ' '
+				+ lastGen + ' generazione';
 	});
 };
 
@@ -2261,14 +2272,26 @@ macros.movelist = function(str) {
 
 	// Traduzioni delle note del breed più ricorrenti
 
-		.replace(/Breed from TM or Move Tutor/gi,
-		'I padri devono aver appreso la mossa tramite MT o Insegnamosse')
-		.replace(/chain breed(ing)?/gi, 'Catena di accoppiamenti')
-		.replace(/breed from (Gen [1-6IV]+) TM( in \w+)?/gi,
+		.replace(/Breed from (Gen [1-6IV]+[-/1-6IV]* )?TM( in \w+)?/gi,
 			function(str, gen, game) {
-				return 'I padri devono aver appreso la mossa tramite MT nella '
-					+ macros.generazioni(gen) + (game ? macros.giochi(game, true)
-					: '');
+				gen = gen ? 'nella ' + macros.generazioni(gen, 'o') : '';
+				game = game ? macros.giochi(game) : '';
+				return 'I padri devono aver appreso la mossa tramite MT ' + gen + game;
+		})
+		.replace(/(Breed from|or) (Gen [1-6IV]+[-/1-6IV]* )?Move Tutor/gi,
+			function(str, prefix, gen) {
+				prefix = prefix == 'or' ? 'o' : 'I padri devono aver appreso la mossa tramite';
+				gen = gen ? 'nella ' + macros.generazioni(gen, 'o') : '';
+				return prefix + ' Insegnamosse ' + gen;
+		})
+		.replace(/chain breed(ing)?/gi, 'Catena di accoppiamenti')
+		.replace(/Breed through Sketch in (\w+)/gi, function(str, game) {
+			var replace = macros.generazioni(game);
+			if (replace == game)
+				replace = 'in ' + macros.giochi(game);
+			else
+				replace = 'nella ' + replace;
+			return 'Il padre deve averla copiata con Schizzo ' + replace;				
 		});
 };
 
