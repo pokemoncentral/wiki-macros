@@ -2222,7 +2222,10 @@ macros.learnlist = function(str) {
 		.replace(/STAB=/g, '')
 		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
 		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
-		.replace(/\|?\n?\}\}\|?/g, '}}');
+		.replace(/\|?\n?\}\}\|?/g, '}}')
+		.replace(/STAB prior to (Gen [1-6IV]+)/gi, function(str, gen) {
+			return 'Gode di STAB prima della ' + macros.generazioni(gen);
+		});
 };
 
 macros.movelist = function(str) {
@@ -2269,6 +2272,9 @@ macros.movelist = function(str) {
 		'|form=$1&pound;]]')
 		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
 		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
+		.replace(/STAB prior to (Gen [1-6IV]+)/gi, function(str, gen) {
+			return 'Gode di STAB prima della ' + macros.generazioni(gen);
+		})
 
 	// Traduzioni delle note del breed più ricorrenti
 
