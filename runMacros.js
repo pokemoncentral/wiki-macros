@@ -2393,7 +2393,7 @@ macros['classi allenatore VI'] = function(str) {
 
 macros['classi allenatore'] = macros['classi allenatore VI'];
 
-macros.trainerlistROZA = function(str) {
+macros['trainerlist ROZA'] = function(str) {
 	str = macros['strumenti lotta'](str);
 	str = macros['classi allenatore VI'](str);
 
@@ -2404,7 +2404,7 @@ macros.trainerlistROZA = function(str) {
 		.replace(/ ?oras ?/gi, '')
 	//rematches
 		.replace(/After acquiring the \{\{badge\|([a-z]+)\}\}/gi, 'Dopo aver ottenuto la {{medaglia|$1}}')
-		.replace(/After entering the \[\[Hall of Fame\]\]/g, 'Dopo essere entrati nella [[Sala d\'onore]]')
+		.replace(/After entering the \[\[Hall of Fame\]\]/g, "Dopo essere entrati nella [[Sala d'onore]]")
 	//per sistemare la visualizzazione html
 		.replace(/é/g, '&eacute;')
 		.replace(/</g, '&lt;')
