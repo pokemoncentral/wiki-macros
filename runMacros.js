@@ -1346,7 +1346,7 @@ macros.strumenti = function(str, battleHeld) {
 			.replace(/Rich Mulch/gi, 'Fertilflorido')
 			.replace(/Discount Coupon/gi, 'Buono sconto')
 			.replace(/Strange Souvenir/gi, 'Strano ninnolo')
-			.replace(/Ability Capsule/gi, 'Capsula abilit&agrave')
+			.replace(/Ability Capsule/gi, 'Capsula Abilit&agrave')
 			.replace(/Joy Scent/gi, 'Olio di Pino')
 			.replace(/Excite Scent/gi, 'Olio di Rosa')
 			.replace(/Vivid Scent/gi, 'Olio Sublime')
