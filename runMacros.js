@@ -678,6 +678,96 @@ macros.mosse = function(str) {
 		.replace(/Magnetic Flux/g, 'Controllo Polare')
 		.replace(/Happy Hour/g, 'Cuccagna')
 		.replace(/Hold Hands/g, 'Mano nella Mano')
+    .replace(/Steam Eruption/g, 'Vaporscoppio')
+    .replace(/Hyperspace Hole/g, 'Forodimensionale')
+    .replace(/Thousand Arrows/g, 'Mille Frecce')
+    .replace(/Thousand Waves/g, 'Mille Onde')
+    .replace(/Light of Ruin/g, 'Luce Nefasta')
+    .replace(/Origin Pulse/g, 'Primopulsar')
+    .replace(/Precipice Blades/g, 'Spade Telluriche')
+    .replace(/Dragon Ascent/g, 'Ascesa del Drago')
+    .replace(/Hyperspace Fury/g, ' Urtodimensionale')
+    .replace(/Breakneck Blitz/g, 'Carica Travolgente')
+    .replace(/All-Out Pummeling/g, 'Iperscarica Furiosa')
+    .replace(/Supersonic Skystrike/g, 'Picchiata Devastante')
+    .replace(/Acid Downpour/g, 'Acidiluvio Corrosivo')
+    .replace(/Tectonic Rage/g, 'Furore della Terra')
+    .replace(/Continental Crush/g, 'Gigamacigno Polverizzante')
+    .replace(/Savage Spin-Out/g, 'Bozzolo Fatale')
+    .replace(/Never-Ending Nightmare/g, 'Abbraccio Spettrale')
+    .replace(/Corkscrew Crash/g, 'Spirale Perforante')
+    .replace(/Inferno Overdrive/g, 'Fiammobomba Detonante')
+    .replace(/Hydro Vortex/g, 'Idrovortice Abissale')
+    .replace(/Bloom Doom/g, 'Floriscoppio Sfolgorante')
+    .replace(/Gigavolt Havoc/g, 'Gigascarica Folgorante')
+    .replace(/Shattered Psyche/g, 'Impatto Psicocinetico')
+    .replace(/Subzero Slammer/g, 'Criodistruzione Polare')
+    .replace(/Devastating Drake/g, 'Dragoschianto Finale')
+    .replace(/Black Hole Eclipse/g, 'Buco Nero del Non Ritorno')
+    .replace(/Twinkle Tackle/g, 'Astroimpatto Fatato')
+    .replace(/Catastropika/g, 'Super Pikaboom')
+    .replace(/Shore Up/g, 'Sabbiaccumulo')
+    .replace(/First Impression/g, 'Schermaglia')
+    .replace(/Baneful Bunker/g, 'Fortino')
+    .replace(/Spirit Shackle/g, 'Cucitura d’Ombra')
+    .replace(/Darkest Lariat/g, 'Braccioteso')
+    .replace(/Sparkling Aria/g, 'Canto Effimero')
+    .replace(/Ice Hammer/g, 'Martelgelo')
+    .replace(/Floral Healing/g, 'Cura Floreale')
+    .replace(/High Horsepower/g, 'Forza Equina')
+    .replace(/Strength Sap/g, 'Assorbiforza')
+    .replace(/Solar Blade/g, 'Lama Solare')
+    .replace(/Leafage/g, 'Fogliame')
+    .replace(/Spotlight/g, 'Riflettore')
+    .replace(/Toxic Thread/g, 'Velenotela')
+    .replace(/Laser Focus/g, 'Concentrazione')
+    .replace(/Gear Up/g, 'Marciainpiù')
+    .replace(/Throat Chop/g, 'Colpo Infernale')
+    .replace(/Pollen Puff/g, 'Sferapolline')
+    .replace(/Anchor Shot/g, 'Colpo d’Ancora')
+    .replace(/Psychic Terrain/g, 'Campo Psichico')
+    .replace(/Lunge/g, 'Assalto')
+    .replace(/Fire Lash/g, 'Frusta di Fuoco')
+    .replace(/Power Trip/g, 'Tracotanza')
+    .replace(/Burn Up/g, 'Ultima Fiamma')
+    .replace(/Speed Swap/g, 'Velociscambio')
+    .replace(/Smart Strike/g, 'Sottilcorno')
+    .replace(/Purify/g, 'Purificazione')
+    .replace(/Revelation Dance/g, 'Mutadanza')
+    .replace(/Core Enforcer/g, 'Nucleocastigo')
+    .replace(/Trop Kick/g, 'Tropicalcio')
+    .replace(/Instruct/g, 'Imposizione')
+    .replace(/Beak Blast/g, 'Cannonbecco')
+    .replace(/Clanging Scales/g, 'Clamorsquame')
+    .replace(/Dragon Hammer/g, 'Marteldrago')
+    .replace(/Brutal Swing/g, 'Vorticolpo')
+    .replace(/Aurora Veil/g, 'Velaurora')
+    .replace(/Sinister Arrow Raid/g, 'Dardoassalto Spettrale')
+    .replace(/Malicious Moonsault/g, 'Iperschianto delle Tenebre')
+    .replace(/Oceanic Operetta/g, 'Sinfonia del Mare')
+    .replace(/Guardian of Alola/g, 'Collera del Guardiano')
+    .replace(/Soul-Stealing 7-Star Strike/g, 'Colpo Eptastellare Rubanima')
+    .replace(/Stoked Sparksurfer/g, 'Elettrosurf Folgorante')
+    .replace(/Pulverizing Pancake/g, 'Adesso Faccio sul Serio')
+    .replace(/Extreme Evoboost/g, 'Potenziamento Eevolutivo')
+    .replace(/Genesis Supernova/g, 'Supernova delle Origini')
+    .replace(/Shell Trap/g, 'Gusciotrappola')
+    .replace(/Fleur Cannon/g, 'Cannonfiore')
+    .replace(/Psychic Fangs/g, 'Psicozanna')
+    .replace(/Stomping Tantrum/g, 'Battipiedi')
+    .replace(/Shadow Bone/g, 'Ossotetro')
+    .replace(/Accelerock/g, 'Rocciarapida')
+    .replace(/Liquidation/g, 'Idrobreccia')
+    .replace(/Prismatic Laser/g, 'Prismalaser')
+    .replace(/Spectral Thief/g, 'Ombrafurto')
+    .replace(/Sunsteel Strike/g, 'Astrocarica')
+    .replace(/Moongeist Beam/g, 'Raggio d’Ombra')
+    .replace(/Tearful Look/g, 'Occhionilucidi')
+    .replace(/Zing Zap/g, 'Elettropizzico')
+    .replace(/Nature’s Madness/g, 'Ira della Natura')
+    .replace(/Multi-Attack/g, 'Multiattacco')
+    .replace(/10,000,000 Volt Thunderbolt/g, 'Iperfulmine')
+
 
 	// Mosse ombra
 
@@ -734,7 +824,23 @@ macros.mosse = function(str) {
 		.replace(/Maledizioned Body/gi, 'Cursed Body')
 		.replace(/Volt Assorbimento/gi, 'Volt Absorb')
 		.replace(/Assorbimento Bulb/gi, 'Absorb Bulb')
-		.replace(/psichico color/gi, 'psico color');
+		.replace(/psichico color/gi, 'psico color')
+    .replace(/Psichico Terrain/g, 'Campo Psichico')
+
+    // Correzioni Mosse Z
+
+    .replace(/Supersuono Skystrike/g, 'Picchiata Devastante')
+    .replace(/Acido Downpour/g, 'Acidiluvio Corrosivo')
+    .replace(/Tectonic Ira/g, 'Furore della Terra')
+    .replace(/Never-Ending Incubo/g, 'Abbraccio Spettrale')
+    .replace(/Marchiatura Overdrive/g, 'Fiammobomba Detonante')
+    .replace(/Subzero Schiantomer/g, 'Criodistruzione Polare')
+    .replace(/Twinkle Azione/g, 'Astroimpatto Fatato')
+    .replace(/Forza Sap/g, 'Assorbiforza')
+    .replace(/Tossina Thread/g, 'Velenotela')
+    .replace(/Stoked ScintillaSurfer/g, 'ElettroSurf Folgorante')
+    .replace(/Spectral Furto/g, 'Ombrafurto')
+    .replace(/10,000,000 Volt Fulmine/g, 'Iperfulmine')
 };
 
 macros["abilita'"] = function(str) {
@@ -928,7 +1034,51 @@ macros["abilita'"] = function(str) {
 		.replace(/Strong Jaw/gi, 'Ferromascella')
 		.replace(/Sweet Veil/gi, 'Dolcevelo')
 		.replace(/Symbiosis/gi, 'Simbiosi')
-		.replace(/Tough Claws/gi, 'Unghiedure');
+		.replace(/Tough Claws/gi, 'Unghiedure')
+    .replace(/Primordial Sea/g, 'Mare Primordiale')
+    .replace(/Desolate Land/g, 'Terra Estrema')
+    .replace(/Delta Stream/g, 'Flusso Delta')
+    .replace(/Stamina/g, 'Sopportazione')
+    .replace(/Wimp Out/g, 'Fuggifuggi')
+    .replace(/Emergency Exit/g, 'Passoindietro')
+    .replace(/Water Compaction/g, 'Idrorinforzo')
+    .replace(/Merciless/g, 'Spietatezza')
+    .replace(/Shields Down/g, 'Scudosoglia')
+    .replace(/Stakeout/g, 'Sorveglianza')
+    .replace(/Water Bubble/g, 'Bolladacqua')
+    .replace(/Steelworker/g, 'Tempracciaio')
+    .replace(/Berserk/g, 'Furore')
+    .replace(/Slush Rush/g, 'Spalaneve')
+    .replace(/Long Reach/g, 'Distacco')
+    .replace(/Liquid Voice/g, 'Idrovoce')
+    .replace(/Triage/g, 'Primacura')
+    .replace(/Galvanize/g, 'Pellelettro')
+    .replace(/Surge Surfer/g, 'Codasurf')
+    .replace(/Schooling/g, 'Banco')
+    .replace(/Disguise/g, 'Fantasmanto')
+    .replace(/Battle Bond/g, 'Morfosintonia')
+    .replace(/Power Construct/g, 'Sciamefusione')
+    .replace(/Corrosion/g, 'Corrosione')
+    .replace(/Comatose/g, 'Sonno Assoluto')
+    .replace(/Queenly Majesty/g, 'Regalità')
+    .replace(/Innards Out/g, 'Espellinterno')
+    .replace(/Dancer/g, 'Sincrodanza')
+    .replace(/Battery/g, 'Batteria')
+    .replace(/Fluffy/g, 'Morbidone')
+    .replace(/Dazzling/g, 'Corposgargiante')
+    .replace(/Soul-Heart/g, 'Cuoreanima')
+    .replace(/Tangling Hair/g, 'Boccolidoro')
+    .replace(/Receiver/g, 'Ricezione')
+    .replace(/Power of Alchemy/g, 'Forza Chimica')
+    .replace(/Beast Boost/g, 'Ultraboost')
+    .replace(/RKS System/g, 'Sistema Primevo')
+    .replace(/Electric Surge/g, 'Elettrogenesi')
+    .replace(/Psychic Surge/g, 'Psicogenesi')
+    .replace(/Misty Surge/g, 'Nebbiogenesi')
+    .replace(/Grassy Surge/g, 'Erbogenesi')
+    .replace(/Full Metal Body/g, 'Metalprotezione')
+    .replace(/Shadow Shield/g, 'Spettroguardia')
+    .replace(/Prism Armor/g, 'Scudoprisma')
 };
 
 macros.gare = function(str) {
@@ -1743,9 +1893,9 @@ macros.generazioni = function(str, lastConj) {
 		6 : 'sesta', I : 'prima', II : 'seconda',
 		III : 'terza', IV : 'quarta', V : 'quinta', VI: 'sesta'};
 
-	return str.replace(/gen(eration)? ([1-6IV]+[-/1-6IV]*)+/gi,
+	return str.replace(/gen(eration)? ([1-7IV]+[-/1-6IV]*)+/gi,
 		function(str, placeholder, gens) {
-			gens = gens.match(/[1-6IV]+/gi);
+			gens = gens.match(/[1-7IV]+/gi);
 			for (var k = 0; k < gens.length; ++k)
 				gens[k] = ordinals[gens[k]];
 			if (gens.length == 1)
@@ -2147,20 +2297,20 @@ macros.learnlist = function(str) {
 	// Entry: traduzione numeri romani --> cifre arabe
 
 	return str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
-		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6'};
+		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6', VII: '7'};
 		return '{{learnlist/' + method + numbers[roman]; })
 
 	// Headers in doppio formato:
 	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
 	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
 
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-6])\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-6])\|(.+)\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
+		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-7])\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
+		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-7])\|(.+)\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
 
 	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
 
-		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|TM/g, '{{learnlist/tm$1|MT')
-		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|HM/g, '{{learnlist/tm$1|MN')
+		.replace(/\{\{[Ll]earnlist\/tm([1-7])\|TM/g, '{{learnlist/tm$1|MT')
+		.replace(/\{\{[Ll]earnlist\/tm([1-7])\|HM/g, '{{learnlist/tm$1|MN')
 		.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/N\/A/g, 'Assente')
 		.replace(/Start/g, 'Inizio')
@@ -2169,15 +2319,15 @@ macros.learnlist = function(str) {
 
 	// Entry: traduzioni generiche
 
-		.replace(/\{\{[lL]earnlist\/(\w+)([1-6])\|(.+)\|?\}\}/g,
+		.replace(/\{\{[lL]earnlist\/(\w+)([1-7])\|(.+)\|?\}\}/g,
 		function(str, method, gen, args) {
 
 			// Raddoppiamento livelli se non lo sono già
 
-			if (gen > 4 && method == 'level' &&
+			/*if (gen > 4 && method == 'level' &&
 				args.search(/^(Inizio|Assente|\d{1,3})\|(Inizio|Assente|\d{1,3})\|/) == -1)
 				return '[[&euro;' + args.replace(/^(Inizio|\d{1,3})\|/, '$1|$1|')
-					+ '&pound;]]|';
+					+ '&pound;]]|';*/
 			return '[[&euro;' + args + '&pound;]]|';
 		})
 
@@ -2190,16 +2340,16 @@ macros.learnlist = function(str) {
 	// 		- {{learnlist/<method>f/<footergen>|etc}}
 	// 		- {{learnlist/<method>f|etc}}
 
-		.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-6])\|(.+)\|([1-6])(.*?)\}\}/g,
+		.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-7])\|(.+)\|([1-7])(.*?)\}\}/g,
 		function(str, method, genf, args, genp, otherArgs) {
 			return '}}<br>{{#invoke: learnlist/hf | ' + method + 'f|' + args + '|' + genf
 				+ '|' + genp + (otherArgs.search('xy=') == -1 ? otherArgs : '') + '}}';
 		})
 		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
 
-	// Footer: inserimento della generazione dl footer se non presente, assumendo la sesta
+	// Footer: inserimento della generazione dl footer se non presente, assumendo la settima
 
-		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-6]+)\|([1-6])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|6|$3}}')
+		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-7]+)\|([1-7])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|7|$3}}')
 
 	// Entry: traduzione null
 
@@ -2223,9 +2373,15 @@ macros.learnlist = function(str) {
 		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
 		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
 		.replace(/\|?\n?\}\}\|?/g, '}}')
-		.replace(/STAB prior to (Gen [1-6IV]+)/gi, function(str, gen) {
+		.replace(/STAB prior to (Gen [1-7IV]+)/gi, function(str, gen) {
 			return 'Gode di STAB prima della ' + macros.generazioni(gen);
-		});
+		})
+
+  // Eliminazione dei dati della mossa, recuperati in automatico dal modulo
+
+  //[[€Inizio|Fogliame|Erba|Fisico|40|100|40||'''£]]|
+  //[[€Inizio|Fogliame||'''£]]|
+    .replace(/\[\[&euro;([^\|]*\|[^\|]*\|)[^\|]*\|[^\|]*\|[^\|]*\|[^\|]*\|[^\|]*?/g, '[[&euro;$1');
 };
 
 macros.movelist = function(str) {
@@ -2243,13 +2399,13 @@ macros.movelist = function(str) {
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
 		.replace(/\{\{Moveheader\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}')
-		.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
+		.replace(/\{\{[Mm]oveheader\/tutor\/([1-7])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor')
-		.replace(/\{\{[Mm]oveheader\/tutor\/([1-6])\|([yesno\|]+)\}\}/gi,
+		.replace(/\{\{[Mm]oveheader\/tutor\/([1-7])\|([yesno\|]+)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}')
-		.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-6])\|?(.*?)\}\}/g,
+		.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-7])\|?(.*?)\}\}/g,
 		'{{#invoke: Movelist/hf | $1h |$2|$3|$4}}<br>{{#invoke: Render | entry | Movelist/entry.$1 |')
-		.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-6])?\}\}/g,
+		.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
 			if (args.search('B2W2') != -1)
@@ -2260,7 +2416,7 @@ macros.movelist = function(str) {
 				args = args.replace(/\|[xX]([\|\}])/, '|X|X$1')
 			return '[[&euro;' + args + '&pound;]]|'
 		})
-		.replace(/\{\{[Mm]oveentry\/\w+([1-6])\|(.+)\|?\}\}/g,
+		.replace(/\{\{[Mm]oveentry\/\w+([1-7])\|(.+)\|?\}\}/g,
 		'[[&euro;$1|$2&pound;]]|')
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
 		'[[&euro;$1&pound;]]|')
@@ -2272,19 +2428,19 @@ macros.movelist = function(str) {
 		'|form=$1&pound;]]')
 		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
 		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
-		.replace(/STAB prior to (Gen [1-6IV]+)/gi, function(str, gen) {
+		.replace(/STAB prior to (Gen [1-7IV]+)/gi, function(str, gen) {
 			return 'Gode di STAB prima della ' + macros.generazioni(gen);
 		})
 
 	// Traduzioni delle note del breed più ricorrenti
 
-		.replace(/Breed from (Gen [1-6IV]+[-/1-6IV]* )?TM( in \w+)?/gi,
+		.replace(/Breed from (Gen [1-7IV]+[-/1-6IV]* )?TM( in \w+)?/gi,
 			function(str, gen, game) {
 				gen = gen ? 'nella ' + macros.generazioni(gen, 'o') : '';
 				game = game ? macros.giochi(game) : '';
 				return 'I padri devono aver appreso la mossa tramite MT ' + gen + game;
 		})
-		.replace(/(Breed from|or) (Gen [1-6IV]+[-/1-6IV]* )?Move Tutor/gi,
+		.replace(/(Breed from|or) (Gen [1-7IV]+[-/1-6IV]* )?Move Tutor/gi,
 			function(str, prefix, gen) {
 				prefix = prefix == 'or' ? 'o' : 'I padri devono aver appreso la mossa tramite';
 				gen = gen ? 'nella ' + macros.generazioni(gen, 'o') : '';
@@ -2317,8 +2473,8 @@ macros.squadra = function(str) {
 
 	// Allineamento Templates Pokémon
 
-	var nPokes = parseInt(new RegExp('\\|pokemon=([1-6])').exec(str)[1]);
-	var pokes = str.match(new RegExp('\\{\\{Pok\u00E9mon\\/[1-6](.|[\\r\\n])+?\\}\\}',
+	var nPokes = parseInt(new RegExp('\\|pokemon=([1-7])').exec(str)[1]);
+	var pokes = str.match(new RegExp('\\{\\{Pok\u00E9mon\\/[1-7](.|[\\r\\n])+?\\}\\}',
 			'gi'));
 	var poke4 = pokes[3].replace('}}', '<br>|align=' +
 		(nPokes == 5 ? 'right' : 'center') + '}}');
