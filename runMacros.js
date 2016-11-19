@@ -2382,9 +2382,7 @@ macros.learnlist = function(str) {
 
   // Eliminazione dei dati della mossa, recuperati in automatico dal modulo
 
-  //[[€Inizio|Fogliame|Erba|Fisico|40|100|40||'''£]]|
-  //[[€Inizio|Fogliame||'''£]]|
-    .replace(/\[\[&euro;([^\|]*\|[^\|]*\|)[^\|]*\|[^\|]*\|[^\|]*\|[^\|]*\|[^\|]*?/g, '[[&euro;$1');
+    .replace(/\[\[&euro;([^\|]*\|[^\|]*?\|?)[^\|]*\|((Fisico|Stato|Speciale))\|[^\|]*\|[^\|]*\|[^\|&pound;]*\|?/g, '[[&euro;$1');
 };
 
 macros.movelist = function(str) {
