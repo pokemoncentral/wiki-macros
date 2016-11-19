@@ -825,7 +825,10 @@ macros.mosse = function(str) {
 		.replace(/Volt Assorbimento/gi, 'Volt Absorb')
 		.replace(/Assorbimento Bulb/gi, 'Absorb Bulb')
 		.replace(/psichico color/gi, 'psico color')
-    .replace(/Psichico Terrain/g, 'Campo Psichico')
+    .replace(/Psichico Terrain/gi, 'Campo Psichico')
+    .replace(/Scintillaling Aria/g, 'Canto Effimero')
+    .replace(/Psichico Fangs/gi, 'Psicozanna')
+    .replace(/Pestoneing Tantrum/g, 'Battipiedi')
 
     // Correzioni Mosse Z
 
