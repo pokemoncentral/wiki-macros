@@ -2495,6 +2495,14 @@ macros.squadra = function(str) {
 		.replace(pokes[3], poke4);
 };
 
+macros.squadra_in_party = function(str) {
+
+  return str.replace(/\{\{#invoke: ?[Ss]quadra ?\| ?[Ss]ingle/gi, "{{#invoke: Party | Single")
+    .replace(/\{\{#invoke: ?[Ss]quadra ?\| ?[Dd]iv ?\| ?color ?= ?[^\}]*}}/gi, "{{#invoke: Party | Div}}")
+    .replace(/\n\|}\n\|}/gi, "\n&lt;/div&gt;\n|}")
+    .replace(/\n\|{{Pok.mon/gi, "\n{{Pok&eacute;mon")
+};
+
 macros['classi allenatore VI'] = function(str) {
 	return str.replace(/Pokémon Breeder/gi, 'Allevapokémon')
 		.replace(/Bird Keeper/gi, 'Avicoltore')
