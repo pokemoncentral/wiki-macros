@@ -61,7 +61,19 @@ macros.tipi = function(str) {
 		.replace(/Normalee/g, 'Normale').replace(/normalee/g, 'normale')
 		.replace(/Gale of [Bb]uioness/gi, 'Tempesta Oscura')
 		.replace(/colore\s*\|?\s*(.+?)\s*\|?\s*buio\s*\}\}/gi,
-				'colore | $1 | dark }}');
+				'colore | $1 | dark }}')
+  // Errori dei Cristalli Z
+		.replace(/Coleotteroinium Z/gi, 'Insectium Z')
+		.replace(/Buioinium Z/gi, 'Obscurium Z')
+		.replace(/Dragoium Z/gi, 'Draconium Z')
+		.replace(/Spettroium Z/gi, 'Spectrium Z')
+		.replace(/Erbaium Z/gi, 'Herbium Z')
+		.replace(/Terraium Z/gi, 'Terrium Z')
+		.replace(/Normaleium Z/gi, 'Normium Z')
+		.replace(/Velenoium Z/gi, 'Venenium Z')
+		.replace(/Rocciaium Z/gi, 'Petrium Z')
+		.replace(/Acciaioium Z/gi, 'Metallium Z')
+		.replace(/Acquaium Z/gi, 'Idrium Z')
 };
 
 macros.mosse = function(str) {
@@ -1082,6 +1094,9 @@ macros["abilita'"] = function(str) {
     .replace(/Full Metal Body/g, 'Metalprotezione')
     .replace(/Shadow Shield/g, 'Spettroguardia')
     .replace(/Prism Armor/g, 'Scudoprisma')
+
+	// Correzioni errori
+		.replace(/Corposgargiante Gleam/gi, 'Magibrillio')
 };
 
 macros.gare = function(str) {
@@ -1880,6 +1895,38 @@ macros.strumenti = function(str, battleHeld) {
 		.replace(/Slowbronite/gi, 'Slowbroite')
 		.replace(/Glalitite/gi, 'Glalite')
 
+  // Cristalli Z
+
+		.replace(/Buginium Z/gi, 'Insectium Z')
+		.replace(/Darkinium Z/gi, 'Obscurium Z')
+		.replace(/Dragonium Z/gi, 'Draconium Z')
+		.replace(/Electrium Z/gi, 'Electrium Z')
+		.replace(/Fairium Z/gi, 'Follectium Z')
+		.replace(/Fightinium Z/gi, 'Luctium Z')
+		.replace(/Firium Z/gi, 'Pirium Z')
+		.replace(/Flyinium Z/gi, 'Volantium Z')
+		.replace(/Ghostium Z/gi, 'Spectrium Z')
+		.replace(/Grassium Z/gi, 'Herbium Z')
+		.replace(/Groundium Z/gi, 'Terrium Z')
+		.replace(/Icium Z/gi, 'Glacium Z')
+		.replace(/Normalium Z/gi, 'Normium Z')
+		.replace(/Poisonium Z/gi, 'Venenium Z')
+		.replace(/Psychium Z/gi, 'Psichium Z')
+		.replace(/Rockium Z/gi, 'Petrium Z')
+		.replace(/Steelium Z/gi, 'Metallium Z')
+		.replace(/Waterium Z/gi, 'Idrium Z')
+		.replace(/Pikanium Z/gi, 'Pikacium Z')
+		//.replace(/Pikashunium Z/gi, '')
+		.replace(/Aloraichium Z/gi, 'Aloraicium Z')
+		.replace(/Eevium Z/gi, 'Eevium Z')
+		.replace(/Snorlium Z/gi, 'Snorlactium Z')
+		//.replace(/Mewnium Z/gi, '')
+		.replace(/Decidium Z/gi, 'Deciduenium Z')
+		.replace(/Incinium Z/gi, 'Incineronium Z')
+		.replace(/Primarium Z/gi, 'Primarinium Z')
+		.replace(/Tapunium Z/gi, 'Tapium Z')
+		//.replace(/Marshadium Z/gi, '')
+
 	// Correzione errori
 
 		.replace(/Calamitaon/gi, 'Magneton')
@@ -2472,33 +2519,35 @@ macros.squadra = function(str) {
 	str = macros.colori(str);
 	str = macros.tipi(str);
 
-	// Allineamento Templates Pokémon
-
-	var nPokes = parseInt(new RegExp('\\|pokemon=([1-7])').exec(str)[1]);
-	var pokes = str.match(new RegExp('\\{\\{Pok\u00E9mon\\/[1-7](.|[\\r\\n])+?\\}\\}',
-			'gi'));
-	var poke4 = pokes[3].replace('}}', '<br>|align=' +
-		(nPokes == 5 ? 'right' : 'center') + '}}');
-
 	// Traduzione squadra specifica
 
-	return str.replace(/gender=maschio/gi, "gender=male")
+	str = str.replace(/gender=maschio/gi, "gender=male")
 		.replace(/gender=femmina/gi, "gender=female")
 		.replace(/type([1-2])?=[Pp]sichico/gi, "type$1=Psico")
-		.replace(/\{\{[Pp]arty\/[Ff]ooter\}\}/gi,
-		'|}<br>|}&ltbr style="clear: left"&gt')
-		.replace(/\{\{[Pp]arty\|/gi, '{{#invoke: Squadra | squadra |')
-		.replace(/\{\{[Pp]arty\//gi, '{{#invoke: Squadra | ')
+		.replace(/\{\{Party\/[Ff]ooter\}\}/gi,
+		'&lt;/div&gt;\n|}{{-}}')
+		.replace(/\{\{Party\//gi, '{{#invoke: Party | ')
 		.replace(/Battle Point\|BP/gi, 'Punti Lotta|PL')
 		.replace(/\s*style="margin:\s*auto?"\s*\|/gi, '')
 		.replace(/\{\{#invoke:\s*colore\s*\|\s*(.+?)\s*\|?\s*(light|dark|normale)?\s*\}\}/gi, '$1 $2')
-		.replace(pokes[3], poke4);
+		.replace(/\|{{Pok.mon\/([1-7])/gi, '{{Pok&eacute;mon|gen=$1')
+		.replace(/{{Party\/Div ?\| ?color={{.+? color ?.*?}}}}/gi, '{{#invoke: Party | Div}}')
+
+	// Forme di Alola
+		.replace(/\|form=\-Alola/gi, '|form=A')
+
+	// replace dei giochi
+		.replace(/\|game=SM/gi, '|game=SL')
+
+	//correzione dello sprite
+	var game = new RegExp('\\|game=(.+?)\\n').exec(str)[1];
+	return str.replace(/\|sprite=(VS.*?\.png)/gi, '|sprite=' + game + ' $1')
 };
 
 macros.squadra_in_party = function(str) {
 
-  return str.replace(/\{\{#invoke: ?[Ss]quadra ?\| ?[Ss]ingle/gi, "{{#invoke: Party | Single")
-    .replace(/\{\{#invoke: ?[Ss]quadra ?\| ?[Dd]iv ?\| ?color ?= ?[^\}]*}}/gi, "{{#invoke: Party | Div}}")
+  return str.replace(/\{\{#invoke: ?Squadra ?\| ?Single/gi, "{{#invoke: Party | Single")
+    .replace(/\{\{#invoke: ?Squadra ?\| ?Div ?\| ?color ?= ?[^\}]*}}/gi, "{{#invoke: Party | Div}}")
     .replace(/\n\|}\n\|}/gi, "\n&lt;/div&gt;\n|}")
     .replace(/\n\|{{Pok.mon/gi, "\n{{Pok&eacute;mon")
 };
