@@ -53,6 +53,7 @@ macros.tipi = function(str) {
 		.replace(/Solroccia/g, 'Solrock')
 		.replace(/Dragoair/g, 'Dragonair')
 		.replace(/Dragoite/g, 'Dragonite')
+		.replace(/Charjacoleottero/g, 'Charjabug')
 		.replace(/Erbaospesso/gi, 'Grassospesso')
 		.replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico')
 		.replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale')
@@ -62,7 +63,9 @@ macros.tipi = function(str) {
 		.replace(/Gale of [Bb]uioness/gi, 'Tempesta Oscura')
 		.replace(/colore\s*\|?\s*(.+?)\s*\|?\s*buio\s*\}\}/gi,
 				'colore | $1 | dark }}')
+
   // Errori dei Cristalli Z
+
 		.replace(/Coleotteroinium Z/gi, 'Insectium Z')
 		.replace(/Buioinium Z/gi, 'Obscurium Z')
 		.replace(/Dragoium Z/gi, 'Draconium Z')
@@ -2357,6 +2360,13 @@ macros.learnlist = function(str) {
 		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-7])\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
 		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-7])\|(.+)\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
 
+	/*
+		Entry: inserimento di un carattere di rimando al footer
+		per le mosse imparate all'evoluzione.
+	*/
+		.replace(/\{\{tt\|\*\|.+evolving\}\}/g, '&amp;#x2670;') 
+
+
 	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
 
 		.replace(/\{\{[Ll]earnlist\/tm([1-7])\|TM/g, '{{learnlist/tm$1|MT')
@@ -2397,7 +2407,7 @@ macros.learnlist = function(str) {
 		})
 		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
 
-	// Footer: inserimento della generazione dl footer se non presente, assumendo la settima
+	// Footer: inserimento della generazione del footer se non presente, assumendo la settima
 
 		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-7]+)\|([1-7])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|7|$3}}')
 
@@ -2427,9 +2437,9 @@ macros.learnlist = function(str) {
 			return 'Gode di STAB prima della ' + macros.generazioni(gen);
 		})
 
-  // Eliminazione dei dati della mossa, recuperati in automatico dal modulo
+	// Eliminazione dei dati della mossa, recuperati in automatico dal modulo
 
-    .replace(/\[\[&euro;([^\|]*\|[^\|]*?\|?)[^\|]*\|((Fisico|Stato|Speciale))\|[^\|]*\|[^\|]*\|[^\|&pound;]*\|?/g, '[[&euro;$1');
+		.replace(/[^\|]*\|(Fisico|Stato|Speciale)\|[^\|]*\|[^\|]*\|[^\|&]*\|?/g, '');
 };
 
 macros.movelist = function(str) {
@@ -2648,8 +2658,8 @@ quelli consecutivi
 */
 
 var ending = function(str) {
-	return str.replace(/\n{2,}/g, '<br>')
-		.replace(/\n/g, '<br>');
+	return str.replace(/\n{2,}/g, '<br /><br />')
+		.replace(/\n/g, '<br />');
 };
 
 var runMacro = function() {
