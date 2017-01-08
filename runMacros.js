@@ -2269,13 +2269,17 @@ macros.intestazioni = function(str, type) {
 		}
 	};
 
+	var tmHeading = str.indexOf('h/7') == -1
+		? '==Tramite [[MT]]/[[MN]]=='
+		: '==Tramite [[MT]]==';
+
 	return str.replace(/TM(\d{2,3})/g, 'MT$1')
 		.replace(/HM(\d{2,3})/g, 'MN$1')
 		.replace(/==[Ll]earnset==/g, customTrans.learnset[type])
 		.replace(/==\[\[Dream World\]\]\-only moves==/g, '==Mosse esclusive del {{pkmn|Dream World}}==')
 		.replace(/==\{\{pkmn\|Dream World\}\}\-only moves==/g, '==Mosse esclusive del {{pkmn|Dream World}}==')
 		.replace(/==By \[\[[Ll]evel\|leveling up\]\]==/g, '==Aumentando di [[livello]]==')
-		.replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, '==Tramite [[MT]]/[[MN]]==')
+		.replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, tmHeading)
 		.replace(/==By \[\[TM\]\]==/g, '==Tramite [[MT]]==')
 		.replace(/==By \[\[HM\]\]==/g, '==Tramite [[MN]]==')
 		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '==Tramite [[Accoppiamento Pok&eacutemon|accoppiamento]]==')
