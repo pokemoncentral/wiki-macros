@@ -2469,7 +2469,7 @@ macros.movelist = function(str) {
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}')
 		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([1-7])(\|[^\}]*)?\}\}/g, function(str, kind, tipo, gen, tm){
 			generation = gen;
-			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + tm +'}}<br>{{#invoke: Render | entry | Movelist/entry.' + kind + ' |'
+			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + (tm ? tm : '') +'}}<br>{{#invoke: Render | entry | Movelist/entry.' + kind + ' |'
 		})
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
