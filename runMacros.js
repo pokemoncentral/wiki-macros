@@ -2285,7 +2285,7 @@ macros.intestazioni = function(str, type) {
 		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '==Tramite [[Accoppiamento Pok&eacutemon|accoppiamento]]==')
 		.replace(/==By \[\[[Mm]ove [Tt]utor(\|tutoring)?\]\]==/g, "==Dall'[[Insegnamosse]]==")
 		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacutemon|eventi]]==')
-		.replace(/==Special moves==/g, '==Mosse speciali==')
+		.replace(/==Speciale? moves?==/g, '==Mosse speciali==')
 		.replace(/==By a prior \[\[evolution\]\]==/g, '==Tramite [[evoluzione|evoluzioni]] precedenti==')
 		.replace(/==\{\{Trading Card Game\}\}\-only moves==/g, '==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacutemon|GCC]]==');
 };
@@ -2448,26 +2448,30 @@ macros.learnlist = function(str) {
 
 macros.movelist = function(str) {
 
+	var generation;
+
 	// Traduzione tipi e intestazioni
 
-	str = macros.intestazioni(str, 'movelist');
 	str = macros.forme(str, true);
 	str = macros.tipi(str);
+	str = macros.intestazioni(str, 'movelist');
 
 	// Traduzione movelist vero e proprio
 
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
-		.replace(/\{\{Moveheader\/tutor\|(.+?)\}\}/gi,
+		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}')
-		.replace(/\{\{[Mm]oveheader\/tutor\/([1-7])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
+		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor')
-		.replace(/\{\{[Mm]oveheader\/tutor\/([1-7])\|([yesno\|]+)\}\}/gi,
+		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])\|([yesno\|]+)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutor$1 | $2}}')
-		.replace(/\{\{[Mm]oveheader\/(\w+)\|(\w+)\|([1-7])\|?(.*?)\}\}/g,
-		'{{#invoke: Movelist/hf | $1h |$2|$3|$4}}<br>{{#invoke: Render | entry | Movelist/entry.$1 |')
-		.replace(/\{\{[Mm]ovefooter(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
+		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([1-7])(\|[^\}]*)\}\}/g, function(str, kind, tipo, gen, tm){
+			generation = gen;
+			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + tm +'}}<br>{{#invoke: Render | entry | Movelist/entry.' + kind + ' |'
+		})
+		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
 			if (args.search('B2W2') != -1)
@@ -2478,11 +2482,35 @@ macros.movelist = function(str) {
 				args = args.replace(/\|[xX]([\|\}])/, '|X|X$1')
 			return '[[&euro;' + args + '&pound;]]|'
 		})
-		.replace(/\{\{[Mm]oveentry\/\w+([1-7])\|(.+)\|?\}\}/g,
-		'[[&euro;$1|$2&pound;]]|')
+		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\|?\}\}/g, function(str, data){
+			// Traduce i parametri vuoti in no
+			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
+			data = data.replace(/\|\|/g, '|no|')
+				.replace(/\|\|/g, '|no|')
+
+			// Toglie nome, i type, numero di GU e i due GU
+				.replace(/\|type2? ?\= ?\w+/g, '')
+				.replace(/^(\d+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
+
+			// Toglie i sup e li mette come parametri
+				.replace(/\|(\d+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+					// se il primo gioco è ok mette il doppio parametro
+					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
+						return '|' + lvl + '|' + game2 + '=' + lvl2;
+					else
+						return '|no|' + game + '=' + lvl;
+				})
+
+			// Replace vari
+				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
+				.replace(/\|$/g, '')
+
+			//console.log('[[€' + generation + '|' + data + '£]]|');
+			return '[[&euro;' + generation + '|' + data + '&pound;]]|'
+		})
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
 		'[[&euro;$1&pound;]]|')
-		.replace(/\{\{[Mm]oveentryspeciale\|(.+)\|?\}\}/g,
+		.replace(/\{\{[Mm]oveentryspecial\|(.+)\|?\}\}/g,
 		'[[&euro;$1&pound;]]|')
 		.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
 		'|form=$1&pound;]]}}')
