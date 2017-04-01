@@ -2447,7 +2447,6 @@ macros.learnlist = function(str) {
 };
 
 macros.movelist = function(str) {
-
 	var generation;
 
 	// Traduzione tipi e intestazioni
@@ -2461,27 +2460,12 @@ macros.movelist = function(str) {
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
-		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
-		'{{#invoke: Movelist/hf | tutorh | $1}}')
-		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])\|([yesno\|]+)\}\}\n\{\{[Mm]oveentry\/tutor/gi,
-		'{{#invoke: Movelist/hf | tutor$1 | $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry/tutor')
-		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])\|([yesno\|]+)\}\}/gi,
-		'{{#invoke: Movelist/hf | tutor$1 | $2}}')
 		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([1-7])(\|[^\}]*)?\}\}/g, function(str, kind, tipo, gen, tm){
 			generation = gen;
 			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + (tm ? tm : '') +'}}<br>{{#invoke: Render | entry | Movelist/entry.' + kind + ' |'
 		})
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
-		.replace(/\{\{[Mm]oveentry\/[Tt]utor\|(.+)\|?\}\}/g, function(str, args) {
-			if (args.search('B2W2') != -1)
-				args = args.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Xyn])/g, '|$1|$2|$3')
-					.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)\|([Snf])/g, '|$2|$1|$3')
-					.replace(/\|([Xyesno]+)\|B2W2=([Xyesno]+)£/g, '|$2|$1$')
-			else
-				args = args.replace(/\|[xX]([\|\}])/, '|X|X$1')
-			return '[[&euro;' + args + '&pound;]]|'
-		})
 		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\|?\}\}/g, function(str, data){
 			// Traduce i parametri vuoti in no
 			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
@@ -2490,10 +2474,10 @@ macros.movelist = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^(\d+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
-				.replace(/\|(\d+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
 					// se il primo gioco è ok mette il doppio parametro
 					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
 						return '|' + lvl + '|' + game2 + '=' + lvl2;
@@ -2504,6 +2488,7 @@ macros.movelist = function(str) {
 			// Replace vari
 				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
 				.replace(/\|$/g, '')
+				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
 
 			//console.log('[[€' + generation + '|' + data + '£]]|');
 			return '[[&euro;' + generation + '|' + data + '&pound;]]|'
@@ -2547,6 +2532,79 @@ macros.movelist = function(str) {
 		});
 };
 
+macros['movelist tutor'] = function(str) {
+	// Salva il numero di celle vuote iniziale
+	var empty = [0, 0, 0, 1, 4, 7, 9, 11];
+	empty = empty[(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/i).exec(str)[1]];
+	console.log(empty);
+	empty = 'X|'.repeat(empty);
+
+	// Traduzione tipi e intestazioni
+
+	str = macros.forme(str, true);
+	str = macros.tipi(str);
+	str = macros.intestazioni(str, 'movelist');
+
+	// Traduzione movelist vero e proprio
+
+	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
+		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
+		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
+		'{{#invoke: Movelist/hf | tutorh | $1}}')
+		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}\n\{\{[Mm]oveentry/gi,
+		'{{#invoke: Movelist/hf | tutor$1 $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry')
+		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
+		'{{#invoke: Movelist/hf | tutor$1 $2}}')
+		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
+		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
+		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\|?\}\}/g, function(str, data){
+			var ndex;
+			// Traduce i parametri vuoti in no
+			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
+			data = data.replace(/\|\|/g, '|no|')
+				.replace(/\|\|/g, '|no|')
+
+			// Toglie nome, i type, numero di GU e i due GU
+				.replace(/\|type2? ?\= ?\w+/g, '')
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(str, num){
+					ndex = num + '|';
+					return '';
+				})
+
+			// Toglie i sup e li mette come parametri
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+					// se il primo gioco è ok mette il doppio parametro
+					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
+						return '|' + lvl + '|' + game2 + '=' + lvl2;
+					else
+						return '|no|' + game + '=' + lvl;
+				})
+
+			// Replace vari
+				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
+				.replace(/\|$/g, '')
+				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
+
+			//console.log('[[€' + generation + '|' + data + '£]]|');
+			return '[[&euro;' + ndex + empty + data + '&pound;]]|'
+		})
+		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
+		'[[&euro;$1&pound;]]|')
+		.replace(/\{\{[Mm]oveentryspecial\|(.+)\|?\}\}/g,
+		'[[&euro;$1&pound;]]|')
+		.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
+		'|form=$1&pound;]]}}')
+		.replace(/\{\{(maschio|femmina)\}\}&pound;\]\]/gi,
+		'|form=$1&pound;]]')
+		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
+		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
+		.replace(/STAB prior to (Gen [1-7IV]+)/gi, function(str, gen) {
+			return 'Gode di STAB prima della ' + macros.generazioni(gen);
+		})
+		.replace('{{#invoke: Movelist/hf | tutor2 }}', '{{#invoke: Movelist/hf | tutor2 |yes}}');
+};
+
+
 macros.squadra = function(str) {
 
 	// Traduzioni preliminari: tipi, mosse, giochi,
@@ -2586,7 +2644,7 @@ macros.squadra = function(str) {
 	return str.replace(/\|sprite=(VS.*?\.png)/gi, '|sprite=' + game + ' $1')
 };
 
-macros.squadra_in_party = function(str) {
+macros['squadra in party'] = function(str) {
 
   return str.replace(/\{\{#invoke: ?Squadra ?\| ?Single/gi, "{{#invoke: Party | Single")
     .replace(/\{\{#invoke: ?Squadra ?\| ?Div ?\| ?color ?= ?[^\}]*}}/gi, "{{#invoke: Party | Div}}")
