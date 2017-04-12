@@ -46,6 +46,7 @@ macros.tipi = function(str) {
 		.replace(/backterra/g, 'background')
 		.replace(/Clefolletto/g, 'Clefairy')
 		.replace(/Scattercoleottero/g, 'Scatterbug')
+		.replace(/Charjacoleottero/g, 'Charjabug')
 		.replace(/Regiroccia/g, 'Regirock')
 		.replace(/Buiorai/g, 'Darkrai')
 		.replace(/Acciaioix/g, 'Steelix')
