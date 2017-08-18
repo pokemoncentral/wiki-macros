@@ -2743,6 +2743,7 @@ macros['spindata'] = function(str) {
 		.replace(/\{\{([Tt]emplate\:)?Spindata\/Battle Trozei\|col=\d\|type=(\w*)\|ndex=(\d*)\|power=(\d)\}\}/gi, '{{Spindata/Link Battle|$3|width-xl=50|width-sm=100|type=$2|power=$4|skill=|skilldesc=}}')
 		.replace(/\{\{Spindata\/Shuffle\|col=\d\|type=(\w*)\|ndex=(\d*)\|num=(\d*)([^\}]*)\}\}/gi,
 			'{{Spindata/Shuffle|$2|width-xl=50|num=$3|type=$1$4}}')
+		.replace(/\|\-/g, '')
 		.replace(/\}\}/gi, '}}\n');
 }
 
@@ -2998,7 +2999,7 @@ macros.dungeonItems = function(str){
     .replace(/IQ Booster/gi, "Turbo QI")
     .replace(/Key/gi, "Chiave")
     .replace(/Link Box/gi, "Combinatore")
-    .replace(/{{DungeonItem\|Combinatore\|3/gi, "{{DungeonItem|Combinatore|Mosse combinate|sprite=Combinatore Sprite ZainoMD|3")
+    .replace(/\{\{DungeonItem\|Combinatore\|3/gi, "{{DungeonItem|Combinatore|Mosse combinate|sprite=Combinatore Sprite ZainoMD|3")
     .replace(/Lost Loot/gi, "Tesorperduto")
 
     .replace(/King's Rock/gi, "Roccia di Re")
