@@ -2734,6 +2734,18 @@ macros['trainerlist ROZA'] = function(str) {
 		.replace(/>/g, '&gt;')
 }
 
+macros['spindata'] = function(str) {
+	str = macros['tipi'](str);
+
+	return str.replace(/\{\{Spindata\/Head\|type=(\w*)((\|)type2=(\w*))?\}\}/gi, '{{Spindata/Head|$1$3$4}}')
+		.replace(/\|\}\s*$/, '&lt;/div&gt;')
+		.replace(/\n/gi, '')
+		.replace(/\{\{([Tt]emplate\:)?Spindata\/Battle Trozei\|col=\d\|type=(\w*)\|ndex=(\d*)\|power=(\d)\}\}/gi, '{{Spindata/Link Battle|$3|width-xl=50|width-sm=100|type=$2|power=$4|skill=|skilldesc=}}')
+		.replace(/\{\{Spindata\/Shuffle\|col=\d\|type=(\w*)\|ndex=(\d*)\|num=(\d*)([^\}]*)\}\}/gi,
+			'{{Spindata/Shuffle|$2|width-xl=50|num=$3|type=$1$4}}')
+		.replace(/\}\}/gi, '}}\n');
+}
+
 /*
 
 Preparazione alla traduzione; elimina i template p
