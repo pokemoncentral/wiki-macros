@@ -3174,7 +3174,7 @@ macros.dungeon = function(str){
 		.replace(/MD Red/gi, "md rosso")
 		.replace(/MD Blue/gi, "md blu")
 
-  str = macros.colori(str)
+	str = macros.colori(str)
 	
 	str = str
 		.replace(/\{\{Dungeon infobox/gi, "{{InfoboxDungeon")
@@ -3239,12 +3239,17 @@ macros.dungeon = function(str){
 			+ "}}\n");
 
 	// changeName
-	var nameIta = (/nameita=(.*?)\n/i).exec(str)[1];
+	// look for Italian name in the langtable to use it as a default for the box
+	var nameIta;
+	if (str.indexOf("{{langtable") !== -1){
+		nameIta = (/\|it\=([^\|]*)\|/gi).exec(str)
+		if (nameIta)
+			nameIta = nameIta[1].trim()
+	}
+	nameIta = prompt("Inserisci il nome del dungeon in italiano", nameIta);
 	if (nameIta){
 		var nameEng = (/\|name=(.*?)\n\|/i).exec(str)[1];
-		str = str
-		.replace(new RegExp(nameEng, 'g'), nameIta)
-		.replace(/nameita=(.*?)\n/i, "");
+		str = str.replace(new RegExp(nameEng, 'g'), nameIta)
 
 		// add the english interwiki link
 		if (str.search(/\[\[de:/g) === -1)
@@ -3280,7 +3285,7 @@ macros.dungeon = function(str){
 		.replace(/==In other language==/gi, "==In altre lingue==");
 
 	str = macros.dungeonItems(str);
-
+	str = macros.dungeonTraps(str);
 	str = macros.tipi(str);
 
 	str = str
