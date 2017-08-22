@@ -2608,7 +2608,7 @@ macros['movelist tutor'] = function(str) {
 macros['movelist breed cinesi'] = function(str) {
 	return str.replace(/\{\{[Mm]SP\|(\d*)\|[^}]*\}\}/g, '#$1#')
 		.replace(/\|alt\=/gi, '|STAB=')
-		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, "[[&euro;$1|$2|$3&pound;]]")
+		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, "[[&euro;$1|$2|$3&pound;]]|")
 		.replace(/\|\|/g, '|no|')
 		.replace(/\|\|/g, '|no|')
 		.replace(new RegExp(String.fromCharCode(36830, 38145, 36951, 20256), 'gi'), 'Catena di accoppiamenti');
