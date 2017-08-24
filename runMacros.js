@@ -2478,7 +2478,7 @@ macros.movelist = function(str) {
 				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
 					// se il primo gioco è ok mette il doppio parametro
 					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
 						return '|' + lvl + '|' + game2 + '=' + lvl2;
@@ -2537,7 +2537,6 @@ macros['movelist tutor'] = function(str) {
 	// Salva il numero di celle vuote iniziale
 	var empty = [0, 0, 0, 1, 4, 7, 9, 11];
 	empty = empty[(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/i).exec(str)[1]];
-	console.log(empty);
 	empty = 'X|'.repeat(empty);
 
 	// Traduzione tipi e intestazioni
@@ -2573,7 +2572,7 @@ macros['movelist tutor'] = function(str) {
 				})
 
 			// Toglie i sup e li mette come parametri
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>(\d+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
 					// se il primo gioco è ok mette il doppio parametro
 					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
 						return '|' + lvl + '|' + game2 + '=' + lvl2;
