@@ -2563,11 +2563,12 @@ macros.movelist = function(str) {
 		})
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
-		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\|?\}\}/g, function(str, data){
+		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\}\}/g, function(str, data){
 			// Traduce i parametri vuoti in no
 			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
 			data = data.replace(/\|\|/g, '|no|')
 				.replace(/\|\|/g, '|no|')
+				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
@@ -2653,12 +2654,13 @@ macros['movelist tutor'] = function(str) {
 		'{{#invoke: Movelist/hf | tutor$1 $2}}')
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
-		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\|?\}\}/g, function(str, data){
+		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
 			var ndex;
 			// Traduce i parametri vuoti in no
 			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
 			data = data.replace(/\|\|/g, '|no|')
 				.replace(/\|\|/g, '|no|')
+				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
@@ -2703,7 +2705,7 @@ macros['movelist tutor'] = function(str) {
 macros['movelist breed cinesi'] = function(str) {
 	return str.replace(/\{\{[Mm]SP\|(\d*)\|[^}]*\}\}/g, '#$1#')
 		.replace(/\|alt\=/gi, '|STAB=')
-		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, "[[&euro;$1|$2|$3&pound;]]|")
+		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, '[[&euro;$1|$2|$3&pound;]]|')
 		.replace(/\|\|/g, '|no|')
 		.replace(/\|\|/g, '|no|')
 		.replace(new RegExp(String.fromCharCode(36830, 38145, 36951, 20256), 'gi'), 'Catena di accoppiamenti');
