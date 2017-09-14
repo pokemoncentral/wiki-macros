@@ -2545,15 +2545,18 @@ macros['learnlist vecchi'] = function(str) {
 
 macros.movelist = function(str) {
 	var generation;
+	
+	// Giochi senza parametro
+	var games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'];
+	// Corrispondente parametro
+	var otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS'];
 
 	// Traduzione tipi e intestazioni
-
 	str = macros.forme(str, true);
 	str = macros.tipi(str);
 	str = macros.intestazioni(str, 'movelist');
 
 	// Traduzione movelist vero e proprio
-
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
@@ -2572,13 +2575,14 @@ macros.movelist = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2 = 'no', game2){
 					// se il primo gioco è ok mette il doppio parametro
-					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
-						return '|' + lvl + '|' + game2 + '=' + lvl2;
+					var otherGame = otherGames[games.indexOf(game)];
+					if (otherGame)
+						return '|' + lvl + '|' + otherGame + '=' + lvl2;
 					else
 						return '|no|' + game + '=' + lvl;
 				})
@@ -2631,27 +2635,42 @@ macros.movelist = function(str) {
 };
 
 macros['movelist tutor'] = function(str) {
-	// Salva il numero di celle vuote iniziale
-	var empty = [0, 0, 0, 1, 4, 7, 9, 11];
-	empty = empty[(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/i).exec(str)[1]];
-	empty = 'X|'.repeat(empty);
+	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
+	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole' }
+	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
+	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, cells.lenght];
+	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
+	str = str.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi, function (match, gen, yesnos) {
+		// Se la generazione ha un solo gioco su Bulba non c'è parametro, lo mostra e basta
+		if (headers[+gen + 1] - headers[gen] === 1){
+			cells[headers[gen]] = '<replace>';
+		}
+		else {
+			var splitted = yesnos.split('|');
+			splitted.shift();
+			for (i = 0; i < splitted.length; ++i)
+				if (splitted[i] === 'yes')
+					cells[headers[gen] + i] = '<replace>';
+		}
+		return '{{#invoke: Movelist/hf | tutor' + gen + ' ' + yesnos + '}}';
+	});
+
 
 	// Traduzione tipi e intestazioni
-
 	str = macros.forme(str, true);
 	str = macros.tipi(str);
 	str = macros.intestazioni(str, 'movelist');
 
 	// Traduzione movelist vero e proprio
-
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}')
-		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}\n\{\{[Mm]oveentry/gi,
-		'{{#invoke: Movelist/hf | tutor$1 $2}}<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry')
-		.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
-		'{{#invoke: Movelist/hf | tutor$1 $2}}')
+		.replace(/(\{\{\#invoke\: Movelist\/hf \| tutor[1-7] [^\}]*?\}\})\n\{\{[Mm]oveentry/gi,
+		'$1<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry')
+		//~ .replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
+		//~ '{{#invoke: Movelist/hf | tutor$1 $2}}')
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
 		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
@@ -2669,22 +2688,18 @@ macros['movelist tutor'] = function(str) {
 					return '';
 				})
 
-			// Toglie i sup e li mette come parametri
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2, game2){
-					// se il primo gioco è ok mette il doppio parametro
-					if (['RB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'].indexOf(game) !== -1)
-						return '|' + lvl + '|' + game2 + '=' + lvl2;
-					else
-						return '|no|' + game + '=' + lvl;
-				})
-
 			// Replace vari
-				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
 				.replace(/\|$/g, '')
 				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
 
-			//console.log('[[€' + generation + '|' + data + '£]]|');
-			return '[[&euro;' + ndex + empty + data + '&pound;]]|'
+			// Crea la nuova stringa dei tutor: sostituisce i <replace> in cells.join('|') con i parametri che trova in data
+			var values = cells.join('|');
+			('|' + data).replace(/\|(yes|no)/gi, function(match, p1) {
+				values = values.replace('<replace>', p1);
+				return '';
+			});
+			
+			return '[[&euro;' + ndex + values + '&pound;]]|';
 		})
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
 		'[[&euro;$1&pound;]]|')
