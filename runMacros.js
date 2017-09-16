@@ -2718,12 +2718,13 @@ macros['movelist tutor'] = function(str) {
 };
 
 macros['movelist breed cinesi'] = function(str) {
-	return str.replace(/\{\{[Mm]SP\|(\d*)\|[^}]*\}\}/g, '#$1#')
+	return str.replace(/\{\{[Mm]SP\|([\dA]*)\|[^}]*\}\}/g, '#$1#')
 		.replace(/\|alt\=/gi, '|STAB=')
 		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, '[[&euro;$1|$2|$3&pound;]]|')
 		.replace(/\|\|/g, '|no|')
 		.replace(/\|\|/g, '|no|')
-		.replace(new RegExp(String.fromCharCode(36830, 38145, 36951, 20256), 'gi'), 'Catena di accoppiamenti');
+		.replace(/\u8FDE\u9501\u9057\u4F20/g, 'Catena di accoppiamenti')
+		.replace(/\u7B2C\u4E8C\u4E16\u4EE3\u901A\u8FC7\u7B2C\u4E00\u4E16\u4EE3\u7684\u62DB\u5F0F\u5B66\u4E60\u5668\u9057\u4F20/g, 'In seconda generazione il padre deve aver appreso la mossa nei giochi di prima generazione tramite MT')
 };
 
 macros.squadra = function(str) {
