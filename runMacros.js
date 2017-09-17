@@ -2727,6 +2727,30 @@ macros['movelist breed cinesi'] = function(str) {
 		.replace(/\u7B2C\u4E8C\u4E16\u4EE3\u901A\u8FC7\u7B2C\u4E00\u4E16\u4EE3\u7684\u62DB\u5F0F\u5B66\u4E60\u5668\u9057\u4F20/g, 'In seconda generazione il padre deve aver appreso la mossa nei giochi di prima generazione tramite MT')
 };
 
+macros['table in langtable'] = function(str) {
+	str = str.replace(/\{\|[^\n]*style\=\"[^\n]*background\: ?\#\{\{([\w\s\d]*) color[\w\s]*\}\}\; border\:[^{]*\#\{\{([\w\s\d]*) color[\w\s]*\}\}[^\n]*\n\|\-[^\n]*\n\! ?Language\n\! ?Name(\n\! ?Origin)?/i,
+			'{{langtable|type=$1|type2=$2')
+		.replace('|}', '}}')
+
+	// Copia le righe con più nomi in uno
+	while (/\n\|([\w\s]*), ?([\w\s,]*)\n/i.test(str))
+		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*), ?([\w\s,]*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4')
+
+	var languages = [['Japanese', 'ja'], ['English', 'en'], ['French', 'fr'], ['German', 'de'], ['Spanish', 'es'], ['Korean', 'ko'], ['Vietnamese', 'vi'],
+		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it']];
+	// Riga semplice, senza rowspan
+	for (l in languages){
+		//~ console.log(languages[l][0]);
+		//~ console.log(str);
+		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + '\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
+			//~ console.log(match);
+			return '|-\n|' + languages[l][1] + '=' + value + (meaning ? '|' + languages[l][1] + 'meaning=' + meaning + '\n' : '\n');
+		});
+	}
+
+	return macros.langtable(str.replace(/\|\-\n/g, ''));
+}
+
 macros.langtable = function(str) {
 	var count = false;
 	var rep = function(){
