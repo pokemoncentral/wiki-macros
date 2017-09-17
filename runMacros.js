@@ -2727,6 +2727,46 @@ macros['movelist breed cinesi'] = function(str) {
 		.replace(/\u7B2C\u4E8C\u4E16\u4EE3\u901A\u8FC7\u7B2C\u4E00\u4E16\u4EE3\u7684\u62DB\u5F0F\u5B66\u4E60\u5668\u9057\u4F20/g, 'In seconda generazione il padre deve aver appreso la mossa nei giochi di prima generazione tramite MT')
 };
 
+macros.langtable = function(str) {
+	var count = false;
+	var rep = function(){
+		count = !count;
+		if (count)
+			return "&lt;div&gt;";
+		else
+			return "&lt;/div&gt;";
+	}
+
+	str = str.replace(/(<br>|\n)/g, function(match){
+			if (match == '<br>')
+				return rep();
+			else if (match ==  '\n' && count)
+				return rep() + '\n';
+			else
+				return '\n';
+		})
+		.replace(/''\{\{tt\|([^\|]*)\|[^\|]*\}\}''/gi, "''$1''")
+		.replace(/\{\{tt\|\*\|([^\|]*)\}\}/gi, '($1)')
+
+		.replace('TCG', 'GCC')
+		.replace(/\[?\[?The Official Pok.mon Handbook\]?\]?/gi, 'Il grande libro ufficiale dei Pok&eacute;mon')
+		.replace(/Games/gi, 'giochi')
+
+	// prova ad aggiungere i template delle lingue
+	var nonNormalCharacters = "";
+	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi']];
+
+	for (lang in languages){
+		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)\\|'), function(match, data){
+			return '|' + languages[lang][0] + '=' +
+				data.replace(/([^\s\n\u0020-\u017E\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g, '{{' + languages[lang][1] + '|$1}}')
+				+ '|';
+		});
+	}
+
+	return str;
+}
+
 macros.squadra = function(str) {
 
 	// Traduzioni preliminari: tipi, mosse, giochi,
