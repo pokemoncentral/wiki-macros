@@ -2737,6 +2737,8 @@ macros.langtable = function(str) {
 			return "&lt;/div&gt;";
 	}
 
+	str = macros.colori(str);
+
 	str = str.replace(/(<br>|\n)/g, function(match){
 			if (match == '<br>')
 				return rep();
@@ -2748,13 +2750,16 @@ macros.langtable = function(str) {
 		.replace(/''\{\{tt\|([^\|]*)\|[^\|]*\}\}''/gi, "''$1''")
 		.replace(/\{\{tt\|\*\|([^\|]*)\}\}/gi, '($1)')
 
+		// se il colore è lo stesso ma in due varianti diverse, indipendentemente da queste usa il parametro type
+		.replace(/\|color=\{\{\#invoke\: colore \| ([\w\s\d]*) \| (?:normale|dark|light) \}\}\n?\|bordercolor=\{\{\#invoke\: colore \| \1 \| (?:normale|dark|light) \}\}/gi, '|type=$1')
+
 		.replace('TCG', 'GCC')
 		.replace(/\[?\[?The Official Pok.mon Handbook\]?\]?/gi, 'Il grande libro ufficiale dei Pok&eacute;mon')
 		.replace(/Games/gi, 'giochi')
 
 	// prova ad aggiungere i template delle lingue
 	var nonNormalCharacters = "";
-	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi']];
+	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru']];
 
 	for (lang in languages){
 		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)\\|'), function(match, data){
