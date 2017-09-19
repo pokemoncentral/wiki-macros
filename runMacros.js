@@ -2568,9 +2568,7 @@ macros.movelist = function(str) {
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\}\}/g, function(str, data){
 			// Traduce i parametri vuoti in no
-			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
-			data = data.replace(/\|\|/g, '|no|')
-				.replace(/\|\|/g, '|no|')
+			data = data.replace(/\|(?=\|)/g, '|no|')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
@@ -2676,9 +2674,7 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
 			var ndex;
 			// Traduce i parametri vuoti in no
-			// Serve due volte per cose tipo '|||'. Al primo giro ne toglie solo metà
-			data = data.replace(/\|\|/g, '|no|')
-				.replace(/\|\|/g, '|no|')
+			data = data.replace(/\|(?=\|)/g, '|no|')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
@@ -2718,11 +2714,18 @@ macros['movelist tutor'] = function(str) {
 };
 
 macros['movelist breed cinesi'] = function(str) {
-	return str.replace(/\{\{[Mm]SP\|([\dA]*)\|[^}]*\}\}/g, '#$1#')
-		.replace(/\|alt\=/gi, '|STAB=')
+	str = str.replace(/\{\{[Mm]SP\|([\dA]*)\|[^}]*\}\}/g, '#$1#')
+	str = str.replace(/\|((?:[#\d]|{{sup\/\d\|\w*}})*)(?=\|)/gi, function(match, list){
+			var res = /{{sup\/\d\|(\w*)}}/i.exec(match);
+			if (!res)
+				return match;
+			var games = res[1];
+			return list.replace(/#\d\d\d#{{sup\/\d\|\w*}}/gi, '') + '|' + games + '=' + list.replace(/{{sup\/\d\|\w*}}/gi, '');
+		})
+
+	return str.replace(/\|alt\=/gi, '|STAB=')
 		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, '[[&euro;$1|$2|$3&pound;]]|')
-		.replace(/\|\|/g, '|no|')
-		.replace(/\|\|/g, '|no|')
+		.replace(/\|(?=\|)/g, '|no|')
 		.replace(/\u8FDE\u9501\u9057\u4F20/g, 'Catena di accoppiamenti')
 		.replace(/\u7B2C\u4E8C\u4E16\u4EE3\u901A\u8FC7\u7B2C\u4E00\u4E16\u4EE3\u7684\u62DB\u5F0F\u5B66\u4E60\u5668\u9057\u4F20/g, 'In seconda generazione il padre deve aver appreso la mossa nei giochi di prima generazione tramite MT')
 };
@@ -2739,14 +2742,10 @@ macros['table in langtable'] = function(str) {
 	var languages = [['Japanese', 'ja'], ['English', 'en'], ['French', 'fr'], ['German', 'de'], ['Spanish', 'es'], ['Korean', 'ko'], ['Vietnamese', 'vi'],
 		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it']];
 	// Riga semplice, senza rowspan
-	for (l in languages){
-		//~ console.log(languages[l][0]);
-		//~ console.log(str);
+	for (l in languages)
 		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + '\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
-			//~ console.log(match);
 			return '|-\n|' + languages[l][1] + '=' + value + (meaning ? '|' + languages[l][1] + 'meaning=' + meaning + '\n' : '\n');
 		});
-	}
 
 	return macros.langtable(str.replace(/\|\-\n/g, ''));
 }
@@ -2780,6 +2779,7 @@ macros.langtable = function(str) {
 		.replace('TCG', 'GCC')
 		.replace(/\[?\[?The Official Pok.mon Handbook\]?\]?/gi, 'Il grande libro ufficiale dei Pok&eacute;mon')
 		.replace(/Games/gi, 'giochi')
+		.replace(/Pre-Gen VII Media/gi, 'media precedenti alla settima generazione')
 
 	// prova ad aggiungere i template delle lingue
 	var nonNormalCharacters = "";
