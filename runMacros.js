@@ -2568,7 +2568,7 @@ macros.movelist = function(str) {
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\}\}/g, function(str, data){
 			// Traduce i parametri vuoti in no
-			data = data.replace(/\|(?=\|)/g, '|no|')
+			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
@@ -2674,7 +2674,7 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
 			var ndex;
 			// Traduce i parametri vuoti in no
-			data = data.replace(/\|(?=\|)/g, '|no|')
+			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
@@ -2725,7 +2725,7 @@ macros['movelist breed cinesi'] = function(str) {
 
 	return str.replace(/\|alt\=/gi, '|STAB=')
 		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, '[[&euro;$1|$2|$3&pound;]]|')
-		.replace(/\|(?=\|)/g, '|no|')
+		.replace(/\|(?=\|)/g, '|no')
 		.replace(/\u8FDE\u9501\u9057\u4F20/g, 'Catena di accoppiamenti')
 		.replace(/\u7B2C\u4E8C\u4E16\u4EE3\u901A\u8FC7\u7B2C\u4E00\u4E16\u4EE3\u7684\u62DB\u5F0F\u5B66\u4E60\u5668\u9057\u4F20/g, 'In seconda generazione il padre deve aver appreso la mossa nei giochi di prima generazione tramite MT')
 };
