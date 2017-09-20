@@ -2719,9 +2719,8 @@ macros['movelist breed cinesi'] = function(str) {
 			var res = /{{sup\/\d\|(\w*)}}/i.exec(match);
 			if (!res)
 				return match;
-			var games = res[1];
-			return list.replace(/#\d\d\d#{{sup\/\d\|\w*}}/gi, '') + '|' + games + '=' + list.replace(/{{sup\/\d\|\w*}}/gi, '');
-		})
+			return '|' + list.replace(/#\d\d\d#{{sup\/\d\|\w*}}/gi, '') + '|' + res[1] + '=' + list.replace(/{{sup\/\d\|\w*}}/gi, '');
+		});
 
 	return str.replace(/\|alt\=/gi, '|STAB=')
 		.replace(/\{\{Movelist\/breed\/gen(\d)\|([\w\d]+)\|.*?\|.*?\|.*?\|([^}]*)\}\}/g, '[[&euro;$1|$2|$3&pound;]]|')
