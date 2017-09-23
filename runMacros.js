@@ -2730,8 +2730,8 @@ macros['movelist breed cinesi'] = function(str) {
 };
 
 macros['table in langtable'] = function(str) {
-	str = str.replace(/\{\|[^\n]*style\=\"[^\n]*background\: ?\#\{\{([\w\s\d]*) color[\w\s]*\}\}\; border\:[^{]*\#\{\{([\w\s\d]*) color[\w\s]*\}\}[^\n]*\n\|\-[^\n]*\n\! ?Language\n\! ?Name(\n\! ?Origin)?/i,
-			'{{langtable|type=$1|type2=$2')
+	str = str.replace(/\{\|[^\n]*style\=\"[^\n]*background\: ?\#\{\{([\w\s]*) color[\w\s]*\}\}\; border\:[^{]*\#\{\{([\w\s]*) color[\w\s]*\}\}[^\n]*\n(?:\|\-[^\n]*\n)?\! ?Language\n\! ?Name(\n\! ?Origin)?/i,
+			function (match, t1, t2){ return '{{langtable|type=' + t1 + (t1 === t2 ? '' : '|type2=' + t2) })
 		.replace('|}', '}}')
 
 	// Copia le righe con più nomi in uno
@@ -2785,10 +2785,16 @@ macros.langtable = function(str) {
 	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru']];
 
 	for (lang in languages){
-		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)\\|'), function(match, data){
+		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)(\\||})'), function(match, data, closing){
 			return '|' + languages[lang][0] + '=' +
-				data.replace(/([^\s\n\u0020-\u017E\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g, '{{' + languages[lang][1] + '|$1}}')
-				+ '|';
+				data.replace(/([^\s\n\u0020-\u017E\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g, '{{' + languages[lang][1] + '|$1}}').replace(/^\s\s*/, '')
+				+ closing;
+		})
+		.replace(new RegExp('\\|' + languages[lang][0] + 'meaning ?=([^|]*)(\\||})'), function(match, data, closing){
+			console.log('meaning di', languages[lang][0]);
+			return '|' + languages[lang][0] + 'meaning=' +
+				data.replace(/([^\s\n\u0020-\u017E\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g, '{{' + languages[lang][1] + '|$1}}').replace(/^[ \t][ \t]*/, '')
+				+ closing;
 		});
 	}
 
