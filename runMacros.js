@@ -2730,7 +2730,7 @@ macros['movelist breed cinesi'] = function(str) {
 };
 
 macros['table in langtable'] = function(str) {
-	str = str.replace(/\{\|[^\n]*style\=\"[^\n]*background\: ?\#\{\{([\w\s]*) color[\w\s]*\}\}\; border\:[^{]*\#\{\{([\w\s]*) color[\w\s]*\}\}[^\n]*\n(?:\|\-[^\n]*\n)?\! ?Language\n\! ?Name(\n\! ?Origin)?/i,
+	str = str.replace(/{\|[^\n]*style=\"[^\n]*background: ?#{{([\w\s]*) color[\w\s]*}}[^\n]*border:[^{]*#{{([\w\s]*) color[\w\s]*}}[^\n]*\n(?:\|\-[^\n]*\n)?\![^\n]*Language\n\![^\n]*Name(?:\n\![^\n]*Origin)?/i,
 			function (match, t1, t2){ return '{{langtable|type=' + t1 + (t1 === t2 ? '' : '|type2=' + t2) })
 		.replace('|}', '}}')
 
@@ -2739,7 +2739,7 @@ macros['table in langtable'] = function(str) {
 		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*), ?([\w\s,]*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4')
 
 	var languages = [['Japanese', 'ja'], ['English', 'en'], ['French', 'fr'], ['German', 'de'], ['Spanish', 'es'], ['Korean', 'ko'], ['Vietnamese', 'vi'],
-		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it']];
+		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it'], ['Brazilian Portuguese', 'pt_br'], ['Portuguese', 'pt']];
 	// Riga semplice, senza rowspan
 	for (l in languages)
 		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + '\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
