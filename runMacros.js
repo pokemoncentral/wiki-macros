@@ -2739,15 +2739,15 @@ macros['table in langtable'] = function(str) {
 		.replace('|}', '}}')
 
 	// Copia le righe con più nomi in uno
-	while (/\n\|([\w\s]*), ?([\w\s,]*)\n/i.test(str))
-		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*), ?([\w\s,]*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4')
+	while (/\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n/i.test(str))
+		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4')
 
 	var languages = [['Japanese', 'ja'], ['English', 'en'], ['French', 'fr'], ['German', 'de'], ['Spanish', 'es'], ['Korean', 'ko'], ['Vietnamese', 'vi'],
 		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it'], ['Brazilian Portuguese', 'pt_br'], ['Portuguese', 'pt'],
-		['Russian', 'ru']];
+		['Russian', 'ru'], ['European Spanish', 'es_eu']];
 	// Riga semplice, senza rowspan
 	for (l in languages)
-		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + '\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
+		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + ' ?\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
 			return '|-\n|' + languages[l][1] + '=' + value.replace(/^[ \t][ \t]*/, '') + (meaning ? '|' + languages[l][1] + 'meaning=' + meaning.replace(/^[ \t][ \t]*/, '') + '\n' : '\n');
 		});
 
