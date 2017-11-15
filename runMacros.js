@@ -702,7 +702,7 @@ macros.mosse = function(str) {
     .replace(/Origin Pulse/g, 'Primopulsar')
     .replace(/Precipice Blades/g, 'Spade Telluriche')
     .replace(/Dragon Ascent/g, 'Ascesa del Drago')
-    .replace(/Hyperspace Fury/g, ' Urtodimensionale')
+    .replace(/Hyperspace Fury/g, 'Urtodimensionale')
     .replace(/Breakneck Blitz/g, 'Carica Travolgente')
     .replace(/All-Out Pummeling/g, 'Iperscarica Furiosa')
     .replace(/Supersonic Skystrike/g, 'Picchiata Devastante')
@@ -2770,7 +2770,7 @@ macros.langtable = function(str) {
 			return "&lt;/div&gt;";
 	}
 
-	str = macros.colori(str);
+	str = macros.giochi(macros.colori(str));
 
 	str = str.replace(/(<br>|\n)/g, function(match){
 			if (match == '<br>')
