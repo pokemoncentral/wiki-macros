@@ -2553,9 +2553,9 @@ macros.movelist = function(str) {
 	var generation;
 	
 	// Giochi senza parametro
-	var games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY'];
+	var games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM'];
 	// Corrispondente parametro
-	var otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS'];
+	var otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM'];
 
 	// Traduzione tipi e intestazioni
 	str = macros.forme(str, true);
@@ -2641,13 +2641,13 @@ macros.movelist = function(str) {
 macros['movelist tutor'] = function(str) {
 	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
 	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole' }
-	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
 	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, cells.lenght];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
 	str = str.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi, function (match, gen, yesnos) {
 		// Se la generazione ha un solo gioco su Bulba non c'è parametro, lo mostra e basta
-		if (headers[+gen + 1] - headers[gen] === 1){
+		if (headers[gen + 1] - headers[gen] === 1){
 			cells[headers[gen]] = '<replace>';
 		}
 		else {
