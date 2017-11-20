@@ -2679,6 +2679,9 @@ macros['movelist tutor'] = function(str) {
 		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
 		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
 			var ndex;
+			// Se c'è lo stab se lo salva
+			var stab = data.match(/\|STAB=\'{0,3}/i);
+			stab = stab ? stab[0] : '';
 			// Traduce i parametri vuoti in no
 			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
@@ -2701,7 +2704,7 @@ macros['movelist tutor'] = function(str) {
 				return '';
 			});
 			
-			return '[[&euro;' + ndex + values + '&pound;]]|';
+			return '[[&euro;' + ndex + values + stab + '&pound;]]|';
 		})
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
 		'[[&euro;$1&pound;]]|')
