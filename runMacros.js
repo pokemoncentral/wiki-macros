@@ -1193,7 +1193,7 @@ macros.strumenti = function(str, battleHeld) {
 			.replace(/Revive/gi, 'Revitalizzante')
 			.replace(/Max Revive/gi, 'Revitalizzante Max')
 			.replace(/Fresh Water/gi, 'Acqua Fresca')
-			.replace(/Soda Pop/gi, 'Gazzosa')
+			.replace(/Soda Pop/gi, 'Gassosa')
 			.replace(/Lemonade/gi, 'Lemonsucco')
 			.replace(/Ether/gi, 'Etere')
 			.replace(/Max Ether/gi, 'Etere Max')
