@@ -2748,8 +2748,8 @@ macros['table in langtable'] = function(str) {
 		.replace('|}', '}}')
 
 	// Copia le righe con più nomi in uno
-	while (/\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n/i.test(str))
-		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4')
+	while (/\|\-[^\n]*\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/g.test(str))
+		str = str.replace(/\|\-[^\n]*\n\|([\w\s]*)(?:, ?| ?<br> ?)((?:[\w\s,]|<br>)*)\n\|([^\n]*)\n(\|[^-][^\n]*\n)?/gi, '|-\n|$1\n|$3\n$4|-\n|$2\n|$3\n$4');
 
 	var languages = [['Japanese', 'ja'], ['English', 'en'], ['French', 'fr'], ['German', 'de'], ['Spanish', 'es'], ['Korean', 'ko'], ['Vietnamese', 'vi'],
 		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it'], ['Brazilian Portuguese', 'pt_br'], ['Portuguese', 'pt'],
