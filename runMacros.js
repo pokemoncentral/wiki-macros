@@ -1154,8 +1154,9 @@ macros.strumenti = function(str, battleHeld) {
 
 			.replace(/Tiny Mushroom/gi, 'Piccolo Fungo')
 			.replace(/Big Mushroom/gi, 'Grande Fungo')
-			.replace(/Pearl/gi, 'Perla')
 			.replace(/Big Pearl/gi, 'Grande Perla')
+			.replace(/Pearl String/gi, 'Trittiperla')
+			.replace(/Pearl/gi, 'Perla')
 			.replace(/Stardust/gi, 'Polvostella')
 			.replace(/Star Piece/gi, 'Pezzo Stella')
 			.replace(/Gold Leaf/gi, 'Fogliadoro')
@@ -1167,7 +1168,6 @@ macros.strumenti = function(str, battleHeld) {
 			.replace(/Pretty Wing/gi, 'Piumabella')
 			.replace(/Balm Mushroom/gi, 'Profumfungo')
 			.replace(/Big Nugget/gi, 'Granpepita')
-			.replace(/Pearl String/gi, 'Trittiperla')
 			.replace(/Comet Shard/gi, 'Pezzo Cometa')
 			.replace(/Relic Copper/gi, 'Soldantico')
 			.replace(/Relic Silver/gi, 'Ducatantico')
