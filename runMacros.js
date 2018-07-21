@@ -55,6 +55,7 @@ macros.tipi = function(str) {
 		.replace(/Dragoair/g, 'Dragonair')
 		.replace(/Dragoite/g, 'Dragonite')
 		.replace(/Charjacoleottero/g, 'Charjabug')
+		.replace(/Rocciaruff/g, 'Rockruff')
 		.replace(/Erbaospesso/gi, 'Grassospesso')
 		.replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico')
 		.replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale')
@@ -1105,8 +1106,9 @@ macros["abilita'"] = function(str) {
     .replace(/Shadow Shield/g, 'Spettroguardia')
     .replace(/Prism Armor/g, 'Scudoprisma')
 
-	// Correzioni errori
-		.replace(/Corposgargiante Gleam/gi, 'Magibrillio')
+    // Correzioni errori
+    .replace(/Corposgargiante Gleam/gi, 'Magibrillio')
+    .replace(/AcuPressione/g, 'Acupressione')
 };
 
 macros.gare = function(str) {
@@ -2265,7 +2267,11 @@ macros.forme = function(str, useful) {
 		.replace(/711_2/g, '711XL')
 		.replace(/681B/g, '681S')
 		.replace(/492S/g, '492C')
-		.replace(/720U/g, '720L');
+		.replace(/720U/g, '720L')
+		.replace(/745Mn/g, '745N')
+		.replace(/745D/g, '745C')
+		.replace(/800DM/g, '800C')
+		.replace(/800DW/g, '800A');
 };
 
 macros.intestazioni = function(str, type) {
@@ -2375,7 +2381,7 @@ macros.learnlist = function(str) {
 		Entry: inserimento di un carattere di rimando al footer
 		per le mosse imparate all'evoluzione.
 	*/
-		.replace(/\{\{tt\|\*\|.+evolving\}\}/g, '&amp;#x2670;') 
+		.replace(/\{\{tt\|\*\|.+evolving\}\}/g, '&amp;#x2670;')
 
 
 	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
@@ -2551,7 +2557,7 @@ macros['learnlist vecchi'] = function(str) {
 
 macros.movelist = function(str) {
 	var generation;
-	
+
 	// Giochi senza parametro
 	var games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM'];
 	// Corrispondente parametro
@@ -2634,7 +2640,7 @@ macros.movelist = function(str) {
 				replace = 'in ' + macros.giochi(game);
 			else
 				replace = 'nella ' + replace;
-			return 'Il padre deve averla copiata con Schizzo ' + replace;				
+			return 'Il padre deve averla copiata con Schizzo ' + replace;
 		});
 };
 
@@ -2688,7 +2694,7 @@ macros['movelist tutor'] = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(str, num){
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(str, num){
 					ndex = num + '|';
 					return '';
 				})
@@ -2703,7 +2709,7 @@ macros['movelist tutor'] = function(str) {
 				values = values.replace('<replace>', p1);
 				return '';
 			});
-			
+
 			return '[[&euro;' + ndex + values + stab + '&pound;]]|';
 		})
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
@@ -2953,7 +2959,7 @@ macros.dungeonItems = function(str){
   str = str
     .replace(/{{DungeonItem\|([^\|]*?)\|Apple/g, "{{DungeonItem|$1|Cibo (Mystery Dungeon)|sprite=Mela Sprite ZainoMD")
     .replace(/{{DungeonItem\|Apple\|/g, "{{DungeonItem|Mela|Cibo (Mystery Dungeon)|sprite=Mela Sprite ZainoMD|")
-    
+
     .replace(/{{DungeonItem\/f\|.*?}}/g, "|}");
 
   // item replacement
@@ -2988,7 +2994,7 @@ macros.dungeonItems = function(str){
     .replace(/\|sprite=MDZaino Bevande salutari Sprite/g, "")
     .replace(/\|sprite=MDZaino \a+ Berry Sprite/g, "")
     .replace(/\|sprite=MDZaino (\a+) Berry III Sprite/g, "")
-    
+
     .replace(/\|sprite=MDZaino ([a-zA-Z\- ]*?) Sprite/g, "|sprite=$1 Sprite ZainoMD")
 
     .replace(/Oran Berry/gi, "Baccarancia")
@@ -3070,7 +3076,7 @@ macros.dungeonItems = function(str){
     .replace(/Sky Caramelle Gommose/gi, "Gommacielo")
     .replace(/Clear Gummi/gi, "Gommachiara")
     .replace(/Clear Caramelle Gommose/gi, "Gommachiara")
-    
+
     .replace(/Geo Pebble/gi, "Geosasso")
     .replace(/Gone Pebble/gi, "Geomasso")
     .replace(/Stick/gi, "Bastone")
@@ -3225,7 +3231,7 @@ macros.dungeonItems = function(str){
     .replace(/Lunar Ribbon/gi, "Galaluna")
     .replace(/Mossy Rock/gi, "Rocciamusco")
     .replace(/Sun Ribbon/gi, "Galasole")
-    
+
     .replace(/Surround Wand/gi, "Accerchiaramo")
     .replace(/Slumber Wand/gi, "Addormentaramo")
     .replace(/Confuse Wand/gi, "Confondiramo")
@@ -3241,7 +3247,7 @@ macros.dungeonItems = function(str){
     .replace(/Stayaway Wand/gi, "Scacciaramo")
     .replace(/Warp Wand/gi, "Teleramo")
     .replace(/Pounce Wand/gi, "Tufforamo")
-    
+
     .replace(/Attack Looplet/gi, "Cerchio Attacco")
     .replace(/Focus Looplet/gi, "Focalcerchio")
     .replace(/Cover Looplet/gi, "Copricerchio")
@@ -3377,7 +3383,7 @@ macros.dungeon = function(str){
 		.replace(/MD Blue/gi, "md blu")
 
 	str = macros.colori(str)
-	
+
 	str = str
 		.replace(/\{\{Dungeon infobox/gi, "{{InfoboxDungeon")
 		.replace(/recruitable=Yes/gi, "recruitable=Sì")
