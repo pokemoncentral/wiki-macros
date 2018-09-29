@@ -2799,6 +2799,15 @@ macros.langtable = function(str) {
 		.replace(/\[?\[?The Official Pok.mon Handbook\]?\]?/gi, 'Il grande libro ufficiale dei Pok&eacute;mon')
 		.replace(/Games/gi, 'giochi')
 		.replace(/Pre-Gen VII Media/gi, 'media precedenti alla settima generazione')
+		.replace(/Same as (?:its |his |hers )?English name/gi, 'Uguale al nome inglese')
+		.replace(/Same as (?:its |his |hers )?Japanese name/gi, 'Uguale al nome giapponese')
+		.replace(/Transliteration of (?:its |his |hers )?Japanese name/gi, 'Traslitterazione del nome giapponese')
+		.replace(/Transcription of (?:its |his |hers )?English name/gi, 'Trascrizione del nome inglese')
+		// Do those two replace really make sense?
+		.replace(/Transliteration of (?:its |his |hers )?English name/gi, 'Traslitterazione del nome inglese')
+		.replace(/Transcription of (?:its |his |hers )?Japanese name/gi, 'Trascrizione del nome giapponese')
+
+	str = macros.tipi(str);
 
 	// prova ad aggiungere i template delle lingue
 	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru']];
@@ -2806,16 +2815,21 @@ macros.langtable = function(str) {
 
 	for (lang in languages){
 		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)(\\||})'), function(match, data, closing){
-			return '|' + languages[lang][0] + '=' +
-				data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^\s\s*/, '')
-				+ closing;
-		})
-		.replace(new RegExp('\\|' + languages[lang][0] + 'meaning ?=([^|]*)(\\||})'), function(match, data, closing){
-			console.log('meaning di', languages[lang][0]);
-			return '|' + languages[lang][0] + 'meaning=' +
-				data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^[ \t][ \t]*/, '')
-				+ closing;
-		});
+				return '|' + languages[lang][0] + '=' +
+					data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^\s\s*/, '')
+					+ closing;
+			})
+			.replace(new RegExp('\\|' + languages[lang][0] + 'meaning ?=([^|]*)(\\||})'), function(match, data, closing){
+				console.log('meaning di', languages[lang][0]);
+				return '|' + languages[lang][0] + 'meaning=' +
+					data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^[ \t][ \t]*/, '')
+					+ closing;
+			})
+
+		// Unifies calls space-separated
+			.replace(new RegExp('{{' + languages[lang][1] + '\\|([^}]*)}}(\\s*){{' + languages[lang][1] + '\\|([^}]*)}}'),
+				'{{' + languages[lang][1] + '|$1$2$3}}'
+			);
 	}
 
 	return str;
