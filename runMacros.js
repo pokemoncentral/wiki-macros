@@ -2810,7 +2810,7 @@ macros.langtable = function(str) {
 	str = macros.tipi(str);
 
 	// prova ad aggiungere i template delle lingue
-	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru']];
+	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru'], ['sr', 'sr']];
 	var regexNonstandardChar = /([^\s\n\u0020-\u017E\u200B\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g;
 
 	for (lang in languages){
