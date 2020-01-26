@@ -837,6 +837,7 @@ macros.mosse = function(str) {
         .replace(/Breaking Swipe/g, 'Vastoimpatto')
         .replace(/Branch Poke/g, 'Ramostoccata')
         .replace(/Overdrive/g, 'Overdrive')
+        .replace(/Apple Acido/g, 'Acido Malico')
         .replace(/Apple Acid/g, 'Acido Malico')
         .replace(/Grav Apple/g, 'Forza G')
         .replace(/Spirit Break/g, 'Frantumanima')
@@ -2856,6 +2857,7 @@ macros.langtable = function(str) {
 		// se il colore è lo stesso ma in due varianti diverse, indipendentemente da queste usa il parametro type
 		.replace(/\|color=\{\{\#invoke\: colore \| ([\w\s\d]*) \| (?:normale|dark|light) \}\}\n?\|bordercolor=\{\{\#invoke\: colore \| \1 \| (?:normale|dark|light) \}\}/gi, '|type=$1')
 
+		.replace(/\{\{Other languages\|/gi, "{{langtable|")
 		.replace('TCG', 'GCC')
 		.replace(/\[?\[?The Official Pok.mon Handbook\]?\]?/gi, 'Il grande libro ufficiale dei Pok&eacute;mon')
 		.replace(/Games/gi, 'giochi')
