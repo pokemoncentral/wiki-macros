@@ -2365,6 +2365,32 @@ macros.intestazioni = function(str, type) {
 		.replace(/==\{\{Trading Card Game\}\}\-only moves==/g, '==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacutemon|GCC]]==');
 };
 
+macros['Terre Selvagge'] = function(str) {
+	// Terre Selvagge
+	return str.replace(/Meetup Spot/gi, 'Piazzale Adunanza')
+		.replace(/Rolling Fields/gi, 'Pianura Serena')
+		.replace(/Dappled Grove/gi, 'Boschetto Ombraluce')
+		.replace(/Watchtower Ruins/gi, 'Torre Diroccata')
+		.replace(/East Lake Axewell/gi, 'Lago Axew (est)')
+		.replace(/West Lake Axewell/gi, 'Lago Axew (ovest)')
+		.replace(/Axew's Eye/gi, 'Occhio del Lago Axew')
+		.replace(/South Lake Miloch/gi, 'Lago Milotic (sud)')
+		.replace(/North Lake Miloch/gi, 'Lago Milotic (nord)')
+		.replace(/Giant's Seat/gi, 'Sedia del Gigante')
+		.replace(/Motostoke Riverbank/gi, 'Fiume di Steamington')
+		.replace(/Bridge Field/gi, 'Piana dei Ponti')
+		.replace(/Stony Wilderness/gi, 'Landa delle Pietre')
+		.replace(/Dusty Bowl/gi, 'Conca delle Sabbie')
+		.replace(/Giant's Mirror/gi, 'Specchio del Gigante')
+		.replace(/Hammerlocke Hills/gi, 'Colle Knuckleburgh')
+		.replace(/Giant's Cap/gi, 'Berretto del Gigante')
+		.replace(/Lake of Outrage/gi, 'Lago Dragofuria')
+
+		// Correzione errori
+
+		// Ancora nessuno
+};
+
 macros['strumenti lotta'] = function(str) {
 	return macros.strumenti(str, true);
 };
