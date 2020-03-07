@@ -2660,13 +2660,13 @@ macros.movelist = function(str) {
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
-		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([1-7])(\|[^\}]*)?\}\}/g, function(str, kind, tipo, gen, tm){
+		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([0-9]+)(\|[^\}]*)?\}\}/g, function(str, kind, tipo, gen, tm){
 			generation = gen;
 			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + (tm ? tm : '') +'}}<br>{{#invoke: Render | entry | Movelist/entry.' + kind + ' |'
 		})
-		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[1-7])?\}\}/g,
+		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[0-9])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
-		.replace(/\{\{[Mm]oveentry\/[1-7]\|(.+)\}\}/g, function(str, data){
+		.replace(/\{\{[Mm]oveentry\/[0-9]\|(.+)\}\}/g, function(str, data){
 			// Traduce i parametri vuoti in no
 			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
@@ -2676,6 +2676,8 @@ macros.movelist = function(str) {
 				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
+			// Per LGPE lo scrivo a mano, e va eseguito prima perché l'altro rompe la sostituzione
+				.replace(/\|([^}|]+){{sup\/7\|SM}}{{sup\/7\|USUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE=$2')
 				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(str, lvl, game, _, lvl2 = 'no', game2){
 					// se il primo gioco è ok mette il doppio parametro
 					var otherGame = otherGames[games.indexOf(game)];
@@ -2734,12 +2736,14 @@ macros.movelist = function(str) {
 
 macros['movelist tutor'] = function(str) {
 	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
-	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole' }
-	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada' }
+	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
-	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, cells.lenght];
+	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, cells.lenght];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
-	str = str.replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi, function (match, gen, yesnos) {
+	// Bisogna sostituire subito il tick con yes perché su Bulba lo usano a caso
+	str = str.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
+		.replace(/\{\{[Mm]ovehead\/tutor\/([1-8])([yesno\|]*)\}\}/gi, function (match, gen, yesnos) {
 		// Se la generazione ha un solo gioco su Bulba non c'è parametro, lo mostra e basta
 		if (headers[gen + 1] - headers[gen] === 1){
 			cells[headers[gen]] = '<replace>';
@@ -2765,7 +2769,7 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}')
-		.replace(/(\{\{\#invoke\: Movelist\/hf \| tutor[1-7] [^\}]*?\}\})\n\{\{[Mm]oveentry/gi,
+		.replace(/(\{\{\#invoke\: Movelist\/hf \| tutor[1-8] [^\}]*?\}\})\n\{\{[Mm]oveentry/gi,
 		'$1<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry')
 		//~ .replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
 		//~ '{{#invoke: Movelist/hf | tutor$1 $2}}')
@@ -2789,7 +2793,6 @@ macros['movelist tutor'] = function(str) {
 
 			// Replace vari
 				.replace(/\|$/g, '')
-				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
 
 			// Crea la nuova stringa dei tutor: sostituisce i <replace> in cells.join('|') con i parametri che trova in data
 			var values = cells.join('|');
