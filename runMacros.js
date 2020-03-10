@@ -2332,7 +2332,7 @@ macros.forme = function(str, useful) {
 		.replace(/720U/g, '720L')
 		.replace(/745Mn/g, '745N')
 		.replace(/745D/g, '745C')
-		.replace(/800DM/g, '800C')
+		.replace(/800DM/g, '800V')
 		.replace(/800DW/g, '800A');
 };
 
