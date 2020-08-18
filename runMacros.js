@@ -2875,8 +2875,8 @@ macros.movelist = function(str) {
 
 macros['movelist tutor'] = function(str) {
 	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
-	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada' }
-	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'landacorona' }
+	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
 	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, cells.lenght];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
@@ -2909,7 +2909,7 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\{\{Movehead\/tutor\|(.+?)\}\}/gi,
 		'{{#invoke: Movelist/hf | tutorh | $1}}')
 		.replace(/(\{\{\#invoke\: Movelist\/hf \| tutor[1-8] [^\}]*?\}\})\n\{\{[Mm]oveentry/gi,
-		'$1<br>{{#invoke: Render | entry | Movelist/entry.tutor |<br>{{Moveentry')
+		'$1<br>{{#invoke: Render | render | Modulo:Movelist/entry | tutor | //<br>{{Moveentry')
 		//~ .replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
 		//~ '{{#invoke: Movelist/hf | tutor$1 $2}}')
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
@@ -2940,17 +2940,15 @@ macros['movelist tutor'] = function(str) {
 				return '';
 			});
 
-			return '[[&euro;' + ndex + values + stab + '&pound;]]|';
+			return '|' + ndex + values + stab + '| //';
 		})
 		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|')
+		'|$1| //')
 		.replace(/\{\{[Mm]oveentryspecial\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|')
-		.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
-		'|form=$1&pound;]]}}')
-		.replace(/\{\{(maschio|femmina)\}\}&pound;\]\]/gi,
-		'|form=$1&pound;]]')
-		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
+		'|$1| //')
+		.replace(/\{\{(maschio|femmina)\}\}\| \/\//gi,
+		'|form=$1| //')
+		.replace(/\}\}\| \/\//g, '| //}}')
 		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
 		.replace(/STAB prior to (Gen [1-7IV]+)/gi, function(str, gen) {
 			return 'Gode di STAB prima della ' + macros.generazioni(gen);
