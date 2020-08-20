@@ -2917,8 +2917,8 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
 			var ndex;
 			// Se c'è lo stab se lo salva
-			var stab = data.match(/\|STAB=\'{0,3}/i);
-			stab = stab ? stab[0] : '';
+			var stab = data.match(/\|STAB=(\'{0,3})/i);
+			stab = stab ? ( '|STAB <- ' + stab[1]) : '';
 			// Traduce i parametri vuoti in no
 			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
