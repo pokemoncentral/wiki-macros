@@ -1080,7 +1080,7 @@ macros["abilita'"] = function(str) {
 		.replace(/Normalize/gi, 'Normalit&agrave')
 		.replace(/Oblivious/gi, 'Indifferenza')
 		.replace(/Overgrow/gi, 'Erbaiuto')
-		.replace(/Own Tempo/gi, 'Mentelocale')
+		.replace(/Own Tempo/gi, 'Mente Locale')
 		.replace(/Pickup/gi, 'Raccolta')
 		.replace(/Plus/gi, 'Pi&ugrave')
 		.replace(/Poison Heal/gi, 'Velencura')
