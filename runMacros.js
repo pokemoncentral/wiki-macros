@@ -1028,6 +1028,7 @@ macros["abilita'"] = function(str) {
 		.replace(/Cloud Nine/gi, 'Antimeteo')
 		.replace(/Color Change/gi, 'Cambiacolore')
 		.replace(/Compoundeyes/gi, 'Insettocchi')
+		.replace(/Compound Eyes/gi, 'Insettocchi')
 		.replace(/Cute Charm/gi, 'Incantevole')
 		.replace(/Damp/gi, 'Umidit&agrave')
 		.replace(/Download/gi, 'Download')
