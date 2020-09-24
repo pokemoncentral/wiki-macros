@@ -3268,16 +3268,67 @@ macros['trainerlist ROZA'] = function(str) {
 }
 
 macros['spindata'] = function(str) {
-	str = macros['tipi'](str);
+	str = macros.mosse(str);
+	str = macros.tipi(str);
 
-	return str.replace(/\{\{Spindata\/Head\|type=(\w*)((\|)type2=(\w*))?\}\}/gi, '{{Spindata/Head|$1$3$4}}')
-		.replace(/\|\}\s*$/, '&lt;/div&gt;')
-		.replace(/\n/gi, '')
-		.replace(/\{\{([Tt]emplate\:)?Spindata\/Battle Trozei\|col=\d\|type=(\w*)\|ndex=(\d*)\|power=(\d)\}\}/gi, '{{Spindata/Link Battle|$3|width-xl=50|width-sm=100|type=$2|power=$4|skill=|skilldesc=}}')
-		.replace(/\{\{Spindata\/Shuffle\|col=\d\|type=(\w*)\|ndex=(\d*)\|num=(\d*)([^\}]*)\}\}/gi,
-			'{{Spindata/Shuffle|$2|width-xl=50|num=$3|type=$1$4}}')
-		.replace(/\|\-/g, '')
-		.replace(/\}\}/gi, '}}\n');
+	return str
+        // Generic spindata replacements
+		.replace(/==Side game data==/gi, '==Dati spin-off==')
+		.replace(/{{Spindata\/Head\|type=(\w*)((\|)type2=(\w*))?}}/gi, '{{Spindata/Head|$1$3$4}}')
+		.replace(/\|}\s*$/, '&lt;/div&gt;')
+		// .replace(/(?<![=}])\n(?!\|)/gi, '')
+		.replace(/(?<![=}])\n/gi, '')
+		.replace(/\|col=\d\|/gi, '|')
+        // Pinball
+		.replace(/{{Spindata\/PinballRS\|/gi, '{{Spindata/PinballRZ|')
+		.replace(/({{Spindata\/PinballRZ\|.*?\|)acquisition=Evolve(.*?}})/gi, '$1acquisition=Evoluzione$2')
+		.replace(/({{Spindata\/PinballRZ\|.*?\|)acquisition=Catch(.*?}})/gi, '$1acquisition=Cattura$2')
+        // Trozei (Link in Italian)
+		.replace(/{{Spindata\/Trozei\|/gi, '{{Spindata/Link|')
+		.replace(/({{Spindata\/Link\|.*?\|)rarity=Rare(.*?}})/gi, '$1rarity=Raro$2')
+		.replace(/({{Spindata\/Link\|.*?\|)rarity=Common(.*?}})/gi, '$1rarity=Comune$2')
+        // MDRB
+		.replace(/({{Spindata\/MDRB\|.*?\|)rate=Evolve(.*?}})/gi, '$1rate=Evoluzione$2')
+		.replace(/({{Spindata\/MDRB.*?)\|P[\dL]=[^|}]*/gi, '$1')
+		.replace(/({{Spindata\/MDRB.*?)\|P[\dL]=[^|}]*/gi, '$1') // Pls fix this shit
+		.replace(/({{Spindata\/MDRB.*?)\|P[\dL]=[^|}]*/gi, '$1')
+		.replace(/({{Spindata\/MDRB.*?)\|P[\dL]=[^|}]*(.*?}})/gi, '$1$2')
+        // TODO: add a macro to translate friend areas
+        // MDTOC
+		.replace(/{{Spindata\/MDTDS\|/gi, '{{Spindata/MDTOC|')
+		.replace(/({{Spindata\/MDTOC\|.*?\|)IQ=(.*?}})/gi, '$1QI=$2')
+        // Rangers
+		.replace(/{{Spindata\/Ranger SoA\|/gi, '{{Spindata/RangerOsA|')
+		.replace(/{{Spindata\/Ranger GS\|/gi, '{{Spindata/RangerTL|')
+		.replace(/({{Spindata\/Ranger.*?\|)MinEXP(=.*?}})/gi, '$1minEXP$2')
+		.replace(/({{Spindata\/Ranger.*?\|)MaxEXP(=.*?}})/gi, '$1maxEXP$2')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Burn(.*?}})/gi, '$1field$2=Fuoco$3')
+		.replace(/({{Spindata\/Ranger\|.*?\|)field=Cross(.*?}})/gi, '$1field=Valico$2')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Crush(.*?}})/gi, '$1field$2=Distruzione$3')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Cut(.*?}})/gi, '$1field$2=Taglio$3')
+		.replace(/({{Spindata\/Ranger\|.*?\|)field=Flash(.*?}})/gi, '$1field=Flash$2')
+		.replace(/({{Spindata\/Ranger\|.*?\|)field=Gust(.*?}})/gi, '$1field=Raffica$2')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Recharge(.*?}})/gi, '$1field$2=Ricarica$3')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Soak(.*?}})/gi, '$1field$2=Spruzzo$3')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Tackle(.*?}})/gi, '$1field$2=Azione$3')
+		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Electrify(.*?}})/gi, '$1field$2=Elettricit&agrave$3')
+		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Psy Power(.*?}})/gi, '$1field$2=Potere Psico$3')
+		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Teleport(.*?}})/gi, '$1field$2=Teletrasporto$3')
+		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)assist(p?)=Recharge(.*?}})/gi, '$1assist$2=Ricarica$3')
+		.replace(/({{Spindata\/Ranger\|.*?\|)assist=Discharge(.*?}})/gi, '$1assist=Shock$2')
+        // SuperRumble
+		.replace(/{{Spindata\/RumbleBlast\|/gi, '{{Spindata/SuperRumble|')
+        // Conquest
+        // TODO: fix the move (should be the link to the Italian name with the English name text)
+        // Link Battle
+		.replace(/{{Spindata\/Battle Trozei\|/gi, '{{Spindata/Link Battle|')
+		// .replace(/{{Spindata\/Battle Trozei\|type=(\w*)\|ndex=(\d*)\|power=(\d)\}\}/gi, '{{Spindata/Link Battle|ndex=$3|width-xl=50|width-sm=100|type=$2|power=$4|skill=|skilldesc=}}')
+        // Shuffle
+		.replace(/({{Spindata\/Link\|.*?\|)swapper=Swap(.*?}})/gi, '$1swapper=Sostituzione$2')
+		// Remove the type parameter (here to use our template names)
+        // TODO: do I really want to?
+		.replace(/({{Spindata\/(?:Link(?! Battle)|MDRB|MDTOC|Ranger|RangerOsA|RangerTL).*?)\|type=\w*(.*?}})/gi, '$1$2')
+		.replace(/\|\-/g, '');
 }
 
 macros.dungeonItems = function(str){
