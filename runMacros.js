@@ -3269,6 +3269,7 @@ macros['trainerlist ROZA'] = function(str) {
 
 macros['spindata'] = function(str) {
 	str = macros.mosse(str);
+	str = macros.areeAmico(str);
 	str = macros.tipi(str);
 
 	return str
@@ -3279,6 +3280,9 @@ macros['spindata'] = function(str) {
 		// .replace(/(?<![=}])\n(?!\|)/gi, '')
 		.replace(/(?<![=}])\n/gi, '')
 		.replace(/\|col=\d\|/gi, '|')
+        // Move replacements corrections
+		.replace(/\|Assistente=/gi, '|assist=')
+		.replace(/\|speciale=/gi, '|special=')
         // Pinball
 		.replace(/{{Spindata\/PinballRS\|/gi, '{{Spindata/PinballRZ|')
 		.replace(/({{Spindata\/PinballRZ\|.*?\|)acquisition=Evolve(.*?}})/gi, '$1acquisition=Evoluzione$2')
@@ -3329,6 +3333,78 @@ macros['spindata'] = function(str) {
         // TODO: do I really want to?
 		.replace(/({{Spindata\/(?:Link(?! Battle)|MDRB|MDTOC|Ranger|RangerOsA|RangerTL).*?)\|type=\w*(.*?}})/gi, '$1$2')
 		.replace(/\|\-/g, '');
+}
+
+macros.areeAmico = function(str){
+	return str
+    	// first undo to use right names afterwards
+		.replace(/FoRiposo/g, 'Forest')
+		.replace(/Ravaged Field/g, "Campo Incolto")
+		.replace(/Magnetic Quarry/g, "Cava Magnetica")
+		.replace(/Thunder Crag/g, "Prato Tuono")
+		.replace(/Turtleshell Pond/g, "Stagno Targuscio")
+		.replace(/Ancient Relic/g, "Rudere Vetusto")
+		.replace(/Aged Chamber A–N/g, "Sala Antica A-N")
+		.replace(/Aged Chamber O–?/g, "Sala Antica O-?")
+		.replace(/Shallow Beach/g, "Spiaggia Arenile")
+		.replace(/Ice Floe Beach/g, "Spiaggia Fredda")
+		.replace(/Scorched Plains/g, "Piana Infuocata")
+		.replace(/Crater/g, "Cratere")
+		.replace(/Volcanic Pit/g, "Fossa Vulcanica")
+		.replace(/Rub-a-Dub River/g, "Fiume Rataplan")
+		.replace(/Bountiful Sea/g, "Mare Generoso")
+		.replace(/Serene Sea/g, "Mare Sereno")
+		.replace(/Deepsea Current/g, "Corrente Abissi")
+		.replace(/Tadpole Pond/g, "Stagno Girino")
+		.replace(/Final Island/g, "Isola Estrema")
+		.replace(/Withering Desert/g, "Deserto Fornace")
+		.replace(/Mt\. Deepgreen/g, "Monte Verdescuro")
+		.replace(/Mt\. Green/g, "Monte Verdescuro")
+		.replace(/Mt\. Cleft/g, "Monte Crepaccio")
+		.replace(/Mt\. Moonview/g, "Monte Brillaluna")
+		.replace(/Mt\. Discipline/g, "Monte Disciplina")
+		.replace(/Darkness Ridge/g, "Cresta Oscurità")
+		.replace(/Rainbow Peak/g, "Picco Arcobaleno")
+		.replace(/Jungle/g, "Giungla")
+		.replace(/Mystic Lake/g, "Lago Mistico")
+		.replace(/Waterfall Lake/g, "Lago Cascata")
+		.replace(/Stratos Lookout/g, "Volta Nuvole")
+		.replace(/Legendary Island/g, "Isola Leggenda")
+		.replace(/Echo Cave/g, "Grotta Eco")
+		.replace(/Dragon Cave/g, "Grotta Drago")
+		.replace(/Boulder Cave/g, "Grotta Sasso")
+		.replace(/Cryptic Cave/g, "Grotta Mistero")
+		.replace(/Enclosed Island/g, "Isola Delimitata")
+		.replace(/Mushroom Forest/g, "Foresta Fungo")
+		.replace(/Evolution Forest/g, "Foresta Mutevole")
+		.replace(/Healing Forest/g, "Foresta Florida")
+		.replace(/Secretive Forest/g, "Foresta Segreta")
+		.replace(/Gourd Swamp/g, "Palude Arachide")
+		.replace(/Peanut Swamp/g, "Palude Arachide")
+		.replace(/Poison Swamp/g, "Palude Veleno")
+		.replace(/Decrepit Lab/g, "Laboratorio Cadente")
+		.replace(/Power Plant/g, "Centrale Elettrica")
+		.replace(/Mist-Rise Forest/g, "Foresta Vapore")
+		.replace(/Stump Forest/g, "Foresta Vapore")
+		.replace(/Flyaway Forest/g, "Foresta Elevata")
+		.replace(/Overgrown Forest/g, "Foresta Frondosa")
+		.replace(/Energetic Forest/g, "Foresta Energica")
+		.replace(/Vibrant Forest/g, "Foresta Energica")
+		.replace(/Treasure Sea/g, "Mare Tesoro")
+		.replace(/Deepsea Floor/g, "Abissi Marini")
+		.replace(/Seafloor Cave/g, "Grotta Abissi")
+		.replace(/Southern Island/g, "Isola Sud")
+		.replace(/Safari/g, "Safari")
+		.replace(/Wild Plains/g, "Piana Brada")
+		.replace(/Beau Plains/g, "Piana Incanto")
+		.replace(/Sky-Blue Plains/g, "Piana Cieloterso")
+		.replace(/Sacred Field/g, "Campo Divino")
+		.replace(/Frigid Cavern/g, "Caverna Gelida")
+    // Correct move errors
+		.replace(/Tuono Crag/g, "Prato Tuono")
+		.replace(/Cascata Lake/g, "Lago Cascata")
+		.replace(/Nebbia-Rise Forest/g, "Foresta Vapore")
+		.replace(/Voloaway FoRiposo/g, "Foresta Elevata");
 }
 
 macros.dungeonItems = function(str){
