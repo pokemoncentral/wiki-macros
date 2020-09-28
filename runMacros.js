@@ -3308,6 +3308,7 @@ macros['spindata'] = function(str) {
 		.replace(/({{Spindata\/Ranger.*?\|)MinEXP(=.*?}})/gi, '$1minEXP$2')
 		.replace(/({{Spindata\/Ranger.*?\|)MaxEXP(=.*?}})/gi, '$1maxEXP$2')
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Burn(.*?}})/gi, '$1field$2=Fuoco$3')
+		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Bruciatura(.*?}})/gi, '$1field$2=Fuoco$3')
 		.replace(/({{Spindata\/Ranger\|.*?\|)field=Cross(.*?}})/gi, '$1field=Valico$2')
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Crush(.*?}})/gi, '$1field$2=Distruzione$3')
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Cut(.*?}})/gi, '$1field$2=Taglio$3')
@@ -3329,9 +3330,10 @@ macros['spindata'] = function(str) {
 		.replace(/{{Spindata\/Battle Trozei\|/gi, '{{Spindata/Link Battle|')
 		// .replace(/{{Spindata\/Battle Trozei\|type=(\w*)\|ndex=(\d*)\|power=(\d)\}\}/gi, '{{Spindata/Link Battle|ndex=$3|width-xl=50|width-sm=100|type=$2|power=$4|skill=|skilldesc=}}')
         // Shuffle
-		.replace(/({{Spindata\/Shuffle.*?)\|skilldesc=[^|]*(.*?}})/gi, '$1$2')
+		.replace(/({{Spindata\/Shuffle.*?)\|skilldesc=[^|}]*(.*?}})/gi, '$1$2')
         // GO
 		.replace(/{{m\|([^}]*)}}/gi, '[[$1]]')
+		.replace(/({{Spindata\/GO.*?\|)candy(=.*?}})/gis, '$1candyname$2')
 		// Remove the type parameter (here to use our template names)
         // TODO: do I really want to?
 		.replace(/({{Spindata\/(?:Link(?! Battle)|MDRB|MDTOC|Ranger|RangerOsA|RangerTL).*?)\|type=\w*(.*?}})/gi, '$1$2')
@@ -3370,7 +3372,7 @@ macros.ShuffleAbil = function(str){
 		.replace(/Rock Break/g, 'Frantumarocce')
 		.replace(/Cloud Clear/g, 'Spazzanubi')
 		.replace(/Block Smash/g, 'Abbattiblocco')
-		.replace(/Eject/g, 'Espuslione')
+		.replace(/Eject/g, 'Espulsione')
 		.replace(/Barrier Bash/g, 'Frangibarriera')
 		.replace(/Swap/g, 'Sostituzione')
 		.replace(/Chill/g, 'Brivido')
