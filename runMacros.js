@@ -1005,6 +1005,7 @@ macros.mosse = function(str) {
     .replace(/Scintillaling Aria/g, 'Canto Effimero')
     .replace(/Psichico Fangs/gi, 'Psicozanna')
     .replace(/Pestoneing Tantrum/g, 'Battipiedi')
+    .replace(/AnnullaBarrierae/g, 'Annullabarriere')
 
     // Correzioni Mosse Z
 
@@ -2515,6 +2516,45 @@ macros['strumenti lotta'] = function(str) {
 };
 
 macros['forme rilevanti'] = function(str) { return macros.forme(str, true); };
+
+macros['nature'] = function(str) {
+	return str.replace(/Hardy/g, 'Ardita')
+		.replace(/Lonely/g, 'Schiva')
+		.replace(/Brave/g, 'Audace')
+		.replace(/Adamant/g, 'Decisa')
+		.replace(/Naughty/g, 'Birbona')
+		.replace(/Bold/g, 'Sicura')
+		// .replace(/Docile/g, 'Docile')
+		.replace(/Relaxed/g, 'Placida')
+		.replace(/Impish/g, 'Scaltra')
+		.replace(/Lax/g, 'Fiacca')
+		.replace(/Timid/g, 'Timida')
+		.replace(/Hasty/g, 'Lesta')
+		.replace(/Serious/g, 'Seria')
+		.replace(/Jolly/g, 'Allegra')
+		.replace(/Naive/g, 'Ingenua')
+		.replace(/Modest/g, 'Modesta')
+		.replace(/Mild/g, 'Mite')
+		.replace(/Quiet/g, 'Quieta')
+		.replace(/Bashful/g, 'Ritrosa')
+		.replace(/Rash/g, 'Ardente')
+		.replace(/Calm/g, 'Calma')
+		.replace(/Gentle/g, 'Gentile')
+		.replace(/Sassy/g, 'Vivace')
+		.replace(/Careful/g, 'Cauta')
+		.replace(/Quirky/g, 'Furba')
+
+		// Correzione errori
+		.replace(/Timidaa/g, 'Timida')
+		.replace(/Modestaa/g, 'Modesta')
+		.replace(/Quietaa/g, 'Quieta')
+		.replace(/Calmaa/g, 'Calma')
+
+		.replace(/Audace Bird/g, 'Brave Bird')
+		.replace(/Decisa Orb/g, 'Adamant Orb')
+		.replace(/Fiacca Incense/g, 'Lax Incense')
+		.replace(/Calma Mind/g, 'Calm Mind')
+};
 
 macros['Aree Dream World'] = function(str) {
 	return str.replace(/\{\{[Dd]wa\|(.+?)\}\}/g, '[[$1]]')
