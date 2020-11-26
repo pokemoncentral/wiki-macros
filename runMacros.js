@@ -1291,6 +1291,7 @@ macros["abilita'"] = function(str) {
     // Correzioni errori
     .replace(/Corposgargiante Gleam/gi, 'Magibrillio')
     .replace(/AcuPressione/g, 'Acupressione')
+    .replace(/Aiutofuoco Kick/g, 'Calciardente')
 };
 
 macros.gare = function(str) {
@@ -2126,6 +2127,7 @@ macros.strumenti = function(str, battleHeld) {
 		.replace(/Calamitaon/gi, 'Magneton')
 		.replace(/Calamita Pull/gi, 'Magnetismo')
 		.replace(/Calamitaismo/gi, 'Magnetismo')
+		.replace(/Calamita Rise/gi, 'Magnetascesa')
 		.replace(/Gamboy Hold/gi, 'Sticky Hold');
 };
 
