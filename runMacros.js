@@ -4115,7 +4115,8 @@ macros.cinese = function(str) {
 	// REMARK: Italian names here are gen 5
     str = str
         .replace(/\{\{出战宝可梦列表\|/g, "{{Lop/facility|gen=5|")
-		.replace(/\|\|/g, "|"); // This is an hack
+        // Remove the empty third parameter
+        .replace(/(\{\{Lop\/facility\|gen=5\|[\d\w]+\|[^|]+\|)\|/g, "$1");
 
 	// Pokémon names
     str = str
