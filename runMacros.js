@@ -1,3 +1,4 @@
+'use strict'
 var macros = {}
 
 macros.tipi = function(str) {
@@ -3149,6 +3150,37 @@ macros.squadra = function(str) {
 	return str.replace(/\|sprite=(VS.*?\.png)/gi, '|sprite=' + game + ' $1')
 };
 
+macros['party in squadra'] = function(str) {
+    str = str
+        .replace(/{{#invoke: Party \| Single/gi, "{{Squadra")
+        .replace(/(\|\s*name=){{colore\|000\|([^}]*)}}/gi, "$1$2")
+        .replace(/(\|\s*name=){{colore2\|000\|([^}]*)}}/gi, "$1[[$2]]")
+        .replace(/(\|\s*prize=){{pdollar}}([ \d]*)/gi, "$1$2{{Pdollar}}")
+        .replace(/<\/div>\s*\n\|\}\s*\{\{\-\}\}/gi, "}}")
+        .replace(/(\|\s*location=)([^\n]*)/gi, "$1[[$2]]")
+        .replace(/}}(?:&amp;nbsp;)*/gi, "}}")
+        .replace(/{{#invoke:\s*Party\s*\|\s*Div\s*\|[^}]*}}\s*/gi, "");
+
+    // This part here works only in isolation, ie. if str only contains a
+    // single party invocation, and is in general quite fragile
+    str = str
+        // This subst isn't global so to remove only the closing }} of Party
+        .replace(/}}(\n{{Pok.mon\|)/, "$1");
+
+    let count = 1;
+    let incRep = function(match, beginning, gen_bad, gen_good) {
+        const res = "\n|pokemon" + count.toString() + "="
+                + beginning
+                + (gen_bad ? ("|gen=" + gen_bad) : gen_good);
+        ++count;
+        return res;
+    };
+    str = str.replace(/\n({{Pok.mon)(?:\/(\d+)|(\|gen=\d+))/gi, incRep);
+
+    return str;
+};
+
+// Lol life sure is funny
 macros['squadra in party'] = function(str) {
 
   return str.replace(/\{\{#invoke: ?Squadra ?\| ?Single/gi, "{{#invoke: Party | Single")
