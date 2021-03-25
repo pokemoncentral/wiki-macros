@@ -5548,7 +5548,6 @@ macros.cinese = function(str) {
         .replace(/夢話/g, "Sonnolalia").replace(/梦话/g, "Sonnolalia")
         .replace(/治癒鈴聲/g, "Rintoccasana").replace(/治愈铃声/g, "Rintoccasana")
         .replace(/報恩/g, "Ritorno").replace(/报恩/g, "Ritorno")
-        .replace(/禮物/g, "Regalino").replace(/礼物/g, "Regalino")
         .replace(/遷怒/g, "Frustrazione").replace(/迁怒/g, "Frustrazione")
         .replace(/神秘守護/g, "Salvaguardia").replace(/神秘守护/g, "Salvaguardia")
         .replace(/分擔痛楚/g, "Malcomune").replace(/分担痛楚/g, "Malcomune")
@@ -5890,7 +5889,10 @@ macros.cinese = function(str) {
         .replace(/冰柱墜擊/g, "Scagliagelo").replace(/冰柱坠击/g, "Scagliagelo")
         .replace(/Ｖ熱焰/g, "Generatore V").replace(/Ｖ热焰/g, "Generatore V")
         .replace(/交錯火焰/g, "Incrofiamma").replace(/交错火焰/g, "Incrofiamma")
-        .replace(/交錯閃電/g, "Incrotuono").replace(/交错闪电/g, "Incrotuono");
+        .replace(/交錯閃電/g, "Incrotuono").replace(/交错闪电/g, "Incrotuono")
+        // At the end because are substring of other names
+        // Can't use \b because chinese chars aren't words
+        .replace(/禮物/g, "Regalino").replace(/礼物/g, "Regalino");
 	// Natures
 	str = str
 		.replace(/勤奮/g, "Ardita").replace(/勤奋/g, "Ardita")
