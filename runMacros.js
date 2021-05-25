@@ -6210,6 +6210,22 @@ macros.cinese = function(str) {
     return str;
 };
 
+macros.date = function(str) {
+    return str
+        .replace(/January (\d+), (\d+)/g, '$1 gennaio $2')
+        .replace(/February (\d+), (\d+)/g, '$1 febbraio $2')
+        .replace(/March (\d+), (\d+)/g, '$1 marzo $2')
+        .replace(/April (\d+), (\d+)/g, '$1 aprile $2')
+        .replace(/May (\d+), (\d+)/g, '$1 maggio $2')
+        .replace(/June (\d+), (\d+)/g, '$1 giugno $2')
+        .replace(/July (\d+), (\d+)/g, '$1 luglio $2')
+        .replace(/August (\d+), (\d+)/g, '$1 agosto $2')
+        .replace(/September (\d+), (\d+)/g, '$1 settembre $2')
+        .replace(/October (\d+), (\d+)/g, '$1 ottobre $2')
+        .replace(/November (\d+), (\d+)/g, '$1 novembre $2')
+        .replace(/December (\d+), (\d+)/g, '$1 dicembre $2')
+};
+
 /*
 
 Preparazione alla traduzione; elimina i template p
