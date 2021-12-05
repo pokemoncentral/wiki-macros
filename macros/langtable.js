@@ -77,7 +77,7 @@ macros.langtable = function(str) {
 	var languages = [['zh_yue', 'yue'], ['zh_cmn', 'cmn'], ['ja', 'j'], ['ko', 'k'], ['el', 'gr'], ['gr', 'gr'], ['hi', 'hi'], ['th', 'th'], ['bg', 'bg'], ['he', 'he'], ['ru', 'ru'], ['sr', 'sr']];
 	var regexNonstandardChar = /([^\s\n\u0020-\u017E\u200B\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g;
 
-	for (lang in languages){
+	for (const lang in languages){
 		str = str.replace(new RegExp('\\|' + languages[lang][0] + ' ?=([^|]*)(\\||})'), function(match, data, closing){
 				return '|' + languages[lang][0] + '=' +
 					data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^\s\s*/, '')
