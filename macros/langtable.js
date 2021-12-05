@@ -34,24 +34,11 @@ macros['table in langtable'] = function(str) {
 
 macros.langtable = function(str) {
 	var count = false;
-	var rep = function(){
-		count = !count;
-		if (count)
-			return "&lt;div&gt;";
-		else
-			return "&lt;/div&gt;";
-	}
 
 	str = macros.giochi(macros.colori(str));
 
-	str = str.replace(/(<br>|\n)/g, function(match){
-			if (match == '<br>')
-				return rep();
-			else if (match ==  '\n' && count)
-				return rep() + '\n';
-			else
-				return '\n';
-		})
+	str = str
+		.replace(/<br>/g, "&lt;br&gt;")
 		.replace(/''\{\{tt\|([^\|]*)\|[^\|]*\}\}''/gi, "''$1''")
 		.replace(/\{\{tt\|\*\|([^\|]*)\}\}/gi, '($1)')
 
