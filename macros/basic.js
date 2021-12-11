@@ -185,6 +185,14 @@ macros.giochi = function(str, transHGSS) {
 		.replace(/\bORAS\b/g, 'ROZA')
 		.replace(/([\|=]\n?)Pokémon Stadium(\n?[\|=])/g, '$1St$2')
 		.replace(/([\|=]\n?)Pokémon Stadium 2(\n?[\|=])/g, '$1St2$2')
+		.replace(/\bSM_/g, 'SL_')
+		.replace(/\bSM\b/g, 'SL')
+		.replace(/\bUSUM_/g, 'USUL_')
+		.replace(/\bUSUM\b/g, 'USUL')
+		.replace(/\bSMUSUM_/g, 'SLUSUL_')
+		.replace(/\bSMUSUM\b/g, 'SLUSUL')
+		.replace(/\bSwSh_/g, 'SpSc_')
+		.replace(/\bSwSh\b/g, 'SpSc')
 
 	// Correzione errori
 

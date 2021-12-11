@@ -62,16 +62,43 @@ macros.itemtemplates = function(str) {
     // ItemPrice
         .replace(/N\/A/g, "-")
         .replace(/{{ItemPrice\|/g, "{{ItemPrice/Row|")
-        .replace(/\|{{PDollar}}([\d,.]+)(?:\||})/g, "|$1$2")
+        .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
         // twice because the pipes around may be shared
-        .replace(/\|{{PDollar}}([\d,.]+)(?:\||})/g, "|$1$2")
+        .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
+        // digit separator from English , to Italian .
+        .replace(/(\d),(\d)/g, "$1.$2")
     // ItemDescription
-        .replace(/{{movedesc\|/, "{{ItemDescription/head|")
-        .replace(/{{movedescentry\|/, "{{ItemDescription/row|")
+        .replace(/{{movedesc\|/g, "{{ItemDescription/head|")
+        .replace(/{{movedescentry\|/g, "{{ItemDescription/row|");
     // ItemAvailability
-        // TODO
-        ;
+    // Identify bounds and only work withing them
+    const begin = str.indexOf("{{ItemAvailability/head");
+    const end = str.indexOf("|}", begin);
+    let templ = str.substring(begin, end);
+    let newtempl = templ.split("\n")[0] + "\n";
+    // Each row should be transformed in one template call
+    for (const row of templ.split("|-").slice(1)) {
+        let cells = ("\n" + row).split("\n|").slice(1)
+                        .map(s => s.trim() === "" ? "-" : s.trim());
+        console.assert(cells.length == 3);
+        // Update first cell
+        // cells[0] = cells[0].replace(/^\s*{{gameabbrev(?:\d|ss)\|(\w+)}}/, (_, g) => macros.giochi(g));
+        // Generic replacements for other cells
+        // Old-school for loop because JS doesn't support me on this
+        for (let i = 1; i < cells.length; ++i) {
+            cells[i] = cells[i]
+                .replace(/^''\[\[Trade\]\]''$/g, "[[Scambio]]")
+                .replace(/\[\[Cram\-o\-matic\]\]/g, "[[CramoBot]]");
+        }
 
+        newtempl += "{{ItemAvailability/row|" + cells.join("|") + "}}\n";
+    }
+    newtempl += "{{ItemAvailability/footer}}\n";
+    str = str.substring(0, begin) + newtempl + str.substring(end + 2).replace(/^\s*\|}/, "");
+
+    // Replacing gameabbrev templates with only Italian abbrevs
+    str = str
+        .replace(/{{gameabbrev(?:\d|ss)\|(\w+)}}/g, (_, g) => macros.giochi(g));
     str = macros.tasche(str);
 
     return str;

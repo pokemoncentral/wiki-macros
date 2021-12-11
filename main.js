@@ -26,7 +26,7 @@
      */
     utils.opening = function(str) {
         return str
-            .replace(/\{\{p\|(.+)\}\}/g, '[[$1]]')
+            .replace(/\{\{p\|(.+?)\}\}/g, '[[$1]]')
             .replace(/&(\w+);/g, '&amp;$1;');
     };
 
