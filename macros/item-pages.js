@@ -126,7 +126,7 @@ function itemtemplates(str) {
             return content
                 .replace(/N\/A/g, "-")
                 // .replace(/\b({{ItemPrice\|\b.*?)\|}\s*\|}/, "$1{{ItemPrice/footer}}")
-                .replace(/{{ItemPrice\|/g, "{{ItemPrice/Row|")
+                .replace(/{{ItemPrice\|/g, "{{ItemPrice/row|")
                 .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
                 // twice because the pipes around may be shared
                 .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
