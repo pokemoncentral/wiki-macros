@@ -177,7 +177,13 @@ function itemtemplates(str) {
     });
     // Replacing gameabbrev templates with only Italian abbrevs
     str = str
-        .replace(/{{gameabbrev(?:\d|ss)\|(\w+)}}/g, (_, g) => macros.giochi(g));
+        .replace(/{{gameabbrev(?:\d|ss)\|(\w+)}}/g, (_, g) => macros.giochi(g))
+        // Different conventions: Bulba uses SpScIA, we use only IA
+        .replace(/\|SpScIA\|/g, "|IA|")
+        // Other generic replacements
+        .replace(/\[\[Battle Point\|BP\]\]/g, "{{valuta|PL}}")
+        .replace(/\[\[Poké Coupon\]\]s/g, "{{valuta|PC}}")
+        .replace(/ points/g, "{{valuta|Pts}}")
     str = macros.tasche(str);
 
     return str;
