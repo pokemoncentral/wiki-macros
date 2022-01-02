@@ -24,7 +24,7 @@ macros['table in langtable'] = function(str) {
 		['Chinese.*Mandarin[^\\n]*', 'zh_cmn'], ['Chinese.*Cantonese[^\\n]*', 'zh_yue'], ['Italian', 'it'], ['Brazilian Portuguese', 'pt_br'], ['Portuguese', 'pt'],
 		['Russian', 'ru'], ['European Spanish', 'es_eu']];
 	// Riga semplice, senza rowspan
-	for (l in languages)
+	for (const l in languages)
 		str = str.replace(new RegExp('\\|\\-[^\\n]*\\n\\| ?' + languages[l][0] + ' ?\\n\\|([^\\n]*)\\n(?:\\|([^-][^\\n]*)\\n)?', 'i'), function(match, value, meaning) {
 			return '|-\n|' + languages[l][1] + '=' + value.replace(/^[ \t][ \t]*/, '') + (meaning ? '|' + languages[l][1] + 'meaning=' + meaning.replace(/^[ \t][ \t]*/, '') + '\n' : '\n');
 		});
@@ -71,7 +71,7 @@ macros.langtable = function(str) {
 					+ closing;
 			})
 			.replace(new RegExp('\\|' + languages[lang][0] + 'meaning ?=([^|]*)(\\||})'), function(match, data, closing){
-				console.log('meaning di', languages[lang][0]);
+				// console.log('Trovato meaning di', languages[lang][0]);
 				return '|' + languages[lang][0] + 'meaning=' +
 					data.replace(regexNonstandardChar, '{{' + languages[lang][1] + '|$1}}').replace(/^[ \t][ \t]*/, '')
 					+ closing;
