@@ -32,7 +32,7 @@ macros.strumenti = function(str, battleHeld) {
             .replace(/\bOval Stone\b/g, 'Pietraovale')
 
         // Strumenti da vendere
-            .replace(/\bTiny Mushroom\b/g, 'Piccolo Fungo')
+            .replace(/\bTiny Mushroom\b/g, 'Minifungo')
             .replace(/\bBig Mushroom\b/g, 'Grande Fungo')
             .replace(/\bBig Pearl\b/g, 'Grande Perla')
             .replace(/\bPearl String\b/g, 'Trittiperla')
