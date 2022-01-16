@@ -97,8 +97,16 @@ function itemtemplates(str) {
         head_replace: "{{ItemInfobox",
         foot_replace: "}}",
         transl_content: function(content) {
-            // Find name in the interwiki
-            const name = (/\[\[it:([^\]]*)\]\]/).exec(str)[1];
+            // Find name in the langtable
+            // const name = (/\[\[it:([^\]]*)\]\]/).exec(str)[1];
+            const nameregexres = (/\|\s*it=([^|]+?)\s*\|/).exec(str);
+            let name = "NOME NON TROVATO";
+            if (nameregexres === null) {
+                window.alert("Non ho trovato il nome dello strumento. Uso il valore speciale '" + name + "'");
+            }
+            else {
+                name = nameregexres[1];
+            }
             return content
                 .replace(/\|name=([^|]+)\|/, "|name=" + name + "\n|engname=$1|engtrans=\n|")
                 .replace(/\|art=([^|]+)/, "")
