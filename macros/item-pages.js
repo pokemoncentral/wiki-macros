@@ -191,6 +191,7 @@ function itemtemplates(str) {
         // Other generic replacements
         .replace(/\[\[Battle Point\|BP\]\]/g, "{{valuta|PL}}")
         .replace(/\[\[Poké Coupon\]\]s/g, "{{valuta|PC}}")
+        .replace(/\[\[Coin\]\]s/g, "{{valuta|G}}")
         .replace(/ points/g, "{{valuta|Pts}}")
     str = macros.tasche(str);
 
