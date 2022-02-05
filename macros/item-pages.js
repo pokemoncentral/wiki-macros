@@ -78,10 +78,12 @@ const macros = utils.macros;
 
 macros["pagine strumenti"] = function(str) {
     return macros.langtable(
+        macros['Aree Pokewalker'](
+        macros['Aree Dream World'](
         macros.tasche(
         sezioni(
         itemtemplates(
-    str))));
+    str))))));
 }
 
 const ordinals = {
@@ -138,8 +140,6 @@ function itemtemplates(str) {
                 .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
                 // twice because the pipes around may be shared
                 .replace(/\|{{PDollar}}([\d,.]+)(\||})/g, "|$1$2")
-                // digit separator from English , to Italian .
-                .replace(/(\d),(\d)/g, "$1.$2");
         },
     })
     // ItemDescription
@@ -175,7 +175,14 @@ function itemtemplates(str) {
                 for (let i = 1; i < cells.length; ++i) {
                     cells[i] = cells[i]
                         .replace(/^''\[\[Trade\]\]''$/g, "[[Scambio]]")
-                        .replace(/\[\[Cram\-o\-matic\]\]/g, "[[CramoBot]]");
+                        .replace(/\[\[Cram\-o\-matic\]\]/g, "[[CramoBot]]")
+                        .replace(/Battle Maison/g, "Villa Lotta")
+                        .replace(/Battle Subway/g, "Metrò Lotta")
+                        // Held by
+                        .replace(/Held by/g, "Tenuto da")
+                        .replace(/held by/g, "tenuto da")
+                        .replace(/\((\d+)% chance each\)/g, "($1% di probabilità ciascuno)")
+                        .replace(/\((\d+)% chance\)/g, "($1% di probabilità)")
                 }
 
                 newtempl += "{{ItemAvailability/row|" + cells.join("|") + "}}\n";
@@ -193,6 +200,8 @@ function itemtemplates(str) {
         .replace(/\[\[Poké Coupon\]\]s/g, "{{valuta|PC}}")
         .replace(/\[\[Coin\]\]s/g, "{{valuta|G}}")
         .replace(/ points/g, "{{valuta|Pts}}")
+        // digit separator from English , to Italian .
+        .replace(/(\d),(\d)/g, "$1.$2")
     str = macros.tasche(str);
 
     return str;
