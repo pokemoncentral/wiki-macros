@@ -400,7 +400,7 @@ macros.strumenti = function(str, battleHeld) {
             .replace(/\[\[TM/gi, '[[MT')
             .replace(/\[\[HM/gi, '[[MN')
             .replace(/\{\{DL\|([\w-\s]+)\|([\w\s]+)\}\}/gi, '[[$1#$2|$2]]')
-            .replace(/Evolution\-inducing held item/gi, 'Oggetti tenuti che provocano Evoluzione');
+            .replace(/Evolution\-inducing held item/gi, 'Strumenti tenuti che provocano Evoluzione');
     }
 
     // Strumenti tenuti - Gen II
