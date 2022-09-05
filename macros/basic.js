@@ -203,14 +203,16 @@ macros.giochi = function(str, transHGSS) {
 };
 
 macros.colori = function(str) {
-	str = str.replace(/color buio/gi, 'color dark');
-	var matches = /\{\{([\s\wé]+) color\s?[dark|light]?\}\}/gi.exec(str);
-	str = str.replace(/\{\{([\s\wé]+) color\s?((dark|light))?\}\}/gi,
-		'{{#invoke: colore | $1 | $2 }}')
+	str = str.replace(/color buio/gi, 'color dark')
+		.replace(/\{\{([\s\wé]+) color\s?((dark|light))?\}\}/gi,
+			(_, color, shade) => {
+				color = color.replace(/\s/g, '_')
+					// Fixing some colors which don't want the _
+					.replace(/Poké_Ball/i, "Poké Ball");
+				return `{{#invoke: colore | ${color} | ${shade} }}`;
+			}
+		)
 		.replace(/(\{\{#invoke: colore \| .+? )\|\s*\}\}/gi, '$1| normale }}');
-	if (matches && matches.length)
-		for (var k = 1; k < matches.length; ++k)
-			str = str.replace(matches[k], matches[k].replace(/\s/g, '_'));
 	return str;
 };
 
