@@ -33,8 +33,6 @@ macros['table in langtable'] = function(str) {
 };
 
 macros.langtable = function(str) {
-	var count = false;
-
 	str = macros.giochi(macros.colori(str));
 
 	str = str
@@ -43,7 +41,7 @@ macros.langtable = function(str) {
 		.replace(/\{\{tt\|\*\|([^\|]*)\}\}/gi, '($1)')
 
 		// se il colore è lo stesso ma in due varianti diverse, indipendentemente da queste usa il parametro type
-		.replace(/\|color=\{\{\#invoke\: colore \| ([\w\s\d]*) \| (?:normale|dark|light) \}\}\n?\|bordercolor=\{\{\#invoke\: colore \| \1 \| (?:normale|dark|light) \}\}/gi, '|type=$1')
+		.replace(/\|color=\{\{\#invoke\: colore \| ([\w\s\dé]*) \| (?:normale|dark|light) \}\}\n?\|bordercolor=\{\{\#invoke\: colore \| \1 \| (?:normale|dark|light) \}\}/gi, '|type=$1')
 
 		.replace(/\{\{Other languages\|/gi, "{{langtable|")
 		.replace('TCG', 'GCC')
@@ -77,7 +75,7 @@ macros.langtable = function(str) {
 					+ closing;
 			})
 
-		// Unifies calls space-separated
+			// Unifies calls space-separated
 			.replace(new RegExp('{{' + languages[lang][1] + '\\|([^}]*)}}(\\s*){{' + languages[lang][1] + '\\|([^}]*)}}'),
 				'{{' + languages[lang][1] + '|$1$2$3}}'
 			);

@@ -195,6 +195,7 @@ macros.giochi = function(str, transHGSS) {
 		.replace(/\bSMUSUM\b/g, 'SLUSUL')
 		.replace(/\bSwSh_/g, 'SpSc_')
 		.replace(/\bSwSh\b/g, 'SpSc')
+		.replace(/\bLA\b/g, 'LPA')
 
 	// Correzione errori
 
@@ -203,8 +204,8 @@ macros.giochi = function(str, transHGSS) {
 
 macros.colori = function(str) {
 	str = str.replace(/color buio/gi, 'color dark');
-	var matches = /\{\{([\s\w]+) color\s?[dark|light]?\}\}/gi.exec(str);
-	str = str.replace(/\{\{([\s\w]+) color\s?((dark|light))?\}\}/gi,
+	var matches = /\{\{([\s\wé]+) color\s?[dark|light]?\}\}/gi.exec(str);
+	str = str.replace(/\{\{([\s\wé]+) color\s?((dark|light))?\}\}/gi,
 		'{{#invoke: colore | $1 | $2 }}')
 		.replace(/(\{\{#invoke: colore \| .+? )\|\s*\}\}/gi, '$1| normale }}');
 	if (matches && matches.length)

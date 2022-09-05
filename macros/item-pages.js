@@ -113,6 +113,7 @@ function itemtemplates(str) {
                 .replace(/\|name=([^|]+)\|/, "|name=" + name + "\n|engname=$1|engtrans=\n|")
                 .replace(/\|art=([^|]+)/, "")
                 .replace(/\|sprite2=([^|]+)/, "")
+                .replace(/\|caption=([^|]+)\|/, "|desc=$1|")
                 .replace(/\|jtrans=([^|]+)\|/, "|jrom=\n|jtrans=$1|")
                 .replace(/\|gen=([IVX]+)\n?(\||})/, function(_, genord, closing) { return "|gen=" + ordinals[genord] + "\n" + closing; })
                 .replace(/\|colorscheme=[^|}]+\n?(\||})/, "$1")
@@ -200,6 +201,8 @@ function itemtemplates(str) {
         .replace(/\[\[Poké Coupon\]\]s/g, "{{valuta|PC}}")
         .replace(/\[\[Coin\]\]s/g, "{{valuta|G}}")
         .replace(/ points/g, "{{valuta|Pts}}")
+        // The English color is plural
+        .replace(/\bPoké Balls\b/g, "Poké Ball")
         // digit separator from English , to Italian .
         .replace(/(\d),(\d)/g, "$1.$2")
     str = macros.tasche(str);
