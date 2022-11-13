@@ -41,6 +41,7 @@ macros.tipi = function(str) {
         .replace(/[Pp]sichico\|[Ff]isico/g, 'Psico|Fisico')
         .replace(/[Pp]sichico\|[Ss]peciale/g, 'Psico|Speciale')
         .replace(/[Pp]sichico\|[Ss]tato/g, 'Psico|Stato')
+        .replace(/\bPunk Roccia\b/g, 'Punk Rock')
         .replace(/colore\s*\|?\s*(.+?)\s*\|?\s*buio\s*\}\}/gi,
                  'colore | $1 | dark }}')
 };

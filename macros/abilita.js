@@ -51,7 +51,7 @@ macros["abilita'"] = function(str) {
         .replace(/\bIce Body\b/g, 'Corpogelo')
         .replace(/\bIlluminate\b/g, 'Risplendi')
         .replace(/\bImmunity\b/g, 'Immunit&agrave;')
-        .replace(/\bInner Focus\b/g, 'Fuocodentro')
+        .replace(/\bInner Focus\b/g, 'Forza Interiore')
         .replace(/\bInsomnia\b/g, 'Insonnia')
         .replace(/\bIntimidate\b/g, 'Prepotenza')
         .replace(/\bIron Fist\b/g, 'Ferropugno')
@@ -130,6 +130,7 @@ macros["abilita'"] = function(str) {
         .replace(/\bUnaware\b/g, 'Imprudenza')
         .replace(/\bUnburden\b/g, 'Agiltecnica')
         .replace(/\bVitalspirit\b/g, 'Spiritovivo')
+        .replace(/\bVital Spirit\b/g, 'Spiritovivo')
         .replace(/\bVolt Absorb\b/g, 'Assorbivolt')
         .replace(/\bWater Absorb\b/g, 'Assorbacqua')
         .replace(/\bWater Veil\b/g, 'Idrovelo')
@@ -269,6 +270,13 @@ macros["abilita'"] = function(str) {
         .replace(/\bNeutralizing Gas\b/g, 'Gas Reagente')
         .replace(/\bPastel Veil\b/g, 'Pastelvelo')
         .replace(/\bHunger Switch\b/g, 'Pancialterna')
+        .replace(/\bQuick Draw\b/g, 'Colpolesto')
+        .replace(/\bCurious Medicine\b/g, 'Stranofarmaco')
+        .replace(/\bUnseen Fist\b/g, 'Pugni Invisibili')
+        .replace(/\bDrago['’]s Maw\b/g, 'Dragomascelle')
+        .replace(/\bChilling Neigh\b/g, 'Nitrito Bianco')
+        .replace(/\bGrim Neigh\b/g, 'Nitrito Nero')
+        .replace(/\As One\b/g, 'Sintonia Equina')
 
     // Correzioni errori
         .replace(/\bCorposgargiante Gleam\b/g, 'Magibrillio');
