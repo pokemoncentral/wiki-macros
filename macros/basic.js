@@ -46,6 +46,26 @@ macros.tipi = function(str) {
                  'colore | $1 | dark }}')
 };
 
+macros['nomi Pokémon'] = function(str) {
+    return str
+        .replace(/\bType: Null\b/g, 'Tipo Zero')
+		.replace(/\bGreat Tusk\b/g, 'Grandizanne')
+		.replace(/\bBrute Bonnet\b/g, 'Fungofurioso')
+		.replace(/\bSandy Shocks\b/g, 'Peldisabbia')
+		.replace(/\bScream Tail\b/g, 'Codaurlante')
+		.replace(/\bFlutter Mane\b/g, 'Crinealato')
+		.replace(/\bSlither Wing\b/g, 'Alirasenti')
+		.replace(/\bRoaring Moon\b/g, 'Lunaruggente')
+		.replace(/\bIron Treads\b/g, 'Solcoferreo')
+		.replace(/\bIron Moth\b/g, 'Falenaferrea')
+		.replace(/\bIron Hands\b/g, 'Manoferrea')
+		.replace(/\bIron Jugulis\b/g, 'Colloferreo')
+		.replace(/\bIron Thorns\b/g, 'Spineferree')
+		.replace(/\bIron Bundle\b/g, 'Saccoferreo')
+		.replace(/\bIron Valiant\b/g, 'Eroeferreo')
+	;
+};
+
 macros.gare = function(str) {
 
 	// Statistiche gara

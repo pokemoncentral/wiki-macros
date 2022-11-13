@@ -245,6 +245,7 @@ macros["abilita'"] = function(str) {
         .replace(/\bShadow Shield\b/g, 'Spettroguardia')
         .replace(/\bPrism Armor\b/g, 'Scudoprisma')
         .replace(/\bNeuroforce\b/g, 'Cerebroforza')
+        // gen 8
         .replace(/\bIntrepid Sword\b/g, 'Spada Indomita')
         .replace(/\bDauntless Shield\b/g, 'Scudo Saldo')
         .replace(/\bLibero\b/g, 'Libero')
@@ -276,11 +277,45 @@ macros["abilita'"] = function(str) {
         .replace(/\bDrago['’]s Maw\b/g, 'Dragomascelle')
         .replace(/\bChilling Neigh\b/g, 'Nitrito Bianco')
         .replace(/\bGrim Neigh\b/g, 'Nitrito Nero')
-        .replace(/\As One\b/g, 'Sintonia Equina')
+        .replace(/\bAs One\b/g, 'Sintonia Equina')
+        // gen 9
+        .replace(/\bLingering Aroma\b/g, 'Odore Tenace')
+        .replace(/\bSeed Sower\b/g, 'Spargisemi')
+        .replace(/\bThermal Exchange\b/g, 'Termoscambio')
+        .replace(/\bAnger Shell\b/g, 'Iraguscio')
+        .replace(/\bPurifying Salt\b/g, 'Sale Purificante')
+        .replace(/\bWell-Baked Body\b/g, 'Bentostato')
+        .replace(/\bWind Rider\b/g, 'Vento Propizio')
+        .replace(/\bGuard Dog\b/g, 'Cane da Guardia')
+        .replace(/\bRocky Payload\b/g, 'Portamassi')
+        .replace(/\bWind Power\b/g, 'Energia Eolica')
+        .replace(/\bZero to Hero\b/g, 'Supercambio')
+        .replace(/\bCommander\b/g, 'Torre di Comando')
+        .replace(/\bElectromorphosis\b/g, 'Convertivolt')
+        .replace(/\bProtosynthesis\b/g, 'Paleoattivazione')
+        .replace(/\bQuark Drive\b/g, 'Carica Quark')
+        .replace(/\bGood as Gold\b/g, 'Corpo Aureo')
+        .replace(/\bVessel of Ruin\b/g, 'Vaso Nefasto')
+        .replace(/\bSword of Ruin\b/g, 'Spada Nefasta')
+        .replace(/\bTablets of Ruin\b/g, 'Amuleto Nefasto')
+        .replace(/\bBeads of Ruin\b/g, 'Monile Nefasto')
+        .replace(/\bOrichalcum Pulse\b/g, "Ritmo d'Oricalco")
+        .replace(/\bHadron Engine\b/g, 'Motore Adronico')
+        .replace(/\bOpportunist\b/g, 'Scrocco')
+        .replace(/\bCud Chew\b/g, 'Ruminante')
+        .replace(/\bSharpness\b/g, 'Affilama')
+        .replace(/\bSupreme Overlord\b/g, 'Generale Supremo')
+        .replace(/\bCostar\b/g, 'Coprotagonismo')
+        .replace(/\bToxic Debris\b/g, 'Mantossina')
+        .replace(/\bArmor Tail\b/g, 'Codarmatura')
+        .replace(/\bEarth Eater\b/g, 'Mangiaterra')
+        .replace(/\bMycelium Might\b/g, 'Micoforza')
 
     // Correzioni errori
-        .replace(/\bCorposgargiante Gleam\b/g, 'Magibrillio');
+        .replace(/\bCorposgargiante Gleam\b/g, 'Magibrillio')
+        .replace(/\bDisinvoltura Beam\b/g, 'Ondisinvolta')
         // .replace(/\bAcuPressione\b/g, 'Acupressione')
+    ;
 };
 
 if (utils.updateMenu) { utils.updateMenu() } ;
