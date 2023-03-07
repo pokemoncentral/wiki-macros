@@ -955,6 +955,8 @@ macros.mosse = function(str) {
         .replace(/\bNoxious Torque\b/g, 'Turbotossina')
         .replace(/\bCombat Torque\b/g, 'Turborissa')
         .replace(/\bMagical Torque\b/g, 'Turboincanto')
+        .replace(/\bHydro Steam\b/g, 'Idrovapore')
+        .replace(/\bPsyblade\b/g, 'Psicolama')
 
     // Correzione errori
         // .replace(/Acidoobomba/g, 'Acidobomba')
