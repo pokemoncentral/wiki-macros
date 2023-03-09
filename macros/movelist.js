@@ -9,9 +9,9 @@
 (function(utils) {
 
 const macros = utils.macros;
+const lastGen = 9;
 
-
-function intestazioni(str, type) {
+function intestazioni(str) {
 	return str.replace(/TM(\d{2,3})/g, 'MT$1')
 		.replace(/HM(\d{2,3})/g, 'MN$1')
 		.replace(/==[Ll]earnset==/g, '==Apprendimento==')
@@ -32,9 +32,9 @@ macros.movelist = function(str) {
 	let generation;
 
 	// Giochi senza parametro
-	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM'];
+	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM', 'SMUSUM', 'SwSh'];
 	// Corrispondente parametro
-	const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM'];
+	const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP'];
 
 	// Traduzione tipi e intestazioni
 	str = macros.forme(str, true);
@@ -44,8 +44,8 @@ macros.movelist = function(str) {
 	// Traduzione movelist vero e proprio
 	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
-		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS=$1')
-		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([0-9]+)(\|[^\}]*)?\}\}/g, function(_, kind, tipo, gen, tm){
+		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS <- $1')
+		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([0-9]+)(\|[^\}]*)?\}\}/g, function(_, kind, tipo, gen, tm) {
 			generation = gen;
 			return '{{#invoke: Movelist/hf | ' + kind + 'h |' + tipo + '|' + gen + (tm ? tm : '') +'}}<br>{{#invoke: Render | render | Movelist/entry | ' + kind + ' | //';
 		})
@@ -53,7 +53,7 @@ macros.movelist = function(str) {
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[0-9]\|(.+)\}\}/g, function(_, data){
 			// Traduce i parametri vuoti in no
-			const data2 = data.replace(/\|(?=\|)/g, '|no')
+			let data2 = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
@@ -62,33 +62,45 @@ macros.movelist = function(str) {
 
 			// Toglie i sup e li mette come parametri
 			// Per LGPE lo scrivo a mano, e va eseguito prima perché l'altro rompe la sostituzione
-				.replace(/\|([^}|]+){{sup\/7\|SM}}{{sup\/7\|USUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE=$2')
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(_, lvl, game, __, lvl2 = 'no', game2){
+				.replace(/\|([^}|]+){{sup\/7\|SM}}{{sup\/7\|USUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE <- $2')
+				.replace(/\|([^}|]+){{sup\/7\|SMUSUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE <- $2')
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(_, lvl, game, __, lvl2 = 'no', game2) {
 					// se il primo gioco è ok mette il doppio parametro
 					const otherGame = otherGames[games.indexOf(game)];
 					if (otherGame)
-						return '|' + lvl + '|' + otherGame + '=' + lvl2;
+						return '|' + lvl + '|' + otherGame + ' <- ' + lvl2;
 					else
-						return '|no|' + game + '=' + lvl;
+						return '|no|' + game + ' <- ' + lvl;
 				})
-
 			// Replace vari
 				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
 				.replace(/\|$/g, '')
 				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
+			// Remove the "form" parameter
+				.replace(/\|form=[^|}]+(\||\})/g, '$1');
+
+			// Count positional parameters in data2 to add "no" for last gens
+			{
+				const params = data2.split("|");
+				if (data2.indexOf("{") !== -1) {
+					const ndex = params[0];
+					alert(`Found "{" in the row for ndex ${ndex}. It may miss some final "no".`);
+					console.log(data2);
+				}
+				else {
+					const numPosParams = params.filter(p => !p.includes("<-")).length;
+					// The first positional parameter is the ndex
+					const missingNos = (lastGen - generation + 1) - (numPosParams - 1);
+					data2 += "|no".repeat(missingNos);
+				}
+			}
 
 			return '|' + generation + '|' + data2 + '| //';
 		})
-		.replace(/\{\{[Mm]oveentry\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|')
-		.replace(/\{\{[Mm]oveentryspecial\|(.+)\|?\}\}/g,
-		'[[&euro;$1&pound;]]|')
-		.replace(/\{\{(maschio|femmina)&pound;\]\]\}\}/gi,
-		'|form=$1&pound;]]}}')
-		.replace(/\{\{(maschio|femmina)\}\}&pound;\]\]/gi,
-		'|form=$1&pound;]]')
-		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
+		.replace(/\{\{(maschio|femmina)\}\}\| \/\//gi,
+		'|form=$1| //')
 		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
+		.replace(/\| \/\/[ ]*\}\}/g, '| //\n}}')
 		.replace(/STAB prior to (Gen [0-9IVX]+)/gi, function(_, gen) {
 			return 'Gode di STAB prima della ' + macros.generazioni(gen);
 		})
@@ -120,10 +132,10 @@ macros.movelist = function(str) {
 
 macros['movelist tutor'] = function(str) {
 	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
-	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'landacorona' }
-	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'landacorona', 'scarlatto' }
+	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
-	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, cells.lenght];
+	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, 17, cells.lenght];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
 	// Bisogna sostituire subito il tick con yes perché su Bulba lo usano a caso
 	str = str.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
