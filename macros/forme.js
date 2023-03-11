@@ -187,7 +187,22 @@ macros.forme = function(str, useful) {
 		.replace(/745Mn/g, '745N')
 		.replace(/745D/g, '745C')
 		.replace(/800DM/g, '800V')
-		.replace(/800DW/g, '800A');
+		.replace(/800DW/g, '800A')
+		.replace(/849L/g, '849B')
+		.replace(/875N/g, '875L')
+		.replace(/877H/g, '877V')
+		.replace(/888C/g, '888R')
+		.replace(/889C/g, '889R')
+		.replace(/890E/g, '890D')
+		.replace(/892R/g, '892P')
+		.replace(/898S/g, '898S')
+		.replace(/898I/g, '898G')
+		.replace(/931B/g, '931A')
+		.replace(/931Y/g, '931G')
+		.replace(/931W/g, '931B')
+		.replace(/964H/g, '964P')
+		.replace(/999R/g, '999A')
+		;
 };
 
 macros['forme rilevanti'] = function(str) { return macros.forme(str, true); };

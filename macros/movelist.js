@@ -19,6 +19,7 @@ function intestazioni(str) {
 		.replace(/==\{\{pkmn\|Dream World\}\}\-only moves==/g, '==Mosse esclusive del {{pkmn|Dream World}}==')
 		.replace(/==By \[\[[Ll]evel\|leveling up\]\]==/g, '==Aumentando di [[livello]]==')
 		.replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, '==Tramite [[MT]]/[[MN]]==')
+		.replace(/==By \[\[TM\]\]\/\[\[TR\]\]==/g, '==Tramite [[MT]]/[[DT]]==')
 		.replace(/==By \[\[TM\]\]==/g, '==Tramite [[MT]]==')
 		.replace(/==By \[\[HM\]\]==/g, '==Tramite [[MN]]==')
 		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '== Come [[Mossa Uovo|mosse Uovo]]==')
@@ -32,9 +33,9 @@ macros.movelist = function(str) {
 	let generation;
 
 	// Giochi senza parametro
-	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM', 'SMUSUM', 'SwSh'];
+	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM', 'SMUSUM', 'SwSh', 'SwSh'];
 	// Corrispondente parametro
-	const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP'];
+	const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP', 'LA'];
 
 	// Traduzione tipi e intestazioni
 	str = macros.forme(str, true);
@@ -58,7 +59,7 @@ macros.movelist = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
+				.replace(/^([0-9a-zA-Z]+)\|([\w '.:é\-]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
 			// Per LGPE lo scrivo a mano, e va eseguito prima perché l'altro rompe la sostituzione
@@ -77,7 +78,9 @@ macros.movelist = function(str) {
 				.replace(/\|$/g, '')
 				.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
 			// Remove the "form" parameter
-				.replace(/\|form=[^|}]+(\||\})/g, '$1');
+				.replace(/\|form=[^|}]+(\||$)/g, '$1')
+			// STAB parameter
+				.replace(/\|STAB ?= ?(\'{0,3})/, '|STAB <- $1')
 
 			// Count positional parameters in data2 to add "no" for last gens
 			{
@@ -91,6 +94,9 @@ macros.movelist = function(str) {
 					const numPosParams = params.filter(p => !p.includes("<-")).length;
 					// The first positional parameter is the ndex
 					const missingNos = (lastGen - generation + 1) - (numPosParams - 1);
+					if (missingNos < 0) {
+						console.log(`data2: ${data2}\nnumPosParams: ${numPosParams}`);
+					}
 					data2 += "|no".repeat(missingNos);
 				}
 			}
@@ -132,10 +138,10 @@ macros.movelist = function(str) {
 
 macros['movelist tutor'] = function(str) {
 	// Crea un array che contiene le celle da mostrare e non sulla base dell'header
-	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'landacorona', 'scarlatto' }
-	var cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
+	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'diamantelucente', 'leggendearceus' }
+	const cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
-	var headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, 17, cells.lenght];
+	const headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, 18, cells.lenght];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
 	// Bisogna sostituire subito il tick con yes perché su Bulba lo usano a caso
 	str = str.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
@@ -145,15 +151,14 @@ macros['movelist tutor'] = function(str) {
 			cells[headers[gen]] = '<replace>';
 		}
 		else {
-			var splitted = yesnos.split('|');
+			const splitted = yesnos.split('|');
 			splitted.shift();
-			for (i = 0; i < splitted.length; ++i)
+			for (let i = 0; i < splitted.length; ++i)
 				if (splitted[i] === 'yes')
 					cells[headers[gen] + i] = '<replace>';
 		}
 		return '{{#invoke: Movelist/hf | tutor' + gen + ' ' + yesnos + '}}';
 	});
-
 
 	// Traduzione tipi e intestazioni
 	str = macros.forme(str, true);
@@ -171,10 +176,10 @@ macros['movelist tutor'] = function(str) {
 		//~ '{{#invoke: Movelist/hf | tutor$1 $2}}')
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
-		.replace(/\{\{[Mm]oveentry\/\d\|(.+)\}\}/g, function(str, data){
-			var ndex;
+		.replace(/\{\{[Mm]oveentry\/\d+\|(.+)\}\}/g, function(_, data){
+			let ndex;
 			// Se c'è lo stab se lo salva
-			var stab = data.match(/\|STAB=(\'{0,3})/i);
+			let stab = data.match(/\|STAB=(\'{0,3})/i);
 			stab = stab ? ( '|STAB <- ' + stab[1]) : '';
 			// Traduce i parametri vuoti in no
 			data = data.replace(/\|(?=\|)/g, '|no')
@@ -182,7 +187,7 @@ macros['movelist tutor'] = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(str, num){
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(_, num){
 					ndex = num + '|';
 					return '';
 				})
@@ -191,11 +196,13 @@ macros['movelist tutor'] = function(str) {
 				.replace(/\|$/g, '')
 
 			// Crea la nuova stringa dei tutor: sostituisce i <replace> in cells.join('|') con i parametri che trova in data
-			var values = cells.join('|');
-			('|' + data).replace(/\|(yes|no)/gi, function(match, p1) {
+			let values = cells.join('|');
+			('|' + data).replace(/\|(yes|no)/gi, function(_, p1) {
 				values = values.replace('<replace>', p1);
 				return '';
 			});
+			// Any missing trailing parameter is by default a "no"
+			values = values.replace(/<replace>/g, 'no');
 
 			return '|' + ndex + values + stab + '| //';
 		})
