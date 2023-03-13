@@ -33,9 +33,9 @@ macros.movelist = function(str) {
 	let generation;
 
 	// Giochi senza parametro
-	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM', 'SMUSUM', 'SwSh', 'SwSh'];
+	const games = ['RB', 'RGB', 'GS', 'RS', 'RSE', 'DP', 'DPPt', 'BW', 'XY', 'SM', 'SMUSUM', 'SwSh', 'SwShBDSP'];
 	// Corrispondente parametro
-	const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP', 'LA'];
+	// const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP', 'LA'];
 
 	// Traduzione tipi e intestazioni
 	str = macros.forme(str, true);
@@ -65,13 +65,17 @@ macros.movelist = function(str) {
 			// Per LGPE lo scrivo a mano, e va eseguito prima perché l'altro rompe la sostituzione
 				.replace(/\|([^}|]+){{sup\/7\|SM}}{{sup\/7\|USUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE <- $2')
 				.replace(/\|([^}|]+){{sup\/7\|SMUSUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE <- $2')
-				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}(<br>([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(_, lvl, game, __, lvl2 = 'no', game2) {
+			// Changes {{sup\/7\|PE}} -> {{sup\/7\|LGPE}} to make the parameter work
+				.replace(/{{sup\/7\|PE}}/g, '{{sup/7|LGPE}}')
+				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}((?:<br>)?([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(_, lvl, game, __, lvl2 = 'no', game2) {
 					// se il primo gioco è ok mette il doppio parametro
-					const otherGame = otherGames[games.indexOf(game)];
-					if (otherGame)
-						return '|' + lvl + '|' + otherGame + ' <- ' + lvl2;
-					else
-						return '|no|' + game + ' <- ' + lvl;
+					const game2lvl = game2 ? ('|' + game2 + ' <- ' + lvl2) : '';
+					if (games.includes(game)) {
+						return '|' + lvl + game2lvl;
+					}
+					else {
+						return '|no|' + game + ' <- ' + lvl + game2lvl;
+					}
 				})
 			// Replace vari
 				.replace(/\{\{tt\|Evo\.\|Learned upon evolving\}\}/g, 'Evo')
