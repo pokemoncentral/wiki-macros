@@ -169,8 +169,8 @@ macros.forme = function(str, useful) {
 		.replace(/479R/g, '479G')
 		.replace(/646B/g, '646N')
 		.replace(/646W/g, '646B')
-		.replace(/41(2|3)G/g, '41$1Sa')
 		.replace(/41(2|3)S/g, '41$1Sc')
+		.replace(/41(2|3)G/g, '41$1Sa')
 		.replace(/648P/g, '648D')
 		.replace(/386S/g, '386V')
 		.replace(/351R/g, '351P')
@@ -202,6 +202,10 @@ macros.forme = function(str, useful) {
 		.replace(/931W/g, '931B')
 		.replace(/964H/g, '964P')
 		.replace(/999R/g, '999A')
+		.replace(/128PC/g, '128C')
+		.replace(/128PB/g, '128I')
+		.replace(/128PA/g, '128A')
+		.replace(/550W/g, '550Bi')
 		;
 };
 

@@ -67,6 +67,8 @@ macros.movelist = function(str) {
 				.replace(/\|([^}|]+){{sup\/7\|SMUSUM}}<br>([\d ,]+){{sup\/7\|PE}}/g, '|$1|LGPE <- $2')
 			// Changes {{sup\/7\|PE}} -> {{sup\/7\|LGPE}} to make the parameter work
 				.replace(/{{sup\/7\|PE}}/g, '{{sup/7|LGPE}}')
+			// Merges pairs of gen 8 sup (SwShBDSP, BDSPLA), or the next replace misses them
+				.replace(/{{sup\/8\|(\w+)}}{{sup\/8\|(\w+)}}/g, '{{sup/8|$1$2}}')
 				.replace(/\|([^\}\|]+)\{\{sup\/\d\|(\w+)\}\}((?:<br>)?([\d ,]+)\{\{sup\/\d\|(\w+)\}\})?/g, function(_, lvl, game, __, lvl2 = 'no', game2) {
 					// se il primo gioco è ok mette il doppio parametro
 					const game2lvl = game2 ? ('|' + game2 + ' <- ' + lvl2) : '';
@@ -85,6 +87,8 @@ macros.movelist = function(str) {
 				.replace(/\|form=[^|}]+(\||$)/g, '$1')
 			// STAB parameter
 				.replace(/\|STAB ?= ?(\'{0,3})/, '|STAB <- $1')
+			// note parameter
+				.replace(/\|note ?= ?([^|}]*)/, '|note <- $1')
 
 			// Count positional parameters in data2 to add "no" for last gens
 			{
@@ -107,8 +111,8 @@ macros.movelist = function(str) {
 
 			return '|' + generation + '|' + data2 + '| //';
 		})
-		.replace(/\{\{(maschio|femmina)\}\}\| \/\//gi,
-		'|form=$1| //')
+		// .replace(/\{\{(maschio|femmina)\}\}\| \/\//gi,
+		// '|form=$1| //')
 		.replace(/\|?\n?\}\}\n?\|?/g, '}}')
 		.replace(/\| \/\/[ ]*\}\}/g, '| //\n}}')
 		.replace(/STAB prior to (Gen [0-9IVX]+)/gi, function(_, gen) {
