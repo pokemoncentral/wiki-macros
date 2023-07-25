@@ -23,7 +23,7 @@ macros['learnlist template 1-2'] = function(str) {
 };
 
 const gen34games = ["RZ", "S", "RZS", "RFVF", "DP", "Pt", "DPPt", "HGSS", "PtHGSS"];
-const moduleparams = { 3: ["RZS", "RFVF"], 4: ["DP", "Pt", "HGSS"] };
+const moduleparams = { 3: ["RZS", "RFVF"], 4: ["DP", "Pt", "HGSS"], 0: [] };
 
 macros['learnlist template 3-4'] = function(str) {
     // Basically I have to parse shit for levels to work
@@ -32,7 +32,7 @@ macros['learnlist template 3-4'] = function(str) {
     if (num_level >= 2) {
         alert(`Found ${num_level} level learnlists, the translation for levels will be fucked up. Do it manually or ask Ff300`);
     }
-    else {
+    else if (num_level === 1) {
         let gen = 0;
         // Parse all level entries it finds
         // console.log("============ Regex matching ============");
