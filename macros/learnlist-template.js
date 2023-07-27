@@ -18,8 +18,8 @@ macros['learnlist template 1-2'] = function(str) {
         .replace(/{{Learnlist\/(\w+)f\|([^|]+)\|(\w+)\|(\w+)\|(\d)\|(\d)\s*(\|[^}]+)?}}/gi,
             "}}\n{{#invoke: learnlist/hf | $1f | $2 | $3 | $4 | $5 | $6 }}")
         // Of course breed is fucked up
-        .replace(/{{MS\|(\d{3})\|[^}]+}}/g, "#$1#")
-        .replace(/{{#invoke:\s*MiniSprite\s*\|[\w\s]+\|\s*(\d{3})[^}]+}}/g, "#$1#")
+        .replace(/{{MS\|(\d{3}[A-Za-z]*)\|[^}]+}}/g, "#$1#")
+        .replace(/{{#invoke:\s*MiniSprite\s*\|[\w\s]+\|\s*(\d{3}[A-Za-z]*)[^}]+}}/g, "#$1#")
         .replace(/{{[Ll]earnlist\/\w+\d\|([^}]*)}}/g, "|$1| //")
         // This replacement happens after the others, so it can remove the render call
         .replace(/{{#invoke: render \| render \| Modulo:Learnlist\/entry\d \| \w+ \| \/\/\n{{learnlist\/(\w+)(\d)null}}\s*\n}}/g,
