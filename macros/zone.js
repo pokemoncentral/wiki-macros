@@ -41,7 +41,7 @@ macros['Aree Dream World'] = function(str) {
 		.replace(/Spooky Manor/g, 'Maniero Antico')
 		.replace(/Rugged Mountain/g, 'Monte Spigolo')
 		.replace(/Icy Cave/g, 'Grotta Refrigerio')
-		.replace(/Pokémon Café Forest/g, 'Foresta Pok&eacutemon Caf&eacute')
+		.replace(/Pokémon Café Forest/g, 'Foresta Pok&eacute;mon Caf&eacute;')
 		.replace(/Dream Park/g, 'Parco Incanto');
 };
 

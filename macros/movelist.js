@@ -24,7 +24,7 @@ function intestazioni(str) {
 		.replace(/==By \[\[HM\]\]==/g, '==Tramite [[MN]]==')
 		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '== Come [[Mossa Uovo|mosse Uovo]]==')
 		.replace(/==By \[\[[Mm]ove [Tt]utor(\|tutoring)?\]\]==/g, "==Dall'[[Insegnamosse]]==")
-		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacutemon|evento]]==')
+		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacute;mon|evento]]==')
 		.replace(/==Speciale? moves?==/g, '==Mosse speciali==')
 		.replace(/==By a prior \[\[evolution\]\]==/g, '==Tramite [[evoluzione|evoluzioni]] precedenti==');
 };

@@ -31,12 +31,12 @@ macros.intestazioni = function(str, type) {
 		.replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, tmHeading)
 		.replace(/==By \[\[TM\]\]==/g, '==Tramite [[MT]]==')
 		.replace(/==By \[\[HM\]\]==/g, '==Tramite [[MN]]==')
-		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '==Tramite [[Accoppiamento Pok&eacutemon|accoppiamento]]==')
+		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '==Tramite [[Accoppiamento Pok&eacute;mon|accoppiamento]]==')
 		.replace(/==By \[\[[Mm]ove [Tt]utor(\|tutoring)?\]\]==/g, "==Dall'[[Insegnamosse]]==")
-		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacutemon|eventi]]==')
+		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacute;mon|eventi]]==')
 		.replace(/==Speciale? moves?==/g, '==Mosse speciali==')
 		.replace(/==By a prior \[\[evolution\]\]==/g, '==Tramite [[evoluzione|evoluzioni]] precedenti==')
-		.replace(/==\{\{Trading Card Game\}\}\-only moves==/g, '==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacutemon|GCC]]==');
+		.replace(/==\{\{Trading Card Game\}\}\-only moves==/g, '==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacute;mon|GCC]]==');
 };
 
 macros.learnlist = function(str) {

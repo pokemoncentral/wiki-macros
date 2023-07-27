@@ -13,6 +13,7 @@
 			Tahoma, Verdana, sans-serif; background: #9FC1E7; }
 		.same-line { display: inline-block; }
 		.pull-top { vertical-align: top; }
+		.text-red { color: red; }
 		div.tr { padding: 3px; margin: -0.2em -0.2em auto auto; width: 48%;
 			border-top: 1px solid #437DBF; border-right: 1px solid #437DBF; }
 		div.tl { padding: 3px; margin: -0.2em auto auto -0.2em; width: 49%;
@@ -41,7 +42,7 @@
 		 		nella casella <a href="#text">Testo</a>.</li>
 		 	<li>Selezionare la macro tramite il men&ugrave; <a href="#menu">Macro</a>.</li>
 		 	<li>Clickare sul pulsante Esegui.</li>
-		 	<li>Copiare il testo tradotto, che sar&agrave; gi&agrave; selezionato.</li>
+			<li>Il testo tradotto apparirà nella colonna di destra e verrà copiato automaticamente.</li>
 		 </ol>
 		<p>Buon lavoro!</p>
 	<div class="tr same-line">
@@ -53,6 +54,8 @@
 			</label>
 			<br>
 			<button type="button">Esegui</button>
+			<br>
+			<p id="copy-result"></p>
 		</div>
 		<label class="same-line" id="text">
 			Testo:<br>

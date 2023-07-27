@@ -236,7 +236,7 @@ macros.mosse = function(str) {
         .replace(/\bJump Kick\b/g, 'Calciosalto')
         .replace(/\bKarate Chop\b/g, 'Colpokarate')
         .replace(/\bTelekinesis\b/g, 'Telecinesi')
-        .replace(/\bKinesis\b/g, 'Cin&egravesi')
+        .replace(/\bKinesis\b/g, 'Cin&egrave;si')
         .replace(/\bKnock Off\b/g, 'Privazione')
         .replace(/\bLast Resort\b/g, 'Ultimascelta')
         .replace(/\bLava Plume\b/g, 'Lavasbuffo')

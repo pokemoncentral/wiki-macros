@@ -36,43 +36,54 @@
      * dai browser, limitando a due il numero di
      * quelli consecutivi
      */
-    utils.ending = function(str) {
+    utils.tooutput = function(str) {
         return str
             .replace(/\n{2,}/g, '<br /><br />')
             .replace(/\n/g, '<br />');
     };
 
     /**
-     * Runs a macro (?)
+     * Traduzione verso clipboard: sostituisce (alcune) html entities con i
+     * rispettivi caratteri.
+     */
+    utils.toclipboard = function(str) {
+        return str
+            .replace(/&agrave;/g, "à")
+            .replace(/&ugrave;/g, "ù")
+            .replace(/&egrave;/g, "è")
+            .replace(/&eacute;/g, "é")
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&igrave;/g, 'ì')
+            // This must be last
+            .replace(/&amp;/g, "&")
+        ;
+    }
+
+    /**
+     * Runs a macro
      */
     utils.runMacro = function() {
-
         // Recupero della macro selezionata
         let macro = utils.menu.selectedOptions[0].value;
 
         // Applicazione della macro
-        utils.output.innerHTML = utils.ending(
-            utils.macros[macro](
-                utils.opening(utils.textarea.value)));
+        const result = utils.macros[macro](utils.opening(utils.textarea.value));
+        utils.output.innerHTML = utils.tooutput(result);
 
-        // Selezione del testo
-        if (document.body.createTextRange) {
-            let range = document.body.createTextRange();
-            range.moveToElementText(utils.output);
-            range.select();
-        }
-        else if (window.getSelection) {
-            let selection = window.getSelection();
-            if (selection.setBaseAndExtent) {
-                selection.setBaseAndExtent(text, 0, text, 1);
-            }
-            else {
-                let range = document.createRange();
-                range.selectNodeContents(utils.output);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            }
-        }
+        // Copia del risultato
+        navigator.clipboard.writeText(utils.toclipboard(result)).then(
+            () => {
+                utils.copyresult.textContent = "Copiato con successo!";
+                if (utils.classList) {
+                    utils.classList.remove("text-red");
+                }
+            },
+            () => {
+                utils.copyresult.textContent = "Copia fallita :(";
+                utils.classList.add("text-red");
+            },
+        );
     };
 
     document.getElementsByTagName('button')[0].onclick = utils.runMacro;
@@ -97,6 +108,7 @@
     utils.menu = document.getElementsByTagName('select')[0];
     utils.output = document.getElementById('output');
     utils.textarea = document.getElementsByTagName('textarea')[0];
+    utils.copyresult = document.getElementById('copy-result');
 
     utils.updateMenu();
 

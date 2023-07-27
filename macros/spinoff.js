@@ -57,7 +57,7 @@ macros['spindata'] = function(str) {
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Recharge(.*?}})/gi, '$1field$2=Ricarica$3')
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Soak(.*?}})/gi, '$1field$2=Spruzzo$3')
 		.replace(/({{Spindata\/Ranger(?:|OsA|TL)\|.*?\|)field(p?)=Tackle(.*?}})/gi, '$1field$2=Azione$3')
-		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Electrify(.*?}})/gi, '$1field$2=Elettricit&agrave$3')
+		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Electrify(.*?}})/gi, '$1field$2=Elettricit&agrave;$3')
 		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Psy Power(.*?}})/gi, '$1field$2=Potere Psico$3')
 		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)field(p?)=Teleport(.*?}})/gi, '$1field$2=Teletrasporto$3')
 		.replace(/({{Spindata\/Ranger(?:OsA|TL)\|.*?\|)assist(p?)=Recharge(.*?}})/gi, '$1assist$2=Ricarica$3')
