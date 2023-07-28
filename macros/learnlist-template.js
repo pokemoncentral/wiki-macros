@@ -9,7 +9,7 @@ const macros = utils.macros;
 
 macros['learnlist template 1-2'] = function(str) {
     if (!str.includes("__NOTOC__")) {
-        str = "__NOTOC__" + str;
+        str = "__NOTOC__\n" + str;
     }
 
     return str
@@ -22,7 +22,7 @@ macros['learnlist template 1-2'] = function(str) {
         .replace(/{{#invoke:\s*MiniSprite\s*\|[\w\s]+\|\s*(\d{3}[A-Za-z]*)[^}]+}}/g, "#$1#")
         .replace(/{{[Ll]earnlist\/\w+\d\|([^}]*)}}/g, "|$1| //")
         // This replacement happens after the others, so it can remove the render call
-        .replace(/{{#invoke: render \| render \| Modulo:Learnlist\/entry\d \| \w+ \| \/\/\n{{learnlist\/(\w+)(\d)null}}\s*\n}}/g,
+        .replace(/{{#invoke: render \| render \| Modulo:Learnlist\/entry\d \| \w+ \| \/\/\n?{{[Ll]earnlist\/(\w+)(\d)null}}\s*}}/g,
             "{{#invoke: learnlist/entry$2 | $1null }}")
         .replace(/\b([cC])oleot\b/g, "$1oleottero")
     ;
