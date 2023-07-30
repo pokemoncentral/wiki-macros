@@ -17,6 +17,8 @@ macros['learnlist template 1-2'] = function(str) {
             "{{#invoke: learnlist/hf | $1h | $2 | $3 | $4 | $5 | $6 }}\n{{#invoke: render | render | Modulo:Learnlist/entry$5 | $1 | //")
         .replace(/{{Learnlist\/(\w+)f\|([^|]+)\|(\w+)\|(\w+)\|(\d)\|(\d)\s*(\|[^}]+)?}}/gi,
             "}}\n{{#invoke: learnlist/hf | $1f | $2 | $3 | $4 | $5 | $6 }}")
+        .replace(/{{Learnlist\/(\w+)f\|([^|]+)\|(\w+)\|(\w+)\|(\d)\s*(\|[^}]+)?}}/gi,
+            "}}\n{{#invoke: learnlist/hf | $1f | $2 | $3 | $4 | $5 }}")
         // Of course breed is fucked up
         .replace(/{{MS\|(\d{3}[A-Za-z]*)\|[^}]+}}/g, "#$1#")
         .replace(/{{#invoke:\s*MiniSprite\s*\|[\w\s]+\|\s*(\d{3}[A-Za-z]*)[^}]+}}/g, "#$1#")
