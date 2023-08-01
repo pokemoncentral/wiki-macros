@@ -105,7 +105,14 @@ macros.movelist = function(str) {
 					if (missingNos < 0) {
 						console.log(`data2: ${data2}\nnumPosParams: ${numPosParams}`);
 					}
-					data2 += "|no".repeat(missingNos);
+					let newparams = params.concat(Array(missingNos).fill("no"));
+					const stabidx = newparams.findIndex(p => p.startsWith("STAB <- "));
+					if (stabidx !== -1) {
+						// https://stackoverflow.com/questions/24909371/move-item-in-array-to-last-position
+						newparams.push(newparams.splice(stabidx, 1)[0]);
+					}
+					console.log(params, newparams);
+					data2 = newparams.join("|");
 				}
 			}
 
