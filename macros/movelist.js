@@ -202,7 +202,7 @@ macros['movelist tutor'] = function(str) {
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(_, num){
+				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:é]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(_, num){
 					ndex = num + '|';
 					return '';
 				})
