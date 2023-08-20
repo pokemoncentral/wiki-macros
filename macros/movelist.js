@@ -53,13 +53,14 @@ macros.movelist = function(str) {
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[0-9])?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>')
 		.replace(/\{\{[Mm]oveentry\/[0-9]\|(.+)\}\}/g, function(_, data){
+			const data2 = data
 			// Traduce i parametri vuoti in no
-			let data2 = data.replace(/\|(?=\|)/g, '|no')
+				.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
 
 			// Toglie nome, i type, numero di GU e i due GU
 				.replace(/\|type2? ?\= ?\w+/g, '')
-				.replace(/^([0-9a-zA-Z]+)\|([\w '.:é\-]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
+				.replace(/^([0-9a-zA-Z]+(?:\|formsig\s*=\s*[A-Z][a-zA-Z]*)?)\|([\w '.:é\-]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, '$1|')
 
 			// Toglie i sup e li mette come parametri
 			// Per LGPE lo scrivo a mano, e va eseguito prima perché l'altro rompe la sostituzione
@@ -90,33 +91,42 @@ macros.movelist = function(str) {
 			// note parameter
 				.replace(/\|note ?= ?([^|}]*)/, '|note <- $1')
 
-			// Count positional parameters in data2 to add "no" for last gens
+			let params = data2.split("|");
+			// Add formsig to the ndex
 			{
-				const params = data2.split("|");
-				if (data2.indexOf("{") !== -1) {
-					const ndex = params[0];
-					alert(`Found "{" in the row for ndex ${ndex}. It may miss some final "no".`);
-					console.log(data2);
+				const formsigidx = params.findIndex(p => p.startsWith("formsig"));
+				if (formsigidx !== -1) {
+					const formsig = params[formsigidx].match(/formsig\s*=\s*([A-Z][a-zA-Z]*)$/)[1];
+					// Remove the parameter
+					params.splice(formsigidx, 1);
+					params[0] += formsig;
 				}
-				else {
-					const numPosParams = params.filter(p => !p.includes("<-")).length;
-					// The first positional parameter is the ndex
-					const missingNos = (lastGen - generation + 1) - (numPosParams - 1);
-					if (missingNos < 0) {
-						console.log(`data2: ${data2}\nnumPosParams: ${numPosParams}`);
-					}
-					let newparams = params.concat(Array(missingNos).fill("no"));
-					const stabidx = newparams.findIndex(p => p.startsWith("STAB <- "));
-					if (stabidx !== -1) {
-						// https://stackoverflow.com/questions/24909371/move-item-in-array-to-last-position
-						newparams.push(newparams.splice(stabidx, 1)[0]);
-					}
-					console.log(params, newparams);
-					data2 = newparams.join("|");
+			}
+			// Count positional parameters in data2 to add "no" for last gens
+			if (data2.indexOf("{") !== -1) {
+				const ndex = params[0];
+				alert(`Found "{" in the row for ndex ${ndex}. It may miss some final "no".`);
+				console.log(data2);
+			}
+			else {
+				const numPosParams = params.filter(p => !p.includes("<-")).length;
+				// The first positional parameter is the ndex
+				const missingNos = (lastGen - generation + 1) - (numPosParams - 1);
+				if (missingNos < 0) {
+					console.log(`data2: ${data2}\nnumPosParams: ${numPosParams}`);
+				}
+				params = params.concat(Array(missingNos).fill("no"));
+			}
+			// Move STAB to the end
+			{
+				const stabidx = params.findIndex(p => p.startsWith("STAB <- "));
+				if (stabidx !== -1) {
+					// https://stackoverflow.com/questions/24909371/move-item-in-array-to-last-position
+					params.push(params.splice(stabidx, 1)[0]);
 				}
 			}
 
-			return '|' + generation + '|' + data2 + '| //';
+			return '|' + generation + '|' + params.join("|") + '| //';
 		})
 		// .replace(/\{\{(maschio|femmina)\}\}\| \/\//gi,
 		// '|form=$1| //')
