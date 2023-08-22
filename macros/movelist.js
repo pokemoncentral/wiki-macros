@@ -38,12 +38,11 @@ macros.movelist = function(str) {
 	// const otherGames = ['Y', 'Y', 'C', 'E', 'FRLG', 'PtHGSS', 'HGSS', 'B2W2', 'ORAS', 'USUM', 'LGPE', 'BDSP', 'LA'];
 
 	// Traduzione tipi e intestazioni
-	str = macros.forme(str, true);
 	str = macros.tipi(str);
 	str = intestazioni(str, 'movelist');
 
 	// Traduzione movelist vero e proprio
-	return str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
+	str = str.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
 		.replace(/\|\{\{tt\|(.+?)\|XY\}\}(<br>)?/g, '|$1|')
 		.replace(/\{\{tt\|(.+?)\|ORAS\}\}/g, 'ORAS <- $1')
 		.replace(/\{\{[Mm]ovehead\/(\w+)\|(\w+)\|([0-9]+)(\|[^\}]*)?\}\}/g, function(_, kind, tipo, gen, tm) {
@@ -151,7 +150,7 @@ macros.movelist = function(str) {
 				return prefix + ' Insegnamosse ' + gen;
 		})
 		.replace(/chain breed(ing)?/gi, 'Catena di accoppiamenti')
-		.replace(/Breed through Sketch in (\w+)/gi, function(str, game) {
+		.replace(/Breed through Sketch in (\w+)/gi, function(_, game) {
 			var replace = macros.generazioni(game);
 			if (replace == game)
 				replace = 'in ' + macros.giochi(game);
@@ -159,6 +158,9 @@ macros.movelist = function(str) {
 				replace = 'nella ' + replace;
 			return 'Il padre deve averla copiata con Schizzo ' + replace;
 		});
+
+	str = macros.forme(str, true);
+	return str;
 };
 
 macros['movelist tutor'] = function(str) {
