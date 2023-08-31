@@ -55,6 +55,9 @@
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
             .replace(/&igrave;/g, 'ì')
+            .replace(/&euro;/g, '€')
+            .replace(/&pound;/g, '£')
+            .replace(/<br>/g, '\n')
             // This must be last
             .replace(/&amp;/g, "&")
         ;

@@ -204,7 +204,7 @@ macros['movelist tutor'] = function(str) {
 		.replace(/\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
 		'}}<br>{{#invoke: Movelist/hf | footer}}<br>')
 		.replace(/\{\{[Mm]oveentry\/\d+\|(.+)\}\}/g, function(_, data){
-			let ndex;
+			let ndex, formsig;
 			// Se c'è lo stab se lo salva
 			let stab = data.match(/\|STAB=(\'{0,3})/i);
 			stab = stab ? ( '|STAB <- ' + stab[1]) : '';
@@ -212,15 +212,20 @@ macros['movelist tutor'] = function(str) {
 			data = data.replace(/\|(?=\|)/g, '|no')
 				.replace(/\|$/g, '|no')
 
-			// Toglie nome, i type, numero di GU e i due GU
+			// Remove name, types, egg groups and formsig
 				.replace(/\|type2? ?\= ?\w+/g, '')
+				.replace(/\|\s*formsig\s*=\s*([A-Z][a-zA-Z]*)\|/, function(_, sig) {
+					console.log(formsig);
+					formsig = sig;
+					return "|";
+				})
 				.replace(/^([0-9a-zA-Z]+)\|([\w \-'.:é]+[^|])\|[12]\|([\w \-]+)\|([\w \-]+)\|/g, function(_, num){
-					ndex = num + '|';
+					ndex = num + (formsig || "") + '|';
 					return '';
 				})
 
 			// Replace vari
-				.replace(/\|$/g, '')
+				.replace(/\|$/g, '');
 
 			// Crea la nuova stringa dei tutor: sostituisce i <replace> in cells.join('|') con i parametri che trova in data
 			let values = cells.join('|');

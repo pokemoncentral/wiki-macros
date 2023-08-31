@@ -70,11 +70,11 @@ macros.gare = function(str) {
 
 	// Statistiche gara
 
-	return str.replace(/Tough/gi, 'Grinta')
-		.replace(/Cool/gi, 'Classe')
-		.replace(/(Smart|Clever)/gi, 'Acume')
-		.replace(/Beaut(y|iful)/gi, 'Bellezza')
-		.replace(/Cute/gi, 'Grazia')
+	return str.replace(/\bTough\b/gi, 'Grinta')
+		.replace(/\bCool\b/gi, 'Classe')
+		.replace(/\b(Smart|Clever)\b/gi, 'Acume')
+		.replace(/\bBeaut(y|iful)\b/gi, 'Bellezza')
+		.replace(/\bCute\b/gi, 'Grazia')
 
 	// Correzione errori
 
