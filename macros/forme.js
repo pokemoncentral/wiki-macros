@@ -206,6 +206,11 @@ macros.forme = function(str, useful) {
 		.replace(/128PB/g, '128I')
 		.replace(/128PA/g, '128A')
 		.replace(/550W/g, '550Bi')
+		.replace(/550W/g, '550Bi')
+		.replace(/901B/g, '901L')
+		.replace(/1017W/g, '1017P')
+		.replace(/1017H/g, '1017Fc')
+		.replace(/1017C/g, '1017Fn')
 		;
 };
 

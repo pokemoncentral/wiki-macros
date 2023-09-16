@@ -103,8 +103,7 @@ macros.movelist = function(str) {
 			}
 			// Count positional parameters in data2 to add "no" for last gens
 			if (data2.indexOf("{") !== -1) {
-				const ndex = params[0];
-				alert(`Found "{" in the row for ndex ${ndex}. It may miss some final "no".`);
+				alert(`Found "{" in the row for ndex ${params[0]}. It may miss some final "no".`);
 				console.log(data2);
 			}
 			else {
@@ -113,6 +112,7 @@ macros.movelist = function(str) {
 				const missingNos = (lastGen - generation + 1) - (numPosParams - 1);
 				if (missingNos < 0) {
 					console.log(`data2: ${data2}\nnumPosParams: ${numPosParams}`);
+					alert(`Too many parameters found in the row for ndex ${params[0]}. It probably has something wrong. A possible fix is to remove the last ${-missingNos} parameters, but the issue might be something else.`);
 				}
 				params = params.concat(Array(missingNos).fill("no"));
 			}
@@ -168,7 +168,7 @@ macros['movelist tutor'] = function(str) {
 	// {'cristallo', 'rossofuoco', 'smeraldo', 'xd', 'diamante', 'platino', 'heartgold', 'nero', 'nero2', 'x', 'rubinoomega', 'sole', 'ultrasole', 'lgpikachu', 'spada', 'isolaarmatura', 'diamantelucente', 'leggendearceus' }
 	const cells = ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'];
 	// posizione nell'array del primo parametro corrispondente alla generazione dell'indice. Il primo è -1 perché l'array è 0-based, l'ultimo serve per fare (headers[gen+1]-headers[gen])
-	const headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, 18, cells.lenght];
+	const headers = [-1, 0, 0, 1, 4, 7, 9, 11, 14, 18, cells.length];
 	// Cerca gli header che corrispondono ai vari giochi. Se non li torva viene utilizzato il default "non mostrare"
 	// Bisogna sostituire subito il tick con yes perché su Bulba lo usano a caso
 	str = str.replace(new RegExp(String.fromCharCode(10004), 'g'), 'yes')
