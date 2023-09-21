@@ -826,7 +826,7 @@ macros.mosse = function(str) {
         .replace(/\bThunder Cage\b/g, 'Elettrogabbia').replace(/\bTuono Cage\b/g, 'Elettrogabbia')
         .replace(/\bDragon Energy\b/g, 'Dragoenergia')
         .replace(/\bGlacial Lance\b/g, 'Lancia Glaciale')
-        .replace(/\bAstral Barrage\b/g, 'Schegge Astrali').replace(/\bAstral Attacco Pioggia\b/g, 'Schegge Astrali')
+        .replace(/\bAstral Barrage\b/g, 'Schegge Astrali').replace(/\bAstral Attacco Pioggia\b/g, 'Schegge Astrali').replace(/\bAstral Sferattacco\b/g, 'Schegge Astrali')
 
         .replace(/\bDire Claw\b/g, 'Artigli Fatali')
         .replace(/\bPsyshield Bash\b/g, 'Barrierassalto')
@@ -840,7 +840,7 @@ macros.mosse = function(str) {
         .replace(/\bMountain Gale\b/g, 'Soffio d\'Iceberg')
         .replace(/\bVictory Dance\b/g, 'Danzavittoria')
         .replace(/\bHeadlong Rush\b/g, 'Scontro Frontale')
-        .replace(/\bBarb Barrage\b/g, 'Mille Fielespine').replace(/\bBarb Attacco Pioggia\b/g, 'Mille Fielespine')
+        .replace(/\bBarb Barrage\b/g, 'Mille Fielespine').replace(/\bBarb Attacco Pioggia\b/g, 'Mille Fielespine').replace(/\bBarb Sferattacco\b/g, 'Mille Fielespine')
         .replace(/\bEsper Wing\b/g, 'Ali d\'Aura')
         .replace(/\bBitter Malice\b/g, 'Livore')
         .replace(/\bShelter\b/g, 'Barricata')
@@ -957,6 +957,10 @@ macros.mosse = function(str) {
         .replace(/\bMagical Torque\b/g, 'Turboincanto')
         .replace(/\bHydro Steam\b/g, 'Idrovapore')
         .replace(/\bPsyblade\b/g, 'Psicolama')
+        .replace(/\bBlood Moon\b/g, 'Luna Rossa')
+        .replace(/\bSyrup Bomb\b/g, 'Bomba Sciroppata')
+        .replace(/\bMatcha Gotcha\b/g, 'Spruzzatè')
+        .replace(/\bIvy Cudgel\b/g, 'Clava di Liane')
 
     // Correzione errori
         // .replace(/Acidoobomba/g, 'Acidobomba')
