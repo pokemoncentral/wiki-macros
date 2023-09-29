@@ -98,11 +98,33 @@
             " | //"
           );
         },
-      )
-      .replace(
-        /\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|[0-9])?\}\}/g,
-        "}}<br>{{#invoke: Movelist/hf | footer | $2}}<br>",
-      )
+      );
+    str = str.replace(
+      /\{\{[Mm]ovefoot\|(\w+?)(\|[0-9])?\}\}/g,
+      function (_, tipo, __, offset) {
+        // Get the kind of the last header. We assume the relevant headers
+        // have been translated by the previous step
+        const invokepattern = "{{#invoke: Movelist/hf | ";
+        const lastinvokeidx =
+          str.lastIndexOf(invokepattern, offset) + invokepattern.length;
+        const nextpipeidx = str.indexOf("|", lastinvokeidx);
+        let kind = str
+          .substring(lastinvokeidx, nextpipeidx)
+          .trim()
+          .toLowerCase();
+        if (kind === "levelh") {
+          kind = "levelf";
+        } else if (kind === "breedh") {
+          kind = "breedf";
+        } else {
+          kind = "footer";
+        }
+        return (
+          "}}<br>{{#invoke: Movelist/hf | " + kind + " | " + tipo + "}}<br>"
+        );
+      },
+    );
+    str = str
       .replace(/\{\{[Mm]oveentry\/[0-9]\|(.+)\}\}/g, function (_, data) {
         const data2 = data
           // Traduce i parametri vuoti in no
@@ -306,8 +328,8 @@
         //~ .replace(/\{\{[Mm]ovehead\/tutor\/([1-7])([yesno\|]*)\}\}/gi,
         //~ '{{#invoke: Movelist/hf | tutor$1 $2}}')
         .replace(
-          /\{\{[Mm]ovefoot(\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
-          "}}<br>{{#invoke: Movelist/hf | footer}}<br>",
+          /\{\{[Mm]ovefoot(?:\/[Tt]utor)?\|(\w+?)(\|\d)?\}\}/g,
+          "}}<br>{{#invoke: Movelist/hf | footer | $1 }}<br>",
         )
         .replace(/\{\{[Mm]oveentry\/\d+\|(.+)\}\}/g, function (_, data) {
           let ndex, formsig;
