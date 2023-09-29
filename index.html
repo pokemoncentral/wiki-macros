@@ -1,89 +1,204 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="it">
+  <head>
+    <title>Applicatore di macro per Pok&eacute;mon Central Wiki</title>
+    <meta
+      http-equiv="description"
+      content="Applicatore di macro per Pokémon Central Wiki"
+    />
+    <meta http-equiv="author" content="Pokémon Central Wiki" />
+    <meta http-equiv="content-type" content="text/html;" />
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family:
+          Lucida Grande,
+          Lucida Sans,
+          Lucida Sans Unicode,
+          Tahoma,
+          Verdana,
+          sans-serif;
+        background: #9fc1e7;
+      }
+      .same-line {
+        display: inline-block;
+      }
+      .pull-top {
+        vertical-align: top;
+      }
+      .text-red {
+        color: red;
+      }
+      div.tr {
+        padding: 3px;
+        margin: -0.2em -0.2em auto auto;
+        width: 48%;
+        border-top: 1px solid #437dbf;
+        border-right: 1px solid #437dbf;
+      }
+      div.tl {
+        padding: 3px;
+        margin: -0.2em auto auto -0.2em;
+        width: 49%;
+        border-top: 1px solid #437dbf;
+        border-left: 1px solid #437dbf;
+      }
+      h1 {
+        font-variant: small-caps;
+        font-weight: bold;
+        font-size: 160%;
+        text-align: center;
+        margin: -0.2em auto;
+      }
+      p {
+        margin: 0.2em auto;
+        font-size: 90%;
+      }
+      em {
+        font-style: oblique;
+        font-weight: bold;
+      }
+      ol {
+        margin: auto;
+      }
+      li {
+        font-size: 90%;
+      }
+      button {
+        float: right;
+      }
+    </style>
+  </head>
 
-<head>
-	<title>Applicatore di macro per Pok&eacute;mon Central Wiki</title>
-	<meta http-equiv="description" content="Applicatore di macro per Pokémon Central Wiki">
-	<meta http-equiv="author" content="Pokémon Central Wiki">
-	<meta http-equiv="content-type" content="text/html;">
-	<meta charset="UTF-8">
-	<style>
-		body { font-family: Lucida Grande, Lucida Sans, Lucida Sans Unicode,
-			Tahoma, Verdana, sans-serif; background: #9FC1E7; }
-		.same-line { display: inline-block; }
-		.pull-top { vertical-align: top; }
-		.text-red { color: red; }
-		div.tr { padding: 3px; margin: -0.2em -0.2em auto auto; width: 48%;
-			border-top: 1px solid #437DBF; border-right: 1px solid #437DBF; }
-		div.tl { padding: 3px; margin: -0.2em auto auto -0.2em; width: 49%;
-			border-top: 1px solid #437DBF; border-left: 1px solid #437DBF; }
-		h1 { font-variant: small-caps; font-weight: bold;
-			font-size: 160%; text-align: center; margin: -0.2em auto; }
-		p { margin: 0.2em auto; font-size: 90%; }
-		em { font-style: oblique; font-weight: bold; }
-		ol { margin: auto; }
-		li { font-size: 90%; }
-		button { float: right; }
-	</style>
-</head>
+  <body>
+    <h1>Applicatore di Macro</h1>
+    <p>
+      Tool online per usare <em>alcune</em> delle macro "trova e sostituisci"
+      presenti nella cartella Macro jEdit su Dropbox di
+      <a href="http://wiki.pokemoncentral.it/Home"
+        >Pok&eacute;mon Central Wiki.</a
+      ><br />
+      Per maggiori informazioni sulle macro, visita
+      <a href="http://wiki.pokemoncentral.it/Meta:Applicatore_di_macro"
+        >questa pagina</a
+      >. Per segnalare degli errori, prova sul
+      <a href="https://forum.pokemoncentral.it/index.php?showtopic=5864"
+        >forum</a
+      >
+      o sul
+      <a
+        href="http://wiki.pokemoncentral.it/Discussioni_meta:Applicatore_di_macro"
+        >wiki</a
+      >. Utilizzo:
+    </p>
+    <ol>
+      <li>
+        Copiare il testo su cui si intende applicare la macro nella casella
+        <a href="#text">Testo</a>.
+      </li>
+      <li>
+        Selezionare la macro tramite il men&ugrave; <a href="#menu">Macro</a>.
+      </li>
+      <li>Clickare sul pulsante Esegui.</li>
+      <li>
+        Il testo tradotto apparirà nella colonna di destra e verrà copiato
+        automaticamente.
+      </li>
+    </ol>
+    <p>Buon lavoro!</p>
+    <div class="tr same-line">
+      <div class="same-line pull-top">
+        <label id="menu">
+          Macro:<br />
+          <select name="macro"></select>
+        </label>
+        <br />
+        <button type="button">Esegui</button>
+        <br />
+        <p id="copy-result"></p>
+      </div>
+      <label class="same-line" id="text">
+        Testo:<br />
+        <textarea name="input" rows="30" cols="60">
+Inserire qui il testo su cui applicare la macro...</textarea
+        >
+      </label>
+    </div>
+    <div class="tl same-line pull-top" id="output">
+      Qui apparirà il testo dopo aver applicato la macro
+    </div>
 
-<body>
-	<h1>Applicatore di Macro</h1>
-		<p>Tool online per usare <em>alcune</em> delle macro "trova e sostituisci"
-		 presenti nella cartella Macro jEdit su Dropbox di <a href="http://wiki.pokemoncentral.it/Home">Pok&eacute;mon Central Wiki.</a><br>
-		 Per maggiori informazioni sulle macro, visita
-		 <a href="http://wiki.pokemoncentral.it/Meta:Applicatore_di_macro">questa pagina</a>.
-		 Per segnalare degli errori, prova sul
-		 <a href="https://forum.pokemoncentral.it/index.php?showtopic=5864">forum</a> o sul
-		 <a href="http://wiki.pokemoncentral.it/Discussioni_meta:Applicatore_di_macro">wiki</a>.
-		 Utilizzo:</p><ol>
-		 	<li>Copiare il testo su cui si intende applicare la macro
-		 		nella casella <a href="#text">Testo</a>.</li>
-		 	<li>Selezionare la macro tramite il men&ugrave; <a href="#menu">Macro</a>.</li>
-		 	<li>Clickare sul pulsante Esegui.</li>
-			<li>Il testo tradotto apparirà nella colonna di destra e verrà copiato automaticamente.</li>
-		 </ol>
-		<p>Buon lavoro!</p>
-	<div class="tr same-line">
-		<div class="same-line pull-top">
-			<label id="menu">
-				Macro:<br>
-				<select name="macro">
-				</select>
-			</label>
-			<br>
-			<button type="button">Esegui</button>
-			<br>
-			<p id="copy-result"></p>
-		</div>
-		<label class="same-line" id="text">
-			Testo:<br>
-			<textarea name="input" rows="30"
-				cols="60">Inserire qui il testo su cui applicare la macro...</textarea>
-			</label>
-	</div>
-	<div class="tl same-line pull-top" id="output">
-		Qui apparirà il testo dopo aver applicato la macro
-	</div>
-
-	<script type="text/javascript" charset="UTF-8">utils = { macros: {} };</script>
-	<script type="text/javascript" charset="UTF-8" src="./main.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/basic.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/mosse.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/abilita.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/strumenti.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/langtable.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/squadra.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/zone.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/classiallenatore.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/spinoff.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/forme.js"></script>
-	<!-- <script type="text/javascript" charset="UTF-8" src="./macros/learnlist.js"></script> -->
-	<script type="text/javascript" charset="UTF-8" src="./macros/learnlist-template.js"></script>
-	<script type="text/javascript" charset="UTF-8" src="./macros/movelist.js"></script>
-	<!-- <script type="text/javascript" charset="UTF-8" src="./macros/cinese.js"></script> -->
-	<script type="text/javascript" charset="UTF-8" src="./macros/item-pages.js"></script>
-</body>
-
+    <script type="text/javascript" charset="UTF-8">
+      utils = { macros: {} };
+    </script>
+    <script type="text/javascript" charset="UTF-8" src="./main.js"></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/basic.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/mosse.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/abilita.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/strumenti.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/langtable.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/squadra.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/zone.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/classiallenatore.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/spinoff.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/forme.js"
+    ></script>
+    <!-- <script type="text/javascript" charset="UTF-8" src="./macros/learnlist.js"></script> -->
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/learnlist-template.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/movelist.js"
+    ></script>
+    <!-- <script type="text/javascript" charset="UTF-8" src="./macros/cinese.js"></script> -->
+    <script
+      type="text/javascript"
+      charset="UTF-8"
+      src="./macros/item-pages.js"
+    ></script>
+  </body>
 </html>

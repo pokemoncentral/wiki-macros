@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /**
  * learnlists and movelists-related macro
  *
@@ -6,357 +6,567 @@
  * there should be no need to update this file
  */
 
-(function(utils) {
+(function (utils) {
+  const macros = utils.macros;
 
-const macros = utils.macros;
+  macros.intestazioni = function (str, type) {
+    var customTrans = {
+      learnset: {
+        learnlist: "==Mosse apprese==",
+        movelist: "==Apprendimento==",
+      },
+    };
 
-macros.intestazioni = function(str, type) {
-	var customTrans = {
-		learnset: {
-			learnlist: '==Mosse apprese==',
-			movelist: '==Apprendimento=='
-		}
-	};
+    var tmHeading =
+      str.indexOf("h/7") == -1
+        ? "==Tramite [[MT]]/[[MN]]=="
+        : "==Tramite [[MT]]==";
 
-	var tmHeading = str.indexOf('h/7') == -1
-		? '==Tramite [[MT]]/[[MN]]=='
-		: '==Tramite [[MT]]==';
+    return str
+      .replace(/TM(\d{2,3})/g, "MT$1")
+      .replace(/HM(\d{2,3})/g, "MN$1")
+      .replace(/==[Ll]earnset==/g, customTrans.learnset[type])
+      .replace(
+        /==\[\[Dream World\]\]\-only moves==/g,
+        "==Mosse esclusive del {{pkmn|Dream World}}==",
+      )
+      .replace(
+        /==\{\{pkmn\|Dream World\}\}\-only moves==/g,
+        "==Mosse esclusive del {{pkmn|Dream World}}==",
+      )
+      .replace(
+        /==By \[\[[Ll]evel\|leveling up\]\]==/g,
+        "==Aumentando di [[livello]]==",
+      )
+      .replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, tmHeading)
+      .replace(/==By \[\[TM\]\]==/g, "==Tramite [[MT]]==")
+      .replace(/==By \[\[HM\]\]==/g, "==Tramite [[MN]]==")
+      .replace(
+        /==By \{\{pkmn\|breeding\}\}==/g,
+        "==Tramite [[Accoppiamento Pok&eacute;mon|accoppiamento]]==",
+      )
+      .replace(
+        /==By \[\[[Mm]ove [Tt]utor(\|tutoring)?\]\]==/g,
+        "==Dall'[[Insegnamosse]]==",
+      )
+      .replace(
+        /==By \{\{pkmn2\|event\}\}s==/g,
+        "==Tramite [[Evento Pok&eacute;mon|eventi]]==",
+      )
+      .replace(/==Speciale? moves?==/g, "==Mosse speciali==")
+      .replace(
+        /==By a prior \[\[evolution\]\]==/g,
+        "==Tramite [[evoluzione|evoluzioni]] precedenti==",
+      )
+      .replace(
+        /==\{\{Trading Card Game\}\}\-only moves==/g,
+        "==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacute;mon|GCC]]==",
+      );
+  };
 
-	return str.replace(/TM(\d{2,3})/g, 'MT$1')
-		.replace(/HM(\d{2,3})/g, 'MN$1')
-		.replace(/==[Ll]earnset==/g, customTrans.learnset[type])
-		.replace(/==\[\[Dream World\]\]\-only moves==/g, '==Mosse esclusive del {{pkmn|Dream World}}==')
-		.replace(/==\{\{pkmn\|Dream World\}\}\-only moves==/g, '==Mosse esclusive del {{pkmn|Dream World}}==')
-		.replace(/==By \[\[[Ll]evel\|leveling up\]\]==/g, '==Aumentando di [[livello]]==')
-		.replace(/==By \[\[TM\]\]\/\[\[HM\]\]==/g, tmHeading)
-		.replace(/==By \[\[TM\]\]==/g, '==Tramite [[MT]]==')
-		.replace(/==By \[\[HM\]\]==/g, '==Tramite [[MN]]==')
-		.replace(/==By \{\{pkmn\|breeding\}\}==/g, '==Tramite [[Accoppiamento Pok&eacute;mon|accoppiamento]]==')
-		.replace(/==By \[\[[Mm]ove [Tt]utor(\|tutoring)?\]\]==/g, "==Dall'[[Insegnamosse]]==")
-		.replace(/==By \{\{pkmn2\|event\}\}s==/g, '==Tramite [[Evento Pok&eacute;mon|eventi]]==')
-		.replace(/==Speciale? moves?==/g, '==Mosse speciali==')
-		.replace(/==By a prior \[\[evolution\]\]==/g, '==Tramite [[evoluzione|evoluzioni]] precedenti==')
-		.replace(/==\{\{Trading Card Game\}\}\-only moves==/g, '==Mosse apprese solamente nel [[Gioco di Carte Collezionabili Pok&eacute;mon|GCC]]==');
-};
+  macros.learnlist = function (str) {
+    // Traduzione mosse, tipi, gare, intestazioni, sigle giochi
 
-macros.learnlist = function(str) {
+    str = macros.mosse(str);
+    str = macros.gare(str);
+    str = macros.tipi(str);
+    str = macros.intestazioni(str, "learnlist");
+    str = macros.giochi(str, false);
 
-	// Traduzione mosse, tipi, gare, intestazioni, sigle giochi
+    // Traduzione learnlist vero e proprio
 
-	str = macros.mosse(str);
-	str = macros.gare(str);
-	str = macros.tipi(str);
-	str = macros.intestazioni(str, 'learnlist');
-	str = macros.giochi(str, false);
+    // Entry: traduzione numeri romani --> cifre arabe
 
-	// Traduzione learnlist vero e proprio
+    return (
+      str
+        .replace(
+          /\{\{learnlist\/([^V\|]+)([VI]+)/g,
+          function (str, method, roman) {
+            var numbers = {
+              I: "1",
+              II: "2",
+              III: "3",
+              IV: "4",
+              V: "5",
+              VI: "6",
+              VII: "7",
+              VIII: "8",
+            };
+            return "{{learnlist/" + method + numbers[roman];
+          },
+        )
 
-	// Entry: traduzione numeri romani --> cifre arabe
+        // Headers in doppio formato:
+        // 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
+        // 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
 
-	return str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
-		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6', VII: '7', VIII: '8'};
-		return '{{learnlist/' + method + numbers[roman]; })
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\|(.+)\|(\d)\|(\d)\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |",
+        )
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\/(\d)\|(.+)\|(\d)\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |",
+        )
 
-	// Headers in doppio formato:
-	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
-	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
-
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|(\d)\|(\d)\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\/(\d)\|(.+)\|(\d)\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
-
-	/*
+        /*
 		Entry: inserimento di un carattere di rimando al footer
 		per le mosse imparate all'evoluzione.
 	*/
-		.replace(/\{\{tt\|\*\|.+evolving\}\}/g, '&amp;#x2670;')
+        .replace(/\{\{tt\|\*\|.+evolving\}\}/g, "&amp;#x2670;")
 
+        // Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, fixing Evo., eliminazione tt
 
-	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, fixing Evo., eliminazione tt
+        .replace(/\{\{[Ll]earnlist\/tm(\d)\|TM/g, "{{learnlist/tm$1|MT")
+        .replace(/\{\{[Ll]earnlist\/tm(\d)\|HM/g, "{{learnlist/tm$1|MN")
+        .replace(/\{\{[Ll]earnlist\/tr\|TR/g, "{{learnlist/tm1|DT")
+        .replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}(?:<br\/?>)?/g, "#$1#")
+        .replace(/N\/A/g, "Assente")
+        .replace(/Start/g, "Inizio")
+        .replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, "$1")
+        .replace(/\{\{tt\|[Ee]vo\.?\|[^|}]*\}\}|Evo\.?/g, "Evo")
+        .replace(/\{\{tt\|.+\|(.+?)\}\}/g, "$1")
 
-		.replace(/\{\{[Ll]earnlist\/tm(\d)\|TM/g, '{{learnlist/tm$1|MT')
-		.replace(/\{\{[Ll]earnlist\/tm(\d)\|HM/g, '{{learnlist/tm$1|MN')
-		.replace(/\{\{[Ll]earnlist\/tr\|TR/g, '{{learnlist/tm1|DT')
-		.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}(?:<br\/?>)?/g, '#$1#')
-		.replace(/N\/A/g, 'Assente')
-		.replace(/Start/g, 'Inizio')
-		.replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, '$1')
-		.replace(/\{\{tt\|[Ee]vo\.?\|[^|}]*\}\}|Evo\.?/g, "Evo")
-		.replace(/\{\{tt\|.+\|(.+?)\}\}/g, '$1')
+        // Entry: traduzioni generiche
 
-	// Entry: traduzioni generiche
-
-		.replace(/\{\{[lL]earnlist\/(\w+)(\d)\|(.+)\|?\}\}/g,
-		function(str, method, gen, args) {
-
-			// Raddoppiamento livelli se non lo sono già
-			/*if (gen > 4 && method == 'level' &&
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)(\d)\|(.+)\|?\}\}/g,
+          function (str, method, gen, args) {
+            // Raddoppiamento livelli se non lo sono già
+            /*if (gen > 4 && method == 'level' &&
 				args.search(/^(Inizio|Assente|\d{1,3})\|(Inizio|Assente|\d{1,3})\|/) == -1)
 				return '[[&euro;' + args.replace(/^(Inizio|\d{1,3})\|/, '$1|$1|')
 					+ '&pound;]]|';*/
 
-			return '[[&euro;' + args + '&pound;]]|';
-		})
+            return "[[&euro;" + args + "&pound;]]|";
+          },
+        )
 
-	// Sostituzione del livello 1 con Inizio
+        // Sostituzione del livello 1 con Inizio
 
-		.replace(/&euro;1\|/g, '&euro;Inizio|')
-		.replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, '&euro;$1|Inizio|')
+        .replace(/&euro;1\|/g, "&euro;Inizio|")
+        .replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, "&euro;$1|Inizio|")
 
-	// Footer in doppio formato:
-	// 		- {{learnlist/<method>f/<footergen>|etc}}
-	// 		- {{learnlist/<method>f|etc}}
+        // Footer in doppio formato:
+        // 		- {{learnlist/<method>f/<footergen>|etc}}
+        // 		- {{learnlist/<method>f|etc}}
 
-		.replace(/\{\{[lL]earnlist\/(\w+)f\/(\d)\|(.+)\|(\d)(.*?)\}\}/g,
-		function(str, method, genf, args, genp, otherArgs) {
-			return '}}<br>{{#invoke: learnlist/hf | ' + method + 'f|' + args + '|' + genf
-				+ '|' + genp + (otherArgs.search('xy=') == -1 ? otherArgs : '') + '}}';
-		})
-		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f\/(\d)\|(.+)\|(\d)(.*?)\}\}/g,
+          function (str, method, genf, args, genp, otherArgs) {
+            return (
+              "}}<br>{{#invoke: learnlist/hf | " +
+              method +
+              "f|" +
+              args +
+              "|" +
+              genf +
+              "|" +
+              genp +
+              (otherArgs.search("xy=") == -1 ? otherArgs : "") +
+              "}}"
+            );
+          },
+        )
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g,
+          "}}<br>{{#invoke: learnlist/hf | $1f$2}}",
+        )
 
-	// Footer: inserimento della generazione del footer se non presente, assumendo la settima
+        // Footer: inserimento della generazione del footer se non presente, assumendo la settima
 
-		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^0-9]+)\|(\d)\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|8|$3}}')
+        .replace(
+          /\{\{#invoke: learnlist\/hf \| (\w+)f([^0-9]+)\|(\d)\}\}/gi,
+          "{{#invoke: learnlist/hf | $1f$2|8|$3}}",
+        )
 
-	// Entry: traduzione null
+        // Entry: traduzione null
 
-		.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}')
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g,
+          "{{#invoke: learnlist/entry$2 | $1null}}",
+        )
 
-	// Traduzione psichico|psichico in header e footer
+        // Traduzione psichico|psichico in header e footer
 
-	// str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
+        // str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
 
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
-		'learnlist$1|Psico|Psico$2}}')
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}')
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico|Psico$2}}",
+        )
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico$2}}",
+        )
 
-	// Eliminazione chiamata al modulo Render per gli entry null
+        // Eliminazione chiamata al modulo Render per gli entry null
 
-		.replace(/\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g, '$1')
+        .replace(
+          /\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g,
+          "$1",
+        )
 
-	// Eliminazione del parametro STAB e form e aggiustamenti sintattici
+        // Eliminazione del parametro STAB e form e aggiustamenti sintattici
 
-		.replace(/STAB=/g, '')
-		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
-		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
-		.replace(/\|?\n?\}\}\|?/g, '}}')
-		.replace(/STAB prior to (Gen [0-9IV]+)/gi, function(str, gen) {
-			return 'Gode di STAB prima della ' + macros.generazioni(gen);
-		})
+        .replace(/STAB=/g, "")
+        .replace(/form=[^\|£]+\|?(.*?)£/g, "$1£")
+        .replace(/\}\}&pound;\]\]/g, "&pound;]]}}")
+        .replace(/\|?\n?\}\}\|?/g, "}}")
+        .replace(/STAB prior to (Gen [0-9IV]+)/gi, function (str, gen) {
+          return "Gode di STAB prima della " + macros.generazioni(gen);
+        })
 
-	// Eliminazione dei dati della mossa, recuperati in automatico dal modulo
+        // Eliminazione dei dati della mossa, recuperati in automatico dal modulo
 
-		.replace(/[^\|]*\|(Fisico|Stato|Speciale)\|[^\|]*\|[^\|]*\|[^\|&]*\|?/g, '')
+        .replace(
+          /[^\|]*\|(Fisico|Stato|Speciale)\|[^\|]*\|[^\|]*\|[^\|&]*\|?/g,
+          "",
+        )
 
-    // Sorting parameters according to our module
-		.replace(/\[\[\&euro;(\w*)\|([^|]*)\|?([^|]*)?\|?('*)?\&pound;\]\](\||\})/g, function(str, level, move, notes = "", stab = "", close) {
-            return "[[&euro;" + move + '|' + stab + '|' + notes + '|' + level + "&pound;]]" + close;
-        });
+        // Sorting parameters according to our module
+        .replace(
+          /\[\[\&euro;(\w*)\|([^|]*)\|?([^|]*)?\|?('*)?\&pound;\]\](\||\})/g,
+          function (str, level, move, notes = "", stab = "", close) {
+            return (
+              "[[&euro;" +
+              move +
+              "|" +
+              stab +
+              "|" +
+              notes +
+              "|" +
+              level +
+              "&pound;]]" +
+              close
+            );
+          },
+        )
+    );
+  };
 
-};
+  macros["learnlist settima"] = function (str) {
+    // Traduzione mosse, tipi, gare, intestazioni, sigle giochi
 
-macros["learnlist settima"] = function(str) {
+    str = macros.mosse(str);
+    str = macros.gare(str);
+    str = macros.tipi(str);
+    str = macros.intestazioni(str, "learnlist");
+    str = macros.giochi(str, false);
 
-	// Traduzione mosse, tipi, gare, intestazioni, sigle giochi
+    // Traduzione learnlist vero e proprio
 
-	str = macros.mosse(str);
-	str = macros.gare(str);
-	str = macros.tipi(str);
-	str = macros.intestazioni(str, 'learnlist');
-	str = macros.giochi(str, false);
+    // Entry: traduzione numeri romani --> cifre arabe
 
-	// Traduzione learnlist vero e proprio
+    return (
+      str
+        .replace(
+          /\{\{learnlist\/([^V\|]+)([VI]+)/g,
+          function (str, method, roman) {
+            var numbers = {
+              I: "1",
+              II: "2",
+              III: "3",
+              IV: "4",
+              V: "5",
+              VI: "6",
+              VII: "7",
+            };
+            return "{{learnlist/" + method + numbers[roman];
+          },
+        )
 
-	// Entry: traduzione numeri romani --> cifre arabe
+        // Headers in doppio formato:
+        // 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
+        // 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
 
-	return str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
-		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6', VII: '7'};
-		return '{{learnlist/' + method + numbers[roman]; })
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-7])\|([1-7])\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |",
+        )
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\/([1-7])\|(.+)\|([1-7])\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |",
+        )
 
-	// Headers in doppio formato:
-	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
-	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
-
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-7])\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-7])\|(.+)\|([1-7])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
-
-	/*
+        /*
 		Entry: inserimento di un carattere di rimando al footer
 		per le mosse imparate all'evoluzione.
 	*/
-		.replace(/\{\{tt\|\*\|.+evolving\}\}/g, '&amp;#x2670;')
+        .replace(/\{\{tt\|\*\|.+evolving\}\}/g, "&amp;#x2670;")
 
+        // Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
 
-	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
+        .replace(/\{\{[Ll]earnlist\/tm([1-7])\|TM/g, "{{learnlist/tm$1|MT")
+        .replace(/\{\{[Ll]earnlist\/tm([1-7])\|HM/g, "{{learnlist/tm$1|MN")
+        .replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}(?:<br\/?>)?/g, "#$1#")
+        .replace(/N\/A/g, "Assente")
+        .replace(/Start/g, "Inizio")
+        .replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, "$1")
+        .replace(/\{\{tt\|[Ee]vo\.?\|[^|}]*\}\}|Evo\.?/g, "Evo")
+        .replace(/\{\{tt\|.+\|(.+?)\}\}/g, "$1")
 
-		.replace(/\{\{[Ll]earnlist\/tm([1-7])\|TM/g, '{{learnlist/tm$1|MT')
-		.replace(/\{\{[Ll]earnlist\/tm([1-7])\|HM/g, '{{learnlist/tm$1|MN')
-		.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}(?:<br\/?>)?/g, '#$1#')
-		.replace(/N\/A/g, 'Assente')
-		.replace(/Start/g, 'Inizio')
-		.replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, '$1')
-		.replace(/\{\{tt\|[Ee]vo\.?\|[^|}]*\}\}|Evo\.?/g, "Evo")
-		.replace(/\{\{tt\|.+\|(.+?)\}\}/g, '$1')
+        // Entry: traduzioni generiche
 
-	// Entry: traduzioni generiche
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)([1-7])\|(.+)\|?\}\}/g,
+          function (str, method, gen, args) {
+            // Raddoppiamento livelli se non lo sono già
+            if (
+              gen > 4 &&
+              method == "level" &&
+              args.search(
+                /^(Inizio|Assente|Evo|Evoluzione|\d{1,3})\|(Inizio|Assente|Evo|Evoluzione|\d{1,3})\|/,
+              ) == -1
+            )
+              return (
+                "[[&euro;" +
+                args.replace(/^(Inizio|Evo|Evoluzione|\d{1,3})\|/, "$1|$1|") +
+                "&pound;]]|"
+              );
 
-		.replace(/\{\{[lL]earnlist\/(\w+)([1-7])\|(.+)\|?\}\}/g,
-		function(str, method, gen, args) {
+            return "[[&euro;" + args + "&pound;]]|";
+          },
+        )
 
-			// Raddoppiamento livelli se non lo sono già
-			if (gen > 4 && method == 'level' &&
-				args.search(/^(Inizio|Assente|Evo|Evoluzione|\d{1,3})\|(Inizio|Assente|Evo|Evoluzione|\d{1,3})\|/) == -1)
-				return '[[&euro;' + args.replace(/^(Inizio|Evo|Evoluzione|\d{1,3})\|/, '$1|$1|')
-					+ '&pound;]]|';
+        // Sostituzione del livello 1 con Inizio
 
-			return '[[&euro;' + args + '&pound;]]|';
-		})
+        .replace(/&euro;1\|/g, "&euro;Inizio|")
+        .replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, "&euro;$1|Inizio|")
 
-	// Sostituzione del livello 1 con Inizio
+        // Footer in doppio formato:
+        // 		- {{learnlist/<method>f/<footergen>|etc}}
+        // 		- {{learnlist/<method>f|etc}}
 
-		.replace(/&euro;1\|/g, '&euro;Inizio|')
-		.replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, '&euro;$1|Inizio|')
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f\/([1-7])\|(.+)\|([1-7])(.*?)\}\}/g,
+          function (str, method, genf, args, genp, otherArgs) {
+            return (
+              "}}<br>{{#invoke: learnlist/hf | " +
+              method +
+              "f|" +
+              args +
+              "|" +
+              genf +
+              "|" +
+              genp +
+              (otherArgs.search("xy=") == -1 ? otherArgs : "") +
+              "}}"
+            );
+          },
+        )
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g,
+          "}}<br>{{#invoke: learnlist/hf | $1f$2}}",
+        )
 
-	// Footer in doppio formato:
-	// 		- {{learnlist/<method>f/<footergen>|etc}}
-	// 		- {{learnlist/<method>f|etc}}
+        // Footer: inserimento della generazione del footer se non presente, assumendo la settima
 
-		.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-7])\|(.+)\|([1-7])(.*?)\}\}/g,
-		function(str, method, genf, args, genp, otherArgs) {
-			return '}}<br>{{#invoke: learnlist/hf | ' + method + 'f|' + args + '|' + genf
-				+ '|' + genp + (otherArgs.search('xy=') == -1 ? otherArgs : '') + '}}';
-		})
-		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
+        .replace(
+          /\{\{#invoke: learnlist\/hf \| (\w+)f([^1-7]+)\|([1-7])\}\}/gi,
+          "{{#invoke: learnlist/hf | $1f$2|7|$3}}",
+        )
 
-	// Footer: inserimento della generazione del footer se non presente, assumendo la settima
+        // Entry: traduzione null
 
-		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-7]+)\|([1-7])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|7|$3}}')
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g,
+          "{{#invoke: learnlist/entry$2 | $1null}}",
+        )
 
-	// Entry: traduzione null
+        // Traduzione psichico|psichico in header e footer
 
-		.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}')
+        // str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
 
-	// Traduzione psichico|psichico in header e footer
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico|Psico$2}}",
+        )
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico$2}}",
+        )
 
-	// str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
+        // Eliminazione chiamata al modulo Render per gli entry null
 
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
-		'learnlist$1|Psico|Psico$2}}')
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}')
+        .replace(
+          /\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g,
+          "$1",
+        )
 
-	// Eliminazione chiamata al modulo Render per gli entry null
+        // Eliminazione del parametro STAB e form e aggiustamenti sintattici
 
-		.replace(/\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g, '$1')
+        .replace(/STAB=/g, "")
+        .replace(/form=[^\|£]+\|?(.*?)£/g, "$1£")
+        .replace(/\}\}&pound;\]\]/g, "&pound;]]}}")
+        .replace(/\|?\n?\}\}\|?/g, "}}")
+        .replace(/STAB prior to (Gen [1-7IV]+)/gi, function (str, gen) {
+          return "Gode di STAB prima della " + macros.generazioni(gen);
+        })
 
-	// Eliminazione del parametro STAB e form e aggiustamenti sintattici
+        // Eliminazione dei dati della mossa, recuperati in automatico dal modulo
 
-		.replace(/STAB=/g, '')
-		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
-		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
-		.replace(/\|?\n?\}\}\|?/g, '}}')
-		.replace(/STAB prior to (Gen [1-7IV]+)/gi, function(str, gen) {
-			return 'Gode di STAB prima della ' + macros.generazioni(gen);
-		})
+        .replace(
+          /[^\|]*\|(Fisico|Stato|Speciale)\|[^\|]*\|[^\|]*\|[^\|&]*\|?/g,
+          "",
+        )
+    );
+  };
 
-	// Eliminazione dei dati della mossa, recuperati in automatico dal modulo
+  macros["learnlist sesta"] = function (str) {
+    // Traduzione mosse, tipi, gare, intestazioni, sigle giochi
 
-		.replace(/[^\|]*\|(Fisico|Stato|Speciale)\|[^\|]*\|[^\|]*\|[^\|&]*\|?/g, '');
-};
+    str = macros.mosse(str);
+    str = macros.gare(str);
+    str = macros.tipi(str);
+    str = macros.intestazioni(str, "learnlist");
+    str = macros.giochi(str, false);
 
-macros['learnlist sesta'] = function(str) {
+    // Traduzione learnlist vero e proprio
 
-	// Traduzione mosse, tipi, gare, intestazioni, sigle giochi
+    // Entry: traduzione numeri romani --> cifre arabe
 
-	str = macros.mosse(str);
-	str = macros.gare(str);
-	str = macros.tipi(str);
-	str = macros.intestazioni(str, 'learnlist');
-	str = macros.giochi(str, false);
+    return (
+      str
+        .replace(
+          /\{\{learnlist\/([^V\|]+)([VI]+)/g,
+          function (str, method, roman) {
+            var numbers = {
+              I: "1",
+              II: "2",
+              III: "3",
+              IV: "4",
+              V: "5",
+              VI: "6",
+            };
+            return "{{learnlist/" + method + numbers[roman];
+          },
+        )
 
-	// Traduzione learnlist vero e proprio
+        // Headers in doppio formato:
+        // 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
+        // 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
 
-	// Entry: traduzione numeri romani --> cifre arabe
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-6])\|([1-6])\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |",
+        )
+        .replace(
+          /\{\{[Ll]earnlist\/(\w+)h\/([1-6])\|(.+)\|([1-6])\|?.*?\}\}/g,
+          "{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |",
+        )
 
-	return str.replace(/\{\{learnlist\/([^V\|]+)([VI]+)/g, function(str, method, roman) {
-		var numbers = {I: '1', II: '2', III: '3', IV: '4', V: '5', VI: '6'};
-		return '{{learnlist/' + method + numbers[roman]; })
+        // Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
 
-	// Headers in doppio formato:
-	// 		- {{learnlist/<method>h/<genheader>|<type1>|<type2>|<genpoke>|etc}} e
-	// 		- {{learnlist/<method>h|<type1>|<type2>|<genheader>|<genpoke>|etc}}
+        .replace(/\{\{[Ll]earnlist\/tm([1-6])\|TM/g, "{{learnlist/tm$1|MT")
+        .replace(/\{\{[Ll]earnlist\/tm([1-6])\|HM/g, "{{learnlist/tm$1|MN")
+        .replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, "#$1#")
+        .replace(/N\/A/g, "Assente")
+        .replace(/Start/g, "Inizio")
+        .replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, "$1")
+        .replace(/\{\{tt\|.+\|(.+?)\}\}/g, "$1")
 
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\|(.+)\|([1-6])\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$2|$3|$4}}<br>{{#invoke: Render | entry | learnlist/entry$3.$1 |')
-		.replace(/\{\{[Ll]earnlist\/(\w+)h\/([1-6])\|(.+)\|([1-6])\|?.*?\}\}/g, '{{#invoke: learnlist/hf | $1h|$3|$2|$4}}<br>{{#invoke: Render | entry | learnlist/entry$2.$1 |')
+        // Entry: traduzioni generiche
 
-	// Entry: MT e MN, Mini Sprite, N/A, Start, sup XY ORAS, eliminazione tt
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)([1-6])\|(.+)\|?\}\}/g,
+          function (str, method, gen, args) {
+            // Raddoppiamento livelli se non lo sono già
 
-		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|TM/g, '{{learnlist/tm$1|MT')
-		.replace(/\{\{[Ll]earnlist\/tm([1-6])\|HM/g, '{{learnlist/tm$1|MN')
-		.replace(/\{\{MSP?\|([\w\d]+)\|(.+?)\}\}/g, '#$1#')
-		.replace(/N\/A/g, 'Assente')
-		.replace(/Start/g, 'Inizio')
-		.replace(/\{\{sup\/6\|(XY|ROZA)\}\}/g, '$1')
-		.replace(/\{\{tt\|.+\|(.+?)\}\}/g, '$1')
+            if (
+              gen > 4 &&
+              method == "level" &&
+              args.search(
+                /^(Inizio|Assente|\d{1,3})\|(Inizio|Assente|\d{1,3})\|/,
+              ) == -1
+            )
+              return (
+                "[[&euro;" +
+                args.replace(/^(Inizio|\d{1,3})\|/, "$1|$1|") +
+                "&pound;]]|"
+              );
+            return "[[&euro;" + args + "&pound;]]|";
+          },
+        )
 
-	// Entry: traduzioni generiche
+        // Sostituzione del livello 1 con Inizio
 
-		.replace(/\{\{[lL]earnlist\/(\w+)([1-6])\|(.+)\|?\}\}/g,
-		function(str, method, gen, args) {
+        .replace(/&euro;1\|/g, "&euro;Inizio|")
+        .replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, "&euro;$1|Inizio|")
 
-			// Raddoppiamento livelli se non lo sono già
+        // Footer in doppio formato:
+        // 		- {{learnlist/<method>f/<footergen>|etc}}
+        // 		- {{learnlist/<method>f|etc}}
 
-			if (gen > 4 && method == 'level' &&
-				args.search(/^(Inizio|Assente|\d{1,3})\|(Inizio|Assente|\d{1,3})\|/) == -1)
-				return '[[&euro;' + args.replace(/^(Inizio|\d{1,3})\|/, '$1|$1|')
-					+ '&pound;]]|';
-			return '[[&euro;' + args + '&pound;]]|';
-		})
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f\/([1-6])\|(.+)\|([1-6])(.*?)\}\}/g,
+          function (str, method, genf, args, genp, otherArgs) {
+            return (
+              "}}<br>{{#invoke: learnlist/hf | " +
+              method +
+              "f|" +
+              args +
+              "|" +
+              genf +
+              "|" +
+              genp +
+              (otherArgs.search("xy=") == -1 ? otherArgs : "") +
+              "}}"
+            );
+          },
+        )
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g,
+          "}}<br>{{#invoke: learnlist/hf | $1f$2}}",
+        )
 
-	// Sostituzione del livello 1 con Inizio
+        // Footer: inserimento della generazione dl footer se non presente, assumendo la sesta
 
-		.replace(/&euro;1\|/g, '&euro;Inizio|')
-		.replace(/&euro;(Inizio|Assente|\d{1,3})\|1\|/g, '&euro;$1|Inizio|')
+        .replace(
+          /\{\{#invoke: learnlist\/hf \| (\w+)f([^1-6]+)\|([1-6])\}\}/gi,
+          "{{#invoke: learnlist/hf | $1f$2|6|$3}}",
+        )
 
-	// Footer in doppio formato:
-	// 		- {{learnlist/<method>f/<footergen>|etc}}
-	// 		- {{learnlist/<method>f|etc}}
+        // Entry: traduzione null
 
-		.replace(/\{\{[lL]earnlist\/(\w+)f\/([1-6])\|(.+)\|([1-6])(.*?)\}\}/g,
-		function(str, method, genf, args, genp, otherArgs) {
-			return '}}<br>{{#invoke: learnlist/hf | ' + method + 'f|' + args + '|' + genf
-				+ '|' + genp + (otherArgs.search('xy=') == -1 ? otherArgs : '') + '}}';
-		})
-		.replace(/\{\{[lL]earnlist\/(\w+)f(.+?)\}\}/g, '}}<br>{{#invoke: learnlist/hf | $1f$2}}')
+        .replace(
+          /\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g,
+          "{{#invoke: learnlist/entry$2 | $1null}}",
+        )
 
-	// Footer: inserimento della generazione dl footer se non presente, assumendo la sesta
+        // Traduzione psichico|psichico in header e footer
 
-		.replace(/\{\{#invoke: learnlist\/hf \| (\w+)f([^1-6]+)\|([1-6])\}\}/gi, '{{#invoke: learnlist/hf | $1f$2|6|$3}}')
+        // str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
 
-	// Entry: traduzione null
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico|Psico$2}}",
+        )
+        .replace(
+          /[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g,
+          "learnlist$1|Psico$2}}",
+        )
 
-		.replace(/\{\{[lL]earnlist\/(\w+)(\d)null\}\}\n?\}\}/g, '{{#invoke: learnlist/entry$2 | $1null}}')
+        // Eliminazione chiamata al modulo Render per gli entry null
 
-	// Traduzione psichico|psichico in header e footer
+        .replace(
+          /\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g,
+          "$1",
+        )
 
-	// str = str.replace(/€(.+)[Pp]sichico\|[Pp]sichico\|(.+)£/g, '€$1Psichico|Psico$2£');
+        // Eliminazione del parametro STAB e form e aggiustamenti sintattici
 
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico\|[Pp]sichico(.+)\}\}/g,
-		'learnlist$1|Psico|Psico$2}}')
-		.replace(/[Ll]earnlist(.+)\|[Pp]sichico(.+)\}\}/g, 'learnlist$1|Psico$2}}')
+        .replace(/STAB=/g, "")
+        .replace(/form=[^\|£]+\|?(.*?)£/g, "$1£")
+        .replace(/\}\}&pound;\]\]/g, "&pound;]]}}")
+        .replace(/\|?\n?\}\}\|?/g, "}}")
+        .replace(/STAB prior to (Gen [1-6IV]+)/gi, function (str, gen) {
+          return "Gode di STAB prima della " + macros.generazioni(gen);
+        })
+    );
+  };
 
-	// Eliminazione chiamata al modulo Render per gli entry null
-
-		.replace(/\{\{#invoke: Render \| entry \| learnlist\/entry\d\.\w+ \|\n(\{\{.+null\}\})/g, '$1')
-
-	// Eliminazione del parametro STAB e form e aggiustamenti sintattici
-
-		.replace(/STAB=/g, '')
-		.replace(/form=[^\|£]+\|?(.*?)£/g, '$1£')
-		.replace(/\}\}&pound;\]\]/g, '&pound;]]}}')
-		.replace(/\|?\n?\}\}\|?/g, '}}')
-		.replace(/STAB prior to (Gen [1-6IV]+)/gi, function(str, gen) {
-			return 'Gode di STAB prima della ' + macros.generazioni(gen);
-		});
-};
-
-if (utils.updateMenu) { utils.updateMenu() } ;
-}(utils || { macros: {} }));
+  if (utils.updateMenu) {
+    utils.updateMenu();
+  }
+})(utils || { macros: {} });

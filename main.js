@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /**
  * Main js entry point.
  *
@@ -18,102 +18,101 @@
  */
 
 // actually I've a global object utils, with an array macros
-(function(utils) {
-    /**
-     * Preparazione alla traduzione; elimina i template p
-     * e formatta i character references in modo che non
-     * siano interpretati dai browser
-     */
-    utils.opening = function(str) {
-        return str
-            .replace(/\{\{p\|(.+?)\}\}/g, '[[$1]]')
-            .replace(/&(\w+);/g, '&amp;$1;');
-    };
+(function (utils) {
+  /**
+   * Preparazione alla traduzione; elimina i template p
+   * e formatta i character references in modo che non
+   * siano interpretati dai browser
+   */
+  utils.opening = function (str) {
+    return str
+      .replace(/\{\{p\|(.+?)\}\}/g, "[[$1]]")
+      .replace(/&(\w+);/g, "&amp;$1;");
+  };
 
-    /**
-     * Completamento della traduzione: sostituisce i
-     * newline con breakline per farli interpretare
-     * dai browser, limitando a due il numero di
-     * quelli consecutivi
-     */
-    utils.tooutput = function(str) {
-        return str
-            .replace(/\n{2,}/g, '<br /><br />')
-            .replace(/\n/g, '<br />');
-    };
+  /**
+   * Completamento della traduzione: sostituisce i
+   * newline con breakline per farli interpretare
+   * dai browser, limitando a due il numero di
+   * quelli consecutivi
+   */
+  utils.tooutput = function (str) {
+    return str.replace(/\n{2,}/g, "<br /><br />").replace(/\n/g, "<br />");
+  };
 
-    /**
-     * Traduzione verso clipboard: sostituisce (alcune) html entities con i
-     * rispettivi caratteri.
-     */
-    utils.toclipboard = function(str) {
-        return str
-            .replace(/&agrave;/g, "à")
-            .replace(/&ugrave;/g, "ù")
-            .replace(/&egrave;/g, "è")
-            .replace(/&eacute;/g, "é")
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&igrave;/g, 'ì')
-            .replace(/&euro;/g, '€')
-            .replace(/&pound;/g, '£')
-            .replace(/<br>/g, '\n')
-            // This must be last
-            .replace(/&amp;/g, "&")
-        ;
+  /**
+   * Traduzione verso clipboard: sostituisce (alcune) html entities con i
+   * rispettivi caratteri.
+   */
+  utils.toclipboard = function (str) {
+    return (
+      str
+        .replace(/&agrave;/g, "à")
+        .replace(/&ugrave;/g, "ù")
+        .replace(/&egrave;/g, "è")
+        .replace(/&eacute;/g, "é")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&igrave;/g, "ì")
+        .replace(/&euro;/g, "€")
+        .replace(/&pound;/g, "£")
+        .replace(/<br>/g, "\n")
+        // This must be last
+        .replace(/&amp;/g, "&")
+    );
+  };
+
+  /**
+   * Runs a macro
+   */
+  utils.runMacro = function () {
+    // Recupero della macro selezionata
+    let macro = utils.menu.selectedOptions[0].value;
+
+    // Applicazione della macro
+    const result = utils.macros[macro](utils.opening(utils.textarea.value));
+    utils.output.innerHTML = utils.tooutput(result);
+
+    // Copia del risultato
+    navigator.clipboard.writeText(utils.toclipboard(result)).then(
+      () => {
+        utils.copyresult.textContent = "Copiato con successo!";
+        if (utils.classList) {
+          utils.classList.remove("text-red");
+        }
+      },
+      () => {
+        utils.copyresult.textContent = "Copia fallita :(";
+        utils.classList.add("text-red");
+      },
+    );
+  };
+
+  document.getElementsByTagName("button")[0].onclick = utils.runMacro;
+
+  /**
+   * Creazione delle entries del menu sulla base
+   * delle funzione di replacing precedentemente definite
+   */
+  utils.updateMenu = function () {
+    // Clear menu options before adding them again
+    while (utils.menu.options.length > 0) {
+      utils.menu.remove(utils.menu.options.length - 1);
     }
+    for (const k in utils.macros) {
+      const option = document.createElement("option");
+      option.setAttribute("value", k);
+      option.appendChild(document.createTextNode("Traduci " + k));
+      utils.menu.appendChild(option);
+    }
+  };
 
-    /**
-     * Runs a macro
-     */
-    utils.runMacro = function() {
-        // Recupero della macro selezionata
-        let macro = utils.menu.selectedOptions[0].value;
+  utils.menu = document.getElementsByTagName("select")[0];
+  utils.output = document.getElementById("output");
+  utils.textarea = document.getElementsByTagName("textarea")[0];
+  utils.copyresult = document.getElementById("copy-result");
 
-        // Applicazione della macro
-        const result = utils.macros[macro](utils.opening(utils.textarea.value));
-        utils.output.innerHTML = utils.tooutput(result);
+  utils.updateMenu();
 
-        // Copia del risultato
-        navigator.clipboard.writeText(utils.toclipboard(result)).then(
-            () => {
-                utils.copyresult.textContent = "Copiato con successo!";
-                if (utils.classList) {
-                    utils.classList.remove("text-red");
-                }
-            },
-            () => {
-                utils.copyresult.textContent = "Copia fallita :(";
-                utils.classList.add("text-red");
-            },
-        );
-    };
-
-    document.getElementsByTagName('button')[0].onclick = utils.runMacro;
-
-    /**
-     * Creazione delle entries del menu sulla base
-     * delle funzione di replacing precedentemente definite
-     */
-    utils.updateMenu = function() {
-        // Clear menu options before adding them again
-        while (utils.menu.options.length > 0) {
-            utils.menu.remove(utils.menu.options.length - 1);
-        }
-        for (const k in utils.macros) {
-            const option = document.createElement('option');
-            option.setAttribute('value', k);
-            option.appendChild(document.createTextNode('Traduci ' + k));
-            utils.menu.appendChild(option);
-        }
-    };
-
-    utils.menu = document.getElementsByTagName('select')[0];
-    utils.output = document.getElementById('output');
-    utils.textarea = document.getElementsByTagName('textarea')[0];
-    utils.copyresult = document.getElementById('copy-result');
-
-    utils.updateMenu();
-
-    return utils;
-}(utils || { macros: {} }));
+  return utils;
+})(utils || { macros: {} });
