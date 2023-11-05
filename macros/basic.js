@@ -89,7 +89,11 @@
       .replace(/\bIron Jugulis\b/g, "Colloferreo")
       .replace(/\bIron Thorns\b/g, "Spineferree")
       .replace(/\bIron Bundle\b/g, "Saccoferreo")
-      .replace(/\bIron Valiant\b/g, "Eroeferreo");
+      .replace(/\bIron Valiant\b/g, "Eroeferreo")
+      .replace(/\bWalking Wake\b/g, "Acquecrespe")
+      .replace(/\bIron Leaves\b/g, "Fogliaferrea")
+      .replace(/\bRaging Bolt\b/g, "Furiatonante")
+      .replace(/\bIron Crown\b/g, "Capoferreo");
   };
 
   macros.gare = function (str) {

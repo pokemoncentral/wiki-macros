@@ -747,9 +747,10 @@
 
         .replace(/\bFloaty Fall\b/g, "Piombaflap")
         .replace(/\bPika Papow\b/g, "Pikasaetta")
-        .replace(/\bSurfasplash\b/g, "Splishy Splash")
+        .replace(/\bSplishy Splash\b/g, "Surfasplash")
         .replace(/\bZippy Zap\b/g, "Sprintaboom")
         .replace(/\bBouncy Bubble\b/g, "Bollaslurp")
+        .replace(/\bBouncy Bolla\b/g, "Bollaslurp")
         .replace(/\bBuzzy Buzz\b/g, "Elettrozap")
         .replace(/\bSizzly Slide\b/g, "Fiammabam")
         .replace(/\bGlitzy Glow\b/g, "Auraswoosh")
