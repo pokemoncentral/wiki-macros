@@ -310,6 +310,15 @@
         .replace(/\bArmor Tail\b/g, "Codarmatura")
         .replace(/\bEarth Eater\b/g, "Mangiaterra")
         .replace(/\bMycelium Might\b/g, "Micoforza")
+        .replace(/\bHospitality\b/g, "Ospitalità")
+        .replace(/\bMind's Eye\b/g, "Occhio Interiore")
+        .replace(/\bEmbody Aspect\b/g, "Albergamemorie")
+        .replace(/\bToxic Chain\b/g, "Catena Tossica")
+        .replace(/\bSupersweet Syrup\b/g, "Sciroppo Sublime")
+        .replace(/\bTera Shift\b/g, "Teramorfosi")
+        .replace(/\bTera Shell\b/g, "Teraguscio")
+        .replace(/\bTeraform Zero\b/g, "Zeroformazione")
+        .replace(/\bPoison Puppeteer\b/g, "Malia Tossica")
 
         // Correzioni errori
         .replace(/\bCorposgargiante Gleam\b/g, "Magibrillio")
