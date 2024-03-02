@@ -438,7 +438,7 @@ in lotta
 
     return (
       str
-        .replace(/\bBright Powder\b/g, "Luminpolvere")
+        .replace(/\bBright ?Powder\b/g, "Luminpolvere")
         .replace(/\bQuick Claw\b/g, "Rapidartiglio")
         .replace(/\bKing's Rock\b/g, "Roccia di re")
         .replace(/\bSilver ?Powder\b/g, "Argenpolvere")
@@ -464,8 +464,9 @@ in lotta
         .replace(/\bSharp Beak\b/g, "Beccaffilato")
         .replace(/\bPoison Barb\b/g, "Velenaculeo")
         .replace(/\bNever\-Melt Ice\b/g, "Gelomai")
+        .replace(/\bNever[Mm]elt[Ii]ce\b/g, "Gelomai")
         .replace(/\bSpell Tag\b/g, "Spettrotarga")
-        .replace(/\bTwisted Spoon\b/g, "Cucchiaio Torto")
+        .replace(/\bTwisted ?Spoon\b/g, "Cucchiaio Torto")
         .replace(/\bCharcoal\b/g, "Carbonella")
         .replace(/\bDragon Fang\b/g, "Dentedidrago")
         .replace(/\bPink Bow\b/g, "Fiocco Rosa")
