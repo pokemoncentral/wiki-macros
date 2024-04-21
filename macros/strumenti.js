@@ -475,7 +475,7 @@ in lotta
         .replace(/\bLucky Punch\b/g, "Fortunpugno")
         .replace(/\bMetal Powder\b/g, "Metalpolvere")
         .replace(/\bThick Club\b/g, "Ossospesso")
-        .replace(/\bStick\b/g, "Gambo")
+        .replace(/\b(Leek|Stick)\b/g, "Gambo")
         .replace(/\bBerserk Gene\b/g, "Gene Furioso")
 
         // Strumenti tenuti - Gen III
@@ -485,8 +485,8 @@ in lotta
         .replace(/\bMental Herb\b/g, "Mentalerba")
         .replace(/\bChoice Band\b/g, "Bendascelta")
         .replace(/\bSoul Dew\b/g, "Cuorugiada")
-        .replace(/\bDeep Sea Tooth\b/g, "Denteabissi")
-        .replace(/\bDeep Sea Scale\b/g, "Squamabissi")
+        .replace(/\bDeep\s?Sea\s?Tooth\b/g, "Denteabissi")
+        .replace(/\bDeep\s?Sea\s?Scale\b/g, "Squamabissi")
         .replace(/\bSilk Scarf\b/g, "Sciarpa seta")
         .replace(/\bShell Bell\b/g, "Conchinella")
         .replace(/\bSea Incense\b/g, "Marearoma")
@@ -629,8 +629,8 @@ in lotta
         // Strumenti tenuti - Gen IX
         .replace(/\bAbility Shield\b/g, "Scudo abilità")
         .replace(/\bPunching Glove\b/g, "Guantone")
-        .replace(/\Clear Amulet\b/g, "Ciondolochiaro")
-        .replace(/\bStick\b/g, "Gambo")
+        .replace(/\bClear Amulet\b/g, "Ciondolochiaro")
+        .replace(/\b(Leek|Stick)\b/g, "Gambo")
 
         // Bacche - Gen II - no template
         .replace(/\bGold Berry\b/g, "Bacca Oro")
