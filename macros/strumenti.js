@@ -69,7 +69,7 @@ in lotta
         .replace(/\bBrick Piece\b/g, "Mattoncino")
         .replace(/\bNugget\b/g, "Pepita")
         .replace(/\bHeart Scale\b/g, "Squama Cuore")
-        .replace(/\bRare Bone\b/g, "Ossopesso")
+        .replace(/\bRare Bone\b/g, "Osso raro")
         .replace(/\bPretty Wing\b/g, "Piumabella")
         .replace(/\bBalm Mushroom\b/g, "Profumfungo")
         .replace(/\bBig Nugget\b/g, "Granpepita")
@@ -110,7 +110,7 @@ in lotta
         .replace(/\bEnergy Root\b/g, "Radicenergia")
         .replace(/\bHeal Powder\b/g, "Polvocura")
         .replace(/\bRevival Herb\b/g, "Vitalerba")
-        .replace(/\bSacred Ash\b/g, "Magicenere")
+        .replace(/\bSacred Ash\b/g, "Cenere magica")
         .replace(/\bRage Candy Bar\b/g, "Iramella")
         .replace(/\bLava Cookie\b/g, "Lavottino")
         .replace(/\bBerry Juice\b/g, "Succo di Bacca")
@@ -609,6 +609,7 @@ in lotta
         .replace(/\bAssault Vest\b/g, "Corpetto assalto")
         .replace(/\bSafety Goggles\b/g, "Visierantisabbia")
         .replace(/\bWeakness Policy\b/g, "Vulneropolizza")
+        .replace(/\bFairy Gem\b/g, "Bijoufolletto")
 
         // Strumenti tenuti - Gen VII
         .replace(/\bTerrain Extender\b/g, "Fissacampo")
@@ -631,6 +632,13 @@ in lotta
         .replace(/\bPunching Glove\b/g, "Guantone")
         .replace(/\bClear Amulet\b/g, "Ciondolochiaro")
         .replace(/\b(Leek|Stick)\b/g, "Gambo")
+        .replace(/\bFairy Feather\b/g, "Piuma fatata")
+        .replace(/\bCovert Cloak\b/g, "Anonimanto")
+        .replace(/\bLoaded Dice\b/g, "Dado truccato")
+        .replace(/\bBooster Energy\b/g, "Capsula energetica")
+        .replace(/\bAdamant Crystal\b/g, "Adamasferoide")
+        .replace(/\bLustrous Globe\b/g, "Splendisferoide")
+        .replace(/\bGriseous Core\b/g, "Grigiosferoide")
 
         // Bacche - Gen II - no template
         .replace(/\bGold Berry\b/g, "Bacca Oro")

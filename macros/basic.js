@@ -93,25 +93,22 @@
       .replace(/\bWalking Wake\b/g, "Acquecrespe")
       .replace(/\bIron Leaves\b/g, "Fogliaferrea")
       .replace(/\bRaging Bolt\b/g, "Furiatonante")
-      .replace(/\bIron Crown\b/g, "Capoferreo");
+      .replace(/\bIron Crown\b/g, "Capoferreo")
+      .replace(/\bGouging Fire\b/g, "Vampeaguzze")
+      .replace(/\bIron Boulder\b/g, "Massoferreo");
   };
 
   macros.gare = function (str) {
     // Statistiche gara
 
-    return (
-      str
-        .replace(/\bTough\b/gi, "Grinta")
-        .replace(/\bCool\b/gi, "Classe")
-        .replace(/\b(Smart|Clever)\b/gi, "Acume")
-        .replace(/\bBeaut(y|iful)\b/gi, "Bellezza")
-        .replace(/\bCute\b/gi, "Grazia")
+    return str
+      .replace(/\bTough\b/gi, "Grinta")
+      .replace(/\bCool\b/gi, "Classe")
+      .replace(/\b(Smart|Clever)\b/gi, "Acume")
+      .replace(/\bBeaut(y|iful)\b/gi, "Bellezza")
+      .replace(/\bCute\b/gi, "Grazia");
 
-        // Correzione errori
-
-        .replace(/TentaClasse/g, "Tentacool")
-        .replace(/ExeggGrazia/g, "Exeggcute")
-    );
+    // Correzione errori
   };
 
   macros.generazioni = function (str, lastConj) {
@@ -124,12 +121,20 @@
       4: "quarta",
       5: "quinta",
       6: "sesta",
+      7: "settima",
+      8: "ottava",
+      9: "nona",
+      10: "decima",
       I: "prima",
       II: "seconda",
       III: "terza",
       IV: "quarta",
       V: "quinta",
       VI: "sesta",
+      VII: "settima",
+      VIII: "ottava",
+      IX: "nona",
+      X: "decima",
     };
 
     return str.replace(
@@ -291,38 +296,33 @@ SoulSilver
   macros["nature"] = function (str) {
     return (
       str
-        .replace(/Hardy/g, "Ardita")
-        .replace(/Lonely/g, "Schiva")
-        .replace(/Brave/g, "Audace")
-        .replace(/Adamant/g, "Decisa")
-        .replace(/Naughty/g, "Birbona")
-        .replace(/Bold/g, "Sicura")
-        // .replace(/Docile/g, 'Docile')
-        .replace(/Relaxed/g, "Placida")
-        .replace(/Impish/g, "Scaltra")
-        .replace(/Lax/g, "Fiacca")
-        .replace(/Timid/g, "Timida")
-        .replace(/Hasty/g, "Lesta")
-        .replace(/Serious/g, "Seria")
-        .replace(/Jolly/g, "Allegra")
-        .replace(/Naive/g, "Ingenua")
-        .replace(/Modest/g, "Modesta")
-        .replace(/Mild/g, "Mite")
-        .replace(/Quiet/g, "Quieta")
-        .replace(/Bashful/g, "Ritrosa")
-        .replace(/Rash/g, "Ardente")
-        .replace(/Calm/g, "Calma")
-        .replace(/Gentle/g, "Gentile")
-        .replace(/Sassy/g, "Vivace")
-        .replace(/Careful/g, "Cauta")
-        .replace(/Quirky/g, "Furba")
+        .replace(/\bHardy\b/g, "Ardita")
+        .replace(/\bLonely\b/g, "Schiva")
+        .replace(/\bBrave\b/g, "Audace")
+        .replace(/\bAdamant\b/g, "Decisa")
+        .replace(/\bNaughty\b/g, "Birbona")
+        .replace(/\bBold\b/g, "Sicura")
+        // .replace(/\bDocile\b/g, 'Docile')
+        .replace(/\bRelaxed\b/g, "Placida")
+        .replace(/\bImpish\b/g, "Scaltra")
+        .replace(/\bLax\b/g, "Fiacca")
+        .replace(/\bTimid\b/g, "Timida")
+        .replace(/\bHasty\b/g, "Lesta")
+        .replace(/\bSerious\b/g, "Seria")
+        .replace(/\bJolly\b/g, "Allegra")
+        .replace(/\bNaive\b/g, "Ingenua")
+        .replace(/\bModest\b/g, "Modesta")
+        .replace(/\bMild\b/g, "Mite")
+        .replace(/\bQuiet\b/g, "Quieta")
+        .replace(/\bBashful\b/g, "Ritrosa")
+        .replace(/\bRash\b/g, "Ardente")
+        .replace(/\bCalm\b/g, "Calma")
+        .replace(/\bGentle\b/g, "Gentile")
+        .replace(/\bSassy\b/g, "Vivace")
+        .replace(/\bCareful\b/g, "Cauta")
+        .replace(/\bQuirky\b/g, "Furba")
 
         // Correzione errori
-        .replace(/Timidaa/g, "Timida")
-        .replace(/Modestaa/g, "Modesta")
-        .replace(/Quietaa/g, "Quieta")
-        .replace(/Calmaa/g, "Calma")
-
         .replace(/Audace Bird/g, "Brave Bird")
         .replace(/Decisa Orb/g, "Adamant Orb")
         .replace(/Fiacca Incense/g, "Lax Incense")
@@ -332,18 +332,18 @@ SoulSilver
 
   macros.date = function (str) {
     return str
-      .replace(/January (\d+), (\d+)/g, "$1 gennaio $2")
-      .replace(/February (\d+), (\d+)/g, "$1 febbraio $2")
-      .replace(/March (\d+), (\d+)/g, "$1 marzo $2")
-      .replace(/April (\d+), (\d+)/g, "$1 aprile $2")
-      .replace(/May (\d+), (\d+)/g, "$1 maggio $2")
-      .replace(/June (\d+), (\d+)/g, "$1 giugno $2")
-      .replace(/July (\d+), (\d+)/g, "$1 luglio $2")
-      .replace(/August (\d+), (\d+)/g, "$1 agosto $2")
-      .replace(/September (\d+), (\d+)/g, "$1 settembre $2")
-      .replace(/October (\d+), (\d+)/g, "$1 ottobre $2")
-      .replace(/November (\d+), (\d+)/g, "$1 novembre $2")
-      .replace(/December (\d+), (\d+)/g, "$1 dicembre $2");
+      .replace(/\bJanuary (\d+), (\d+)/g, "$1 gennaio $2")
+      .replace(/\bFebruary (\d+), (\d+)/g, "$1 febbraio $2")
+      .replace(/\bMarch (\d+), (\d+)/g, "$1 marzo $2")
+      .replace(/\bApril (\d+), (\d+)/g, "$1 aprile $2")
+      .replace(/\bMay (\d+), (\d+)/g, "$1 maggio $2")
+      .replace(/\bJune (\d+), (\d+)/g, "$1 giugno $2")
+      .replace(/\bJuly (\d+), (\d+)/g, "$1 luglio $2")
+      .replace(/\bAugust (\d+), (\d+)/g, "$1 agosto $2")
+      .replace(/\bSeptember (\d+), (\d+)/g, "$1 settembre $2")
+      .replace(/\bOctober (\d+), (\d+)/g, "$1 ottobre $2")
+      .replace(/\bNovember (\d+), (\d+)/g, "$1 novembre $2")
+      .replace(/\bDecember (\d+), (\d+)/g, "$1 dicembre $2");
   };
 
   if (utils.updateMenu) {
