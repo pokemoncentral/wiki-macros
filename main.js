@@ -35,9 +35,15 @@
    * newline con breakline per farli interpretare
    * dai browser, limitando a due il numero di
    * quelli consecutivi
+   *
+   * Sostituisce anche i < e > con le html entities
    */
   utils.tooutput = function (str) {
-    return str.replace(/\n{2,}/g, "<br /><br />").replace(/\n/g, "<br />");
+    return str
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\n{2,}/g, "<br /><br />")
+      .replace(/\n/g, "<br />");
   };
 
   /**
