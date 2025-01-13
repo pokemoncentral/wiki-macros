@@ -228,9 +228,15 @@ in lotta
         .replace(/\bBridgeMail T\b/g, "Mess. Prop.")
         .replace(/\bBridgeMail V\b/g, "Mess. Vill.")
         .replace(/\bBridgeMail M\b/g, "Mess. Merav.")
+        .replace(/\bBridge Mail S\b/g, "Messaggio Ponte F")
+        .replace(/\bBridge Mail D\b/g, "Messaggio Ponte L")
+        .replace(/\bBridge Mail T\b/g, "Messaggio Ponte P")
+        .replace(/\bBridge Mail V\b/g, "Messaggio Ponte V")
+        .replace(/\bBridge Mail M\b/g, "Messaggio Ponte M")
 
         // Strumenti lotta
         .replace(/\bGuard Spec.\b/g, "Superguardia")
+        .replace(/\bSuperguardia\b/g, "Guard Spec.")
         .replace(/\bDire Hit\b/g, "Supercolpo")
         .replace(/\bX Attack\b/g, "Attacco X")
         .replace(/\bX Defend\b/g, "Difesa X")
@@ -267,6 +273,7 @@ in lotta
         .replace(/\bLift Key\b/g, "Chiave Ascensore")
         .replace(/\bSilph Scope\b/g, "Spettrosonda")
         .replace(/\bBicycle\b/g, "Bicicletta")
+        .replace(/\bBike\b/g, "Bicicletta")
         .replace(/\bTown Map\b/g, "Mappa")
         .replace(/\bFishing Rod\b/g, "Canna da pesca")
 
@@ -359,6 +366,15 @@ in lotta
         .replace(/\bLunar Feather\b/g, "Piumalunare")
         .replace(/\bLoot Sack\b/g, "Bottinosacca")
         .replace(/\bRed Chain\b/g, "Catena rossa")
+        .replace(/\bGuidebook\b/g, "Note di viaggio")
+        .replace(/\bRule Book\b/g, "Libro regole")
+        .replace(/\bSticker Case\b/g, "Portabolli")
+        .replace(/\bSticker Bag\b/g, "Bollosacca")
+        .replace(/\bAzure Flute\b/g, "Flauto cielo")
+        .replace(/\bDowsing Machine\b/g, "Ricerca strumenti")
+        .replace(/\bSlowpoke Tail\b/g, "Coda Slowpoke")
+        .replace(/\bPhoto Album\b/g, "Album")
+        .replace(/\bLock Capsule\b/g, "Capsula scrigno")
 
         // Strumenti base - Gen V
         // .replace(/\bLiberty Pass\b/g, "Liberticket")
@@ -411,6 +427,14 @@ in lotta
         .replace(/\bMeteorite Shard\b/g, "Framm. meteorite")
         .replace(/\bEon Flute\b/g, "Flauto Eone")
         .replace(/\bCommon Stone\b/g, "Sasso qualsiasi")
+        .replace(/\bAdventure Guide\b/g, "Guida avventura")
+        .replace(/\bTravel Trunk\b/g, "Baule per abiti")
+        .replace(/\bMega Charm\b/g, "Megaciondolo")
+        .replace(/\bMega Glove\b/g, "Megaguanto")
+        .replace(/\bDevon Parts\b/g, "Merce Devon")
+        .replace(/\bPokéblock Kit\b/g, "Kit Pokémelle")
+        .replace(/\bDevon Scuba Gear\b/g, "Maschera Devon")
+        .replace(/\bMega Cuff\b/g, "Megapolsiera")
 
         // Strumenti base - Gen VII
         .replace(/\bAutograph \b/g, "Autografo")
@@ -441,6 +465,16 @@ in lotta
         .replace(/\bClothing Trunk\b/g, "Valigia vestiti")
         .replace(/\bCatching Pocket\b/g, "Tasca cattura")
         .replace(/\bBattle Pocket\b/g, "Tasca lotta")
+        .replace(/\bMakeup Bag\b/g, "Trousse")
+        .replace(/\bZ-Ring\b/g, "Cerchio Z")
+        .replace(/\bZygarde Cube\b/g, "Teca Zygarde")
+        .replace(/\bRide Pager\b/g, "Chiamapassaggio")
+        .replace(/\bBeast Ball\b/g, "UC Ball")
+        .replace(/\bBig Malasada\b/g, "Malasada maxi")
+        .replace(/\bPolished Mud Ball\b/g, "Pallina di fango")
+        .replace(/\bTropical Shell\b/g, "Tropiconchiglia")
+        .replace(/\bLeaf Letter\b/g, "Foglialettera")
+        .replace(/\bSmall Bouquet\b/g, "Bouquet")
 
         // Strumenti base - Gen VIII
         .replace(/\bArmor Pass\b/g, "Pass Armatura")
@@ -463,6 +497,21 @@ in lotta
         .replace(/\bSonia's Book\b/g, "Libro di Sonia")
         .replace(/\bDynamax Crystal\b/g, "Dynacristallo")
         .replace(/\bRotom Phone\b/g, "Smart Rotom")
+        .replace(/\bWishing Star\b/g, "Desiostella")
+        .replace(/\bDynamax Band\b/g, "Polsino Dynamax")
+        .replace(/\bRotom Bike\b/g, "Bici Rotom")
+        .replace(/\bCamping Gear\b/g, "Kit da campeggio")
+        .replace(/\bWishing Piece\b/g, "Desioblocco")
+        .replace(/\bHi-tech Earbuds\b/g, "Supertappi")
+        .replace(/\bWishing Chip\b/g, "Desioframmento")
+        .replace(/\bStyle Card\b/g, "Tessera chic")
+        .replace(/\bArmorite Ore\b/g, "Rocciarmatura")
+        .replace(/\bGalarica Wreath\b/g, "Corona Galarnoce")
+        .replace(/\bLegendary Clue\b/g, "Leggenda 1")
+        .replace(/\bLegendary Clue 2\b/g, "Leggenda 2")
+        .replace(/\bLegendary Clue 3\b/g, "Leggenda 3")
+        .replace(/\bLegendary Clue?\b/g, "Leggenda ?")
+        .replace(/\bDS Sounds\b/g, "Lettore DS")
 
         // Strumenti chiave - Gen IX
         .replace(/\bRotom Catalog\b/g, "Catalogo Rotom")
@@ -578,6 +627,7 @@ in lotta
         .replace(/\bMax Mushrooms\b/g, "Fungomax")
 
         // Strumenti da picnic
+        .replace(/\bPicnic Set\b/g, "Set da picnic")
         .replace(/\bAcademy Bottle\b/g, "Borraccia accademia")
         .replace(/\bPolka-Dot Bottle\b/g, "Borraccia a pois")
         .replace(/\bStriped Bottle\b/g, "Borraccia a righe")
@@ -655,7 +705,9 @@ in lotta
         .replace(/\bOrange Dish\b/g, "Piatto arancione")
         .replace(/\bRed Dish\b/g, "Piatto rosso")
         .replace(/\bWhite Dish\b/g, "Piatto bianco")
-        .replace(/\bPiatto giallo\b/g, "Yellow Dish")
+        .replace(/\bYellow Dish\b/g, "Piatto giallo")
+        .replace(/\bBlueberry Tablecloth\b/g, "Tovaglia Mirtillo")
+        .replace(/\bBlueberry Chairs\b/g, "Sedie Mirtillo")
 
         // Caramelle LGPE
         .replace(/\bHealth Candy\b/g, "Caramella vitalità S")
@@ -1016,6 +1068,7 @@ in lotta
         .replace(/\bHM(\d{2,3})\b/gi, "MN$1")
         .replace(/\bTR(\d{2,3})\b/gi, "DT$1")
         .replace(/\{\{DL\|([\w-\s]+)\|([\w\s]+)\}\}/gi, "[[$1#$2|$2]]")
+        .replace(/\bMedicine Pocket\b/g, "Tasca rimedi")
         .replace(
           /Evolution\-inducing held item/gi,
           "Strumenti tenuti che provocano Evoluzione",
