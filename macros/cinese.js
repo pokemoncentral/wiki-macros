@@ -1674,7 +1674,7 @@
       .replace(/生蛋/g, "Covauova")
       .replace(/飛膝踢/g, "Calcinvolo")
       .replace(/飞膝踢/g, "Calcinvolo")
-      .replace(/大蛇瞪眼/g, "Bagliore")
+      .replace(/大蛇瞪眼/g, "Sguardo Feroce")
       .replace(/食夢/g, "Mangiasogni")
       .replace(/食梦/g, "Mangiasogni")
       .replace(/毒瓦斯/g, "Velenogas")

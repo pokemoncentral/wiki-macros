@@ -95,6 +95,8 @@ in lotta
         .replace(/\bLone Earring\b/g, "Orecchino")
         .replace(/\bMarble\b/g, "Biglia")
         .replace(/\bGalarica Twig\b/g, "Ramo Galarnoce")
+        .replace(/\bMysterious Shard S\b/g, "Frammento insolito S")
+        .replace(/\bMysterious Shard L\b/g, "Frammento insolito L")
 
         // Rimedi
         .replace(/\bMax Potion\b/g, "Pozione Max")
@@ -485,6 +487,7 @@ in lotta
         // .replace(/\bLeaf Letter\b/g, "Foglialettera")
         .replace(/\bLeaf Lettera\b/g, "Foglialettera")
         .replace(/\bSmall Bouquet\b/g, "Bouquet")
+        .replace(/\bPokémon Box Link\b/g, "Box Pokémon")
 
         // Strumenti base - Gen VIII
         // .replace(/\bArmor Pass\b/g, "Pass Armatura")
@@ -530,6 +533,7 @@ in lotta
         .replace(/\bDS Sounds\b/g, "Lettore DS")
         // .replace(/\bBand Autograph\b/g, "Autografo band")
         .replace(/\bBand Autografo\b/g, "Autografo band")
+        .replace(/\bDigger Drill\b/g, "Trivella")
 
         // Strumenti chiave - Gen IX
         .replace(/\bRotom Catalog\b/g, "Catalogo Rotom")
@@ -675,9 +679,9 @@ in lotta
         .replace(/\bPink Bottle\b/g, "Borraccia rosa")
         .replace(/\bBlue Bottle\b/g, "Borraccia celeste")
         .replace(/\bYellow Bottle\b/g, "Borraccia gialla")
-        .replace(/\bSteel Bottle (R)\b/g, "Borraccia inox R")
-        .replace(/\bSteel Bottle (Y)\b/g, "Borraccia inox G")
-        .replace(/\bSteel Bottle (B)\b/g, "Borraccia inox B")
+        .replace(/\bSteel Bottle \(R\)/g, "Borraccia inox R")
+        .replace(/\bSteel Bottle \(Y\)/g, "Borraccia inox G")
+        .replace(/\bSteel Bottle \(B\)/g, "Borraccia inox B")
         .replace(/\bSilver Bottle\b/g, "Borraccia argento")
         .replace(/\bBarred Cup\b/g, "Tazza a righe orizzontali")
         .replace(/\bDiamond Pattern Cup\b/g, "Tazza a rombi")
@@ -690,9 +694,9 @@ in lotta
         .replace(/\bSlowpoke Cup\b/g, "Tazza Slowpoke")
         .replace(/\bSilver Cup\b/g, "Tazza argento")
         .replace(/\bExercise Ball\b/g, "Palla fitness")
-        .replace(/\bPlaid Tablecloth (Y)\b/g, "Tovaglia a quadri gialla")
-        .replace(/\bPlaid Tablecloth (B)\b/g, "Tovaglia a quadri viola")
-        .replace(/\bPlaid Tablecloth (R)\b/g, "Tovaglia a quadri rossa")
+        .replace(/\bPlaid Tablecloth \(Y\)/g, "Tovaglia a quadri gialla")
+        .replace(/\bPlaid Tablecloth \(B\)/g, "Tovaglia a quadri viola")
+        .replace(/\bPlaid Tablecloth \(R\)/g, "Tovaglia a quadri rossa")
         .replace(/\bB&W Grass Tablecloth\b/g, "Tovaglia erba alta")
         .replace(/\bBattle Tablecloth\b/g, "Tovaglia sfida")
         .replace(/\bMonstrous Tablecloth\b/g, "Tovaglia mostruosa")
@@ -884,7 +888,8 @@ in lotta
         .replace(/\bStarly Feather\b/g, "Penna di Starly")
         .replace(/\bKricketot Shell\b/g, "Esuvia di Kricketot")
         .replace(/\bShinx Fang\b/g, "Zanna di Shinx")
-        .replace(/\bCombee Honey\b/g, "Nettare di Combee")
+        // .replace(/\bCombee Honey\b/g, "Nettare di Combee")
+        .replace(/\bCombee Miele\b/g, "Nettare di Combee")
         .replace(/\bPachirisu Fur\b/g, "Pelo di Pachirisu")
         .replace(/\bBuizel Fur\b/g, "Pelo di Buizel")
         .replace(/\bShellos Mucus\b/g, "Bava di Shellos")
@@ -1810,7 +1815,7 @@ in lotta
       .replace(/\bPonyta Candy\b/g, "Caramella Ponyta")
       .replace(/\bSlowpoke Candy\b/g, "Caramella Slowpoke")
       .replace(/\bMagnemite Candy\b/g, "Caramella Magnemite")
-      .replace(/\bFarfetch’d Candy\b/g, "Caramella Farfetch’d")
+      .replace(/\bFarfetch[’']d Candy\b/g, "Caramella Farfetch'd")
       .replace(/\bDoduo Candy\b/g, "Caramella Doduo")
       .replace(/\bSeel Candy\b/g, "Caramella Seel")
       .replace(/\bGrimer Candy\b/g, "Caramella Grimer")
@@ -1942,10 +1947,11 @@ in lotta
         .replace(/\bSalty Herba Mystica\b/g, "Spezia nascosta salata")
         .replace(/\bHerba Mystica\b/g, "Spezia nascosta")
         .replace(/\bSpice Mix\b/g, "Spezie assortite")
-        .replace(/\bKlawf Stick\b/g, "Surimi di Klawf")
+        // .replace(/\bKlawf Stick\b/g, "Surimi di Klawf")
+        .replace(/\bKlawf Gambo\b/g, "Surimi di Klawf")
         // .replace(/\bTofu\b/g, "Tofu")
         .replace(/\bPotato Tortilla\b/g, "Tortilla")
-        // .replace(/\bEgg\b/g, "Uovo bollito") // this causes so much troubles
+        .replace(/\bEgg\b/g, "Uovo bollito")
         .replace(/\bBoiled Egg\b/g, "Uovo sodo")
         .replace(/\bSalad Mix\b/g, "Verdure");
       // .replace(/\bWasabi\b/g, "Wasabi")

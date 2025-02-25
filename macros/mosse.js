@@ -739,7 +739,7 @@
         .replace(/\bSplintered Stormshards\b/g, "Litotempesta Radiale")
         .replace(/\bLet's Snuggle Forever\b/g, "Dolcesacco di Botte")
         .replace(/\bMenacing Moonraze Maelstrom\b/g, "Deflagrazione Lunare")
-        .replace(/\bSearing Sunraze Smashh\b/g, "Supercollisione Solare")
+        .replace(/\bSearing Sunraze Smash\b/g, "Supercollisione Solare")
         .replace(
           /\bLight That Burns the Sky\b/g,
           "Fotodistruzione Apocalittica",
