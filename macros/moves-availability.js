@@ -37,6 +37,9 @@
     const rows = str.split("|-");
     // This slice(3) is so bad lol
     const new_rows = rows.slice(3).map((r) => {
+      if (r === "") {
+        return;
+      }
       const cells = r
         .split("\n|")
         .slice(1)
@@ -51,8 +54,10 @@
           switch (c) {
             case "{{yes}}":
               return "yes";
-            case "":
+            case "{{no}}":
               return "no";
+            case "":
+              return "";
             default:
               return "AAAAAAA";
           }
