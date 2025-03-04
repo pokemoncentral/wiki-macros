@@ -35,8 +35,7 @@
       .join("|");
 
     const rows = str.split("|-");
-    // This slice(3) is so bad lol
-    const new_rows = rows.slice(3).map((r) => {
+    const new_rows = rows.map((r) => {
       if (r === "") {
         return;
       }
@@ -44,6 +43,9 @@
         .split("\n|")
         .slice(1)
         .map((c) => c.trim());
+      if (cells.length < 5) {
+        return;
+      }
       const move = macros.mosse(cells[1].match(/{{m\|(.*)}}/)[1]);
       const type = macros.tipi(cells[1].match(/{{typetable\|(.*)}}/)[1]);
       const category = macros.tipi(cells[1].match(/{{statustable\|(.*)}}/)[1]);
