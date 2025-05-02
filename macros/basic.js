@@ -180,10 +180,33 @@ SoulSilver
         .replace(/Oro Oro HeartGold/g, "Oro HeartGold");
     }
 
-    // Traduzione nomi giochi
-
     return (
+      // Traduzione dei gruppi di giochi (con and in mezzo)
       str
+        .replace(/\bRed and Blue\b/gi, "Rosso e Blu")
+        .replace(/\bRed and Green\b/gi, "Rosso e Verde")
+        .replace(/\bGold and Silver\b/gi, "Oro e Argento")
+        .replace(/\bRuby and Sapphire\b/gi, "Rubino e Zaffiro")
+        .replace(/\bFireRed and LeafGreen\b/gi, "Rosso Fuoco e Verde Foglia")
+        .replace(/\bDiamond and Pearl\b/gi, "Diamante e Perla")
+        .replace(
+          /\bOmega Ruby and Alpha Sapphire\b/gi,
+          "Rubino Omega e Zaffiro Alpha",
+        )
+        .replace(/\bSun and Moon\b/gi, "Sole e Luna")
+        .replace(/\bUltra Sun and Ultra Moon\b/gi, "Ultrasole e Ultraluna")
+        .replace(
+          /Let's Go, Pikachu! and Let's Go, Eevee!/gi,
+          "Let's Go, Pikachu! e Let's Go, Eevee!",
+        )
+        .replace(/\bSword and Shield\b/gi, "Spada e Scudo")
+        .replace(
+          /\bBrilliant Diamond and Shining Pearl\b/gi,
+          "Diamante Lucente e Perla Splendente",
+        )
+        .replace(/\bScarlet and Violet\b/gi, "Scarlatto e Violetto")
+
+        // Traduzione nomi giochi
         .replace(/FireRed/gi, "Rosso Fuoco")
         .replace(/LeafGreen/gi, "Verde Foglia")
         .replace(/Alpha Sapphire/gi, "Zaffiro Alpha")
@@ -203,6 +226,65 @@ SoulSilver
         .replace(/Platinum/gi, "Platino")
         .replace(/\bBlack\b/gi, "Nero")
         .replace(/\bWhite\b/gi, "Bianco")
+        .replace(/\bPokémon Legends\: Arceus\b/gi, "Leggende Pokémon: Arceus")
+        .replace(/\bLegends\: Arceus\b/gi, "Leggende: Arceus")
+        .replace(/\bPokémon Legends Z-A\b/gi, "Leggende Pokémon: Z-A")
+        .replace(/\bLegends Z-A\b/gi, "Leggende Z-A")
+        .replace(/\bThe Crown Tundra\b/gi, "Le terre innevate della corona")
+        .replace(/\bThe Indigo Disk\b/gi, "Il disco indaco")
+        .replace(/\bThe Isle of Armor\b/gi, "L'isola solitaria dell'armatura")
+        .replace(/\bThe Teal Mask\b/gi, "La maschera turchese")
+        .replace(
+          /\bPokéPark Wii: Pikachu's Adventure\b/gi,
+          "PokéPark Wii: la grande avventura di Pikachu",
+        )
+        .replace(
+          /\bPokéPark 2: Wonders Beyond\b/gi,
+          "PokéPark 2: Il Mondo dei Desideri",
+        )
+        .replace(
+          /\bPokémon XD: Gale of Darkness\b/gi,
+          "Pokémon XD: Tempesta Oscura",
+        )
+        .replace(
+          /\bTrading Card Game 2: The Invasion of Team GR!\b/gi,
+          "Card GB2 GR dan sanjou!",
+        )
+        .replace(
+          /\bPokémon Trading Card Game Pocket\b/gi,
+          "Gioco di Carte Collezionabili Pokémon Pocket",
+        )
+        .replace(/\bRanger: Shadows of Almia\b/gi, "Ranger: Ombre su Almia")
+        .replace(/\bRanger: Guardian Signs\b/gi, "Ranger: Tracce di luce")
+        .replace(
+          /\bMystery Dungeon: Explorers of Sky\b/gi,
+          "Mystery Dungeon: Esploratori del Cielo",
+        )
+        .replace(
+          /\bMystery Dungeon: Explorers of Time and Explorers of Darkness\b/gi,
+          "Mystery Dungeon: Esploratori del Tempo ed Esploratori dell'Oscurità",
+        )
+        .replace(
+          /\bMystery Dungeon: Gates to Infinity\b/gi,
+          "Mystery Dungeon: i portali sull'infinito",
+        )
+        .replace(
+          /\bMystery Dungeon: Rescue Team DX\b/gi,
+          " Mystery Dungeon: Squadra di Soccorso DX",
+        )
+        .replace(
+          /\bMystery Dungeon: Rosso Rescue Team and Blu Rescue Team\b/gi,
+          "Mystery Dungeon: Squadra Rossa e Squadra Blu",
+        )
+        .replace(
+          /\bLearn with Pokémon: Typing Adventure\b/gi,
+          "Impara con Pokémon: avventura tra i tasti",
+        )
+        .replace(
+          /\bDetective Pikachu Returns\b/gi,
+          "Detective Pikachu: il ritorno",
+        )
+        .replace(/\bBattle Trozei\b/gi, "Link: Battle!")
 
         // Traduzione sigle dei giochi
 
