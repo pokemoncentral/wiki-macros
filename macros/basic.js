@@ -190,6 +190,13 @@ SoulSilver
         .replace(/\bFireRed and LeafGreen\b/gi, "Rosso Fuoco e Verde Foglia")
         .replace(/\bDiamond and Pearl\b/gi, "Diamante e Perla")
         .replace(
+          /\bHeartGold and SoulSilver\b/gi,
+          "Oro HeartGold e Argento SoulSilver",
+        )
+        .replace(/\bBlack and White\b/gi, "Nero e Bianco")
+        .replace(/\bBlack 2 and White 2\b/gi, "Nero 2 e Bianco 2")
+        .replace(/\bX and Y\b/gi, "X e Y")
+        .replace(
           /\bOmega Ruby and Alpha Sapphire\b/gi,
           "Rubino Omega e Zaffiro Alpha",
         )
@@ -242,12 +249,9 @@ SoulSilver
           /\bPokéPark 2: Wonders Beyond\b/gi,
           "PokéPark 2: Il Mondo dei Desideri",
         )
+        .replace(/\bXD: Gale of Darkness\b/gi, "XD: Tempesta Oscura")
         .replace(
-          /\bPokémon XD: Gale of Darkness\b/gi,
-          "Pokémon XD: Tempesta Oscura",
-        )
-        .replace(
-          /\bTrading Card Game 2: The Invasion of Team GR!\b/gi,
+          /\bTrading Card Game 2: The Invasion of Team GR!/gi,
           "Card GB2 GR dan sanjou!",
         )
         .replace(
