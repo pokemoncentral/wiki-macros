@@ -184,7 +184,7 @@ SoulSilver
       // Traduzione dei gruppi di giochi (con and in mezzo)
       str
         .replace(/\bRed and Blue\b/gi, "Rosso e Blu")
-        .replace(/\bRed and Green\b/gi, "Rosso e Verde")
+        .replace(/\bPokémon Red and Green\b/gi, "Pocket Monsters aka e midori")
         .replace(/\bGold and Silver\b/gi, "Oro e Argento")
         .replace(/\bRuby and Sapphire\b/gi, "Rubino e Zaffiro")
         .replace(/\bFireRed and LeafGreen\b/gi, "Rosso Fuoco e Verde Foglia")
@@ -359,6 +359,24 @@ SoulSilver
         // Correzione errori
 
         .replace(/Diamante\s?Storm/gi, "Diamantempesta")
+
+        // Some link replacements (? ask @SDoc94)
+        .replace(/\[\[Pokémon Ranger\]\]/g, "{{ga|Ranger}}")
+        .replace(
+          /\[\[Pokémon Ranger \(video game\)\|Pokémon Ranger\]\]/g,
+          "{{ga|Ranger}}",
+        )
+        .replace(/\[\[Pokémon Ranger\|Ranger\]\]/g, "{{ga|Ranger}}")
+        .replace(
+          /\[\[Pokémon Ranger \(video game\)\|Ranger\]\]/g,
+          "{{ga|Ranger}}",
+        )
+
+        .replace(/\[\[Detective Pikachu\]\]/g, "{{ga|Detective Pikachu}}")
+        .replace(
+          /\[\[Detective Pikachu \(video game\)\|Detective Pikachu\]\]/g,
+          "{{ga|Detective Pikachu}}",
+        )
     );
   };
 
