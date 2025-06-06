@@ -1290,7 +1290,7 @@ in lotta
       .replace(/\bSachet\b/g, "Bustina Aromi")
       .replace(/\bPixie Plate\b/g, "Lastraspiritello")
       .replace(/\bLuminous Moss\b/g, "Muschioluce")
-      .replace(/\bSnowball\b/g, "Palla di Neve")
+      .replace(/\bSnowball\b/g, "Palla di neve")
       .replace(/\bAssault Vest\b/g, "Corpetto assalto")
       .replace(/\bSafety Goggles\b/g, "Visierantisabbia")
       .replace(/\bWeakness Policy\b/g, "Vulneropolizza")

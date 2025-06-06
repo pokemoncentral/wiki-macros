@@ -190,7 +190,7 @@ SoulSilver
         .replace(/\bFireRed and LeafGreen\b/gi, "Rosso Fuoco e Verde Foglia")
         .replace(/\bDiamond and Pearl\b/gi, "Diamante e Perla")
         .replace(
-          /\bHeartGold and SoulSilver\b/gi,
+          /\bOro HeartGold and Argento SoulSilver\b/gi,
           "Oro HeartGold e Argento SoulSilver",
         )
         .replace(/\bBlack and White\b/gi, "Nero e Bianco")
@@ -242,6 +242,10 @@ SoulSilver
         .replace(/\bThe Isle of Armor\b/gi, "L'isola solitaria dell'armatura")
         .replace(/\bThe Teal Mask\b/gi, "La maschera turchese")
         .replace(
+          /\bScarlatto e Violetto\: The Hidden Treasure of Area Zero\b/gi,
+          "Scarlatto e Violetto - Il tesoro dell'Area Zero",
+        )
+        .replace(
           /\bPokéPark Wii: Pikachu's Adventure\b/gi,
           "PokéPark Wii: la grande avventura di Pikachu",
         )
@@ -288,6 +292,7 @@ SoulSilver
           /\bDetective Pikachu Returns\b/gi,
           "Detective Pikachu: il ritorno",
         )
+        .replace(/\bTrozei!/gi, "Link!")
         .replace(/\bBattle Trozei\b/gi, "Link: Battle!")
 
         // Traduzione sigle dei giochi
