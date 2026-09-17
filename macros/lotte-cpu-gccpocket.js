@@ -861,6 +861,11 @@
     );
   }
 
+  /** Numero di un item: Bulbapedia separa le migliaia con la virgola, PCW col punto. */
+  function itemNum(value) {
+    return value.replace(/,/g, ".");
+  }
+
   function items(str) {
     return str
       .replace(
@@ -884,16 +889,32 @@
         "{{GCCPocketItem||Punti Esperienza|num=$1|type=EXP}}",
       )
       .replace(
-        /\{\{TCGPocketItem\|Pack Hourglass\|num=(\d+)\}\}/g,
-        "{{GCCPocketItem|Clessidra buste|num=$1|type=Clessidra}}",
+        /\{\{TCGPocketItem\|Pack Hourglass\|num=([\d.,]+)\}\}/g,
+        (m, n) =>
+          `{{GCCPocketItem|Clessidra buste|num=${itemNum(n)}|type=Clessidra}}`,
       )
       .replace(
-        /\{\{TCGPocketItem\|Shinedust\|num=(\d+)\}\}/g,
-        "{{GCCPocketItem|Sabbialuce|num=$1}}",
+        /\{\{TCGPocketItem\|Wonder Hourglass\|num=([\d.,]+)\}\}/g,
+        (m, n) =>
+          `{{GCCPocketItem|Clessidra misteriosa|num=${itemNum(
+            n,
+          )}|type=Clessidra}}`,
       )
       .replace(
-        /\{\{TCGPocketItem\|Shop Ticket\|num=(\d+)\}\}/g,
-        "{{GCCPocketItem|Buono negozio|num=$1|type=Buono}}",
+        /\{\{TCGPocketItem\|Trade Hourglass\|num=([\d.,]+)\}\}/g,
+        (m, n) =>
+          `{{GCCPocketItem|Clessidra scambio|num=${itemNum(
+            n,
+          )}|type=Clessidra}}`,
+      )
+      .replace(
+        /\{\{TCGPocketItem\|Shinedust\|num=([\d.,]+)\}\}/g,
+        (m, n) => `{{GCCPocketItem|Sabbialuce|num=${itemNum(n)}}}`,
+      )
+      .replace(
+        /\{\{TCGPocketItem\|Shop Ticket\|num=([\d.,]+)\}\}/g,
+        (m, n) =>
+          `{{GCCPocketItem|Buono negozio|num=${itemNum(n)}|type=Buono}}`,
       );
   }
 
