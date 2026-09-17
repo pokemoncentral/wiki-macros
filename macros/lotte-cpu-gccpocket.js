@@ -1007,8 +1007,10 @@
   }
 
   function templates(str) {
+    // icona Mega Evolution ex: Bulbapedia ha sia {{TCGP Icon|Mega ex}} sia {{mega ex}}
     return str
       .replace(/\{\{TCGP Icon\|Mega ex\}\}/g, "{{ex|mega pocket}}")
+      .replace(/\{\{[Mm]ega ex\}\}/g, "{{ex|mega pocket}}")
       .replace(/\{\{TCGP Icon\|ex\}\}/g, "{{ex|pocket}}")
       .replace(/\{\{rar\/TCGP\|Diamond\|(\d)\}\}/g, "{{rar|Diamante $1}}")
       .replace(/\{\{ct\|([^}]+)\}\}/g, (m, t) => `{{ct|${TYPES[t] || t}}}`)
