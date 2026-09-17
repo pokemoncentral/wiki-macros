@@ -673,6 +673,11 @@
     return `{{GCCPocketItem|${it} (${kind})|${it} (${kind})|type=Effetto}}`;
   }
 
+  /** Normalizza gli apostrofi tipografici usati da Bulbapedia. */
+  function normApos(str) {
+    return str.replace(/[\u2018\u2019]/g, "'");
+  }
+
   /* ------------------------------------------------------- regole varie */
 
   function removeBanners(str) {
@@ -731,78 +736,87 @@
       );
   }
 
+  /** Nome del mazzo: Bulbapedia a volte sposta o duplica la parola "Deck". */
+  function deckName(name) {
+    return cardItDeep(name.replace(/\s*\bDeck\b\s*/g, " ").trim());
+  }
+
   function deckTitles(str) {
     str = str.replace(
       /^===\s*(.+?) Deck \((.+?)\)\s*===\s*$/gm,
-      (m, name, set) => `=== Mazzo ${cardItDeep(name)} (${setIt(set)}) ===`,
+      (m, name, set) => `=== Mazzo ${deckName(name)} (${setIt(set)}) ===`,
     );
     str = str.replace(
       /\{\{main\|(.+?) Deck \((.+?)\)\}\}/g,
       (m, name, set) =>
-        `{{principale|Mazzo ${cardItDeep(name)} (${setIt(set)})}}`,
+        `{{principale|Mazzo ${deckName(name)} (${setIt(set)})}}`,
     );
     str = str.replace(
       /\|title=(.+?) Deck \((.+?)\)\}\}/g,
-      (m, name, set) => `|title=Mazzo ${cardItDeep(name)} (${setIt(set)})}}`,
+      (m, name, set) => `|title=Mazzo ${deckName(name)} (${setIt(set)})}}`,
     );
     // casi in cui Bulbapedia omette la parola "Deck"
     str = str.replace(
       /\|title=(?!Mazzo)(.+?) \(([^()]+)\)\}\}/g,
-      (m, name, set) => `|title=Mazzo ${cardItDeep(name)} (${setIt(set)})}}`,
+      (m, name, set) => `|title=Mazzo ${deckName(name)} (${setIt(set)})}}`,
     );
     return str;
   }
 
-  /** Traduce una singola frase sugli effetti, o null se non lo e'. */
+  /**
+   * Traduce una singola frase sugli effetti (flair), o null se non lo e'.
+   * Forme gestite: "X has the Y ...", "The X card has the Y ...",
+   * "The X cards have the Y ...", "Both X (cards) have the Y ...",
+   * "Both X cards and Y have the Y ...", "X and Y both have the Z ...",
+   * "X and Y cards have the Z ...", "X cards have the Y and Z ... flairs".
+   */
   function flairSentence(sent) {
-    const K = "(cosmetic|battle) (?:\\[\\[)?flair(?:\\]\\])?s?\\.";
-    const kindOf = (k) => (k === "battle" ? "lotta" : "decorazione");
-    let m;
+    const m =
+      /^(.*?) (has|have) the (.+?) (cosmetic|battle) (?:\[\[)?flair(?:\]\])?s?\.$/.exec(
+        sent,
+      );
+    if (!m) return null;
+    const kind = m[4] === "battle" ? "lotta" : "decorazione";
 
-    m = new RegExp(`^The (.+?) cards have the (.+?) and (.+?) ${K}$`).exec(
-      sent,
+    // soggetto: "Both X cards and Y", "X and Y both", "The X cards", "X card ex"
+    let subj = m[1];
+    const both = /^Both /.test(subj);
+    subj = subj.replace(/^Both /, "").replace(/^The /, "");
+    let names;
+    let mm = /^(.+?) cards? and (.+)$/.exec(subj);
+    if (mm) names = [mm[1], mm[2]];
+    else if ((mm = /^(.+?) and (.+?)(?: both)?$/.exec(subj)))
+      names = [mm[1], mm[2]];
+    else names = [subj];
+    const plural = m[2] === "have" || / cards\b/.test(subj);
+    names = names.map((n) =>
+      cardItDeep(
+        n
+          .replace(/\s*\bcards?\s*$/, "")
+          .replace(/\s*\bcard\b\s*/g, " ")
+          .replace(/\s{2,}/g, " ")
+          .trim(),
+      ),
     );
-    if (m) {
-      const kind = kindOf(m[4]);
-      return `Una carta di ${cardItDeep(m[1])} ha l'effetto ${effectTmpl(
-        m[2],
-        kind,
-      )} e l'altra l'effetto ${effectTmpl(m[3], kind)}.`;
+
+    // effetti: "Y", oppure "Y and Z" quando la carta ne ha due
+    const effects = m[3]
+      .replace(/\s{2,}/g, " ")
+      .split(/ and /)
+      .map((e) => effectTmpl(e.trim(), kind));
+
+    if (names.length === 2) {
+      if (both && / cards? and /.test(subj))
+        return `Entrambe le carte di ${names[0]} e quella di ${names[1]} hanno l'effetto ${effects[0]}.`;
+      if (both)
+        return `Entrambe le carte di ${names[0]} e ${names[1]} hanno l'effetto ${effects[0]}.`;
+      return `Le carte di ${names[0]} e ${names[1]} hanno entrambe l'effetto ${effects[0]}.`;
     }
-    m = new RegExp(`^Both (.+?) cards and (.+?) have the (.+?) ${K}$`).exec(
-      sent,
-    );
-    if (m) {
-      return `Entrambe le carte di ${cardItDeep(m[1])} e quella di ${cardItDeep(
-        m[2],
-      )} hanno l'effetto ${effectTmpl(m[3], kindOf(m[4]))}.`;
-    }
-    m = new RegExp(`^(.+?) and (.+?) both have the (.+?) ${K}$`).exec(sent);
-    if (m) {
-      return `Le carte di ${cardItDeep(m[1])} e ${cardItDeep(
-        m[2],
-      )} hanno entrambe l'effetto ${effectTmpl(m[3], kindOf(m[4]))}.`;
-    }
-    m = new RegExp(`^Both (.+?) cards have the (.+?) ${K}$`).exec(sent);
-    if (m) {
-      return `Entrambe le carte di ${cardItDeep(
-        m[1],
-      )} hanno l'effetto ${effectTmpl(m[2], kindOf(m[3]))}.`;
-    }
-    m = new RegExp(`^Both (.+?) have the (.+?) ${K}$`).exec(sent);
-    if (m) {
-      return `Entrambe le carte di ${cardItDeep(
-        m[1],
-      )} hanno l'effetto ${effectTmpl(m[2], kindOf(m[3]))}.`;
-    }
-    m = new RegExp(`^(.+?) has the (.+?) ${K}$`).exec(sent);
-    if (m) {
-      return `La carta di ${cardItDeep(m[1])} ha l'effetto ${effectTmpl(
-        m[2],
-        kindOf(m[3]),
-      )}.`;
-    }
-    return null;
+    if (effects.length === 2)
+      return `Una carta di ${names[0]} ha l'effetto ${effects[0]} e l'altra l'effetto ${effects[1]}.`;
+    if (plural)
+      return `Entrambe le carte di ${names[0]} hanno l'effetto ${effects[0]}.`;
+    return `La carta di ${names[0]} ha l'effetto ${effects[0]}.`;
   }
 
   function flairs(str) {
@@ -885,11 +899,13 @@
 
   const MISSION_RULES = [
     [
-      /Knock out your opponent's Active Pokémon (\d+) times? with an attack from a \{\{ct\|([^}]+)\}\} Pokémon/g,
-      (m, n, type) =>
+      /Knock [Oo]ut your opponent['’]s Active Pokémon (\d+) times? with an attack from a (?:\{\{ct\|([^}]+)\}\}|([A-Za-z]+)-type) Pokémon/g,
+      (m, n, tmpl, plain) =>
         `Metti KO il Pokémon attivo avversario ${
           n === "1" ? "una volta" : n + " volte"
-        } con un attacco di un Pokémon {{ct|${TYPES[type] || type}}}.`,
+        } con un attacco di un Pokémon {{ct|${
+          TYPES[tmpl || plain] || tmpl || plain
+        }}}.`,
     ],
     [
       /Put (\d+) Basic Pokémon into play/g,
@@ -908,7 +924,7 @@
       () => "Vinci la lotta senza far ottenere punti al tuo avversario.",
     ],
     [
-      /Do (\d+) or more damage in total (?:to|your) (?:your )?opponent's Pokémon with one attack/g,
+      /Do (\d+) or more damage in total (?:to|your) (?:your )?opponent['’]s Pokémon with one attack/g,
       (m, n) =>
         `Infliggi almeno ${n} danni totali ai Pokémon dell'avversario con un unico attacco.`,
     ],
@@ -918,7 +934,7 @@
     ],
     [/Get (\d+) or more points/g, (m, n) => `Ottieni almeno ${n} punti.`],
     [
-      /Make your opponent's Pokémon Poisoned (\d+) times?/g,
+      /Make your opponent['’]s Pokémon Poisoned (\d+) times?/g,
       () => "Lascia un Pokémon avversario avvelenato una volta.",
     ],
     [
@@ -930,22 +946,22 @@
       () => "Vinci la lotta con un mazzo privo di carte Allenatore.",
     ],
     [
-      /Win this battle with 1 or more \{\{TCGP\|Mega Evolution Pokémon ex\}\} included in your deck/g,
+      /Win this battle with 1 or more (?:\{\{TCGP\|Mega Evolution Pokémon ex\}\}|Mega Evolution Pokémon ex) included in your deck/g,
       () =>
         "Vinci la lotta con un mazzo che contiene almeno un Pokémon-ex Megaevoluzione.",
     ],
     [
-      /Win this battle with (\d+) or more \{\{TCGP\|([^}]+)\}\} cards included in your deck/g,
-      (m, n, set) =>
+      /Win this battle with (\d+) or more (?:\{\{TCGP\|([^}]+)\}\}|([A-Za-z'’.: -]+?)) cards included in your deck/g,
+      (m, n, tmpl, plain) =>
         `Vinci con un mazzo con almeno ${n} carte dell'espansione {{GCCP|${setIt(
-          set,
+          tmpl || plain,
         )}}}.`,
     ],
     [
-      /Win this battle with a deck whose Pokémon are only ([A-Za-z]+)[- ]?type/g,
-      (m, type) =>
+      /Win this battle with a deck whose Pokémon are only (?:\{\{ct\|([^}]+)\}\}|([A-Za-z]+)[- ]?type)/g,
+      (m, tmpl, plain) =>
         `Vinci la lotta usando un mazzo che contiene solo Pokémon di {{ct|${
-          TYPES[type] || type
+          TYPES[tmpl || plain] || tmpl || plain
         }}}.`,
     ],
     [
@@ -1061,6 +1077,7 @@
   /* -------------------------------------------------------- macro finale */
 
   function translate(str) {
+    str = normApos(str);
     return [
       removeBanners,
       intro,
@@ -1086,6 +1103,7 @@
    * intestazioni di pagina, categorie e interwiki.
    */
   macros["mazzo GCC Pocket"] = function (str) {
+    str = normApos(str);
     return [
       deckTitles,
       flairs,
