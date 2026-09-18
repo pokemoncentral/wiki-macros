@@ -729,7 +729,10 @@
         /^==\s*Advanced step-up battles\s*==\s*$/gm,
         "==Lotta per gradi - Avanzato==",
       )
-      .replace(/^==\s*Expert solo battles\s*==\s*$/gm, "==Lotta con CPU pro==")
+      .replace(
+        /^==\s*Expert (?:solo|step-up) battles\s*==\s*$/gm,
+        "==Lotta con CPU pro==",
+      )
       .replace(
         /All opponents use the following accessories in battle:/g,
         "Tutti i mazzi utilizzano i seguenti accessori:",
@@ -965,6 +968,11 @@
     [
       /Win this battle without any (?:\{\{TCGP\|Trainer card\}\}s|Trainer cards)(?: included in your deck)?/g,
       () => "Vinci la lotta con un mazzo privo di carte Allenatore.",
+    ],
+    [
+      // Bulbapedia a volte scrive "withot"
+      /Win this battle witho?u?t any (?:\{\{TCGP\|Stadium card\}\}s|Stadium cards)(?: included in your deck)?/g,
+      () => "Vinci la lotta con un mazzo privo di carte Stadio.",
     ],
     [
       /Win this battle with 1 or more (?:\{\{TCGP\|Mega Evolution Pokémon ex\}\}|Mega Evolution Pokémon ex) included in your deck/g,
