@@ -1118,6 +1118,303 @@
     );
   }
 
+  /* ------------------------------------------------ pagine intere dei mazzi */
+
+  /** Icona dei Pokémon-ex nel wikitesto di PCW. */
+  const EX_ICON = "{{ex|pocket}}";
+
+  /** Parametri di un template, uno per riga. */
+  function params(body) {
+    const out = {};
+    body.replace(/^\|\s*([\w ]+?)\s*=\s*([^\n]*)$/gm, (m, k, v) => {
+      out[k] = v.trim();
+      return m;
+    });
+    return out;
+  }
+
+  /** Carte citate in un testo, con eventuale nome mostrato e icona ex. */
+  function cardRefs(text) {
+    const out = [];
+    (text || "").replace(
+      /\{\{TCG ID\|([^|}]+)\|([^|}]+)\|(\d+)(?:\|([^|}]*))?\}\}(\{\{(?:TCGP Icon|ex)\|[^}]*\}\})?/g,
+      (m, set, name, num, disp, icon) => {
+        out.push({ set, name, num, disp, icon });
+        return m;
+      },
+    );
+    return out;
+  }
+
+  /**
+   * Tipi di energia dell'elenco |types=, che Bulbapedia scrive a volte con
+   * {{e|...}} e a volte con {{ct|...}}.
+   */
+  const TYPES_ANY = /\{\{(?:e|ct)\|([^}]+)\}\}/g;
+
+  function energyTypes(text) {
+    const out = [];
+    (text || "").replace(TYPES_ANY, (m, t) => {
+      out.push(TYPES[t] || t);
+      return m;
+    });
+    return out;
+  }
+
+  /** Lo stesso elenco, ma come testo tradotto e con il template giusto. */
+  function energyText(text) {
+    return (text || "").replace(
+      TYPES_ANY,
+      (m, t) => "{{e|" + (TYPES[t] || t) + "}}",
+    );
+  }
+
+  /** Nome del file immagine di una carta chiave: "NomeSet123.png". */
+  const imageFile = ({ set, name, num }) =>
+    (cardIt(name) + setIt(set) + num).replace(/[ .'’]/g, "") + ".png";
+
+  /**
+   * Riferimento a una carta nel wikitesto di PCW. Per i Pokémon-ex il nome
+   * mostrato (senza "-ex") precede l'icona, come nelle pagine dei mazzi.
+   */
+  function cardRef({ set, name, num, disp, icon }) {
+    const s = setIt(set);
+    const card = cardIt(name);
+    if (disp)
+      return `{{GCC ID|${s}|${card}|${num}|${cardIt(disp)}}}${icon || ""}`;
+    const split = exSplit(card);
+    if (split)
+      return (
+        `{{GCC ID|${s}|${card}|${num}|${split[0]}}}${EX_ICON}` +
+        ` {{GCC ID|${s}|${card}|${num}|${split[1]}}}`
+      );
+    if (/-ex$/.test(card))
+      return `{{GCC ID|${s}|${card}|${num}|${card.slice(0, -3)}}}${EX_ICON}`;
+    return `{{GCC ID|${s}|${card}|${num}}}${icon || ""}`;
+  }
+
+  /** Didascalia dell'infobox: le carte chiave del mazzo. */
+  function deckCaption(cards) {
+    const list = cards
+      .map(cardRef)
+      .join(", ")
+      .replace(/, ([^,]*)$/, " e $1");
+    const kind =
+      cards.length === 1
+        ? "la carta chiave del mazzo"
+        : "le carte chiave del mazzo";
+    return `${list}, ${kind}`;
+  }
+
+  /** Titolo italiano del mazzo, ricavato dal nome nella langtable. */
+  function deckTitle(str) {
+    const m = /\|it=([^\n]*)/.exec(str);
+    return m ? m[1].trim().replace(/\s*\([^()]*\)\s*$/, "") : "";
+  }
+
+  /** Nome di una persona citata nell'introduzione, in link. */
+  function linkedIt(text) {
+    return text
+      .replace(
+        /\[\[([^|\]]+)(\|[^\]]*)?\]\]/,
+        (m, name, alias) => `[[${cardIt(name)}${alias || ""}]]`,
+      )
+      .replace(/\{\{ga\|([^}]+)\}\}/, (m, name) => `[[${cardIt(name)}]]`);
+  }
+
+  /** Seconda frase dell'introduzione: su cosa si basa il mazzo. */
+  function deckFocus(intro) {
+    const m = /It focuses on ([\s\S]*?) Pokémon\./.exec(intro);
+    if (!m) return "";
+    const items = m[1]
+      .replace(/,\s*and\s+/g, " and ")
+      .split(/\s+and\s+/)
+      .map((s) => s.split(/,\s*/))
+      .reduce((a, b) => a.concat(b), [])
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const types = items.filter((i) => /^\{\{ct\|/.test(i));
+    const others = items.filter((i) => !/^\{\{ct\|/.test(i)).map(linkedIt);
+    const list = types.join(", ").replace(/, ([^,]*)$/, " e $1");
+    if (!others.length) return `Si basa su Pokémon di ${list}.`;
+    return `Si basa su ${others.join(", ")} e Pokémon di ${list}.`;
+  }
+
+  /**
+   * Introduzione della pagina. La riga sulle lotte con CPU presente su
+   * Bulbapedia non viene riportata, come nelle pagine di PCW.
+   */
+  function deckIntro(intro, title, set) {
+    const first =
+      /The '''.*?''' is a \[\[deck\]\] in \[\[Pokémon Trading Card Game Pocket\]\] that was added to the game alongside the \{\{TCGP\|[^}]+\}\} expansion\./;
+    if (!first.test(intro)) return intro;
+    const out = [
+      `Il '''${title}''' è un mazzo a tema del {{GCClink|pocket}} aggiunto`,
+      `insieme all'espansione {{GCCP|${set}}}.`,
+    ].join(" ");
+    const focus = deckFocus(intro);
+    return focus ? `${out}\n${focus}` : out;
+  }
+
+  /** Infobox {{DeckInfobox}} a partire da {{TCGPocketDeckInfobox}}. */
+  function deckInfobox(info, cards, types, title) {
+    const lines = ["{{DeckInfobox", `|title=${title}`];
+    if (types[0]) lines.push(`|type=${types[0]}`);
+    if (types[1]) lines.push(`|type2=${types[1]}`);
+    cards.forEach((c, i) =>
+      lines.push(`|image${i ? i + 1 : ""}=${imageFile(c)}`),
+    );
+    lines.push(`|caption=${deckCaption(cards)}`);
+    lines.push(`|expansion={{GCCP|${setIt(info.setname)}}}`);
+    lines.push(`|release=${itDate(info.release || "")}`);
+    lines.push(`|types=${energyText(info.types)}`);
+    lines.push("}}");
+    return lines.join("\n");
+  }
+
+  /** Sezione "Ottenere il mazzo": testo fisso, tranne casi particolari. */
+  function deckObtaining(text, n) {
+    if (
+      !/Players can obtain and use the[\s\S]*?Collect all 20 cards in the deck to obtain/.test(
+        text,
+      )
+    )
+      return text.replace(/^== Obtaining the deck ==/, "==Ottenere il mazzo==");
+    return [
+      "==Ottenere il mazzo==",
+      "Il mazzo si può ottenere e usare completando una delle due [[Missione (GCC Pocket)|missioni mazzo]]:",
+      `* Ottenere ${
+        n === 1 ? "la carta chiave" : "le carte chiave"
+      } e ricevere il mazzo a nolo (utilizzabile solo per 10 lotte).`,
+      "* Creare il mazzo dopo aver collezionato tutte le 20 carte incluse nell'elenco.",
+    ].join("\n");
+  }
+
+  /** Sezione "Elenco carte nel mazzo" con la tabella chiusa da |}. */
+  function deckListPage(text, types) {
+    const entries = [];
+    text.replace(/^\{\{TCGPocketDeckList\/Entry\|[^\n]*$/gm, (m) => {
+      entries.push(m);
+      return m;
+    });
+    const rows = entries.map((line, i) => {
+      const pars = [];
+      if (i === 0) pars.push("firstcard");
+      if (i === entries.length - 1) pars.push("lastcard");
+      if (!pars.length) return line;
+      return line.replace(
+        /\s*\}\}$/,
+        "|" + pars.map((p) => p + "=yes").join("|") + "}}",
+      );
+    });
+    const header =
+      "{{GCCPocketDeckList/Header|type=" +
+      types[0] +
+      (types[1] ? "|type2=" + types[1] : "") +
+      "}}";
+    return [
+      "==Elenco carte nel mazzo==",
+      "L'elenco indica le rarità mostrate nel mazzo a nolo. Per costruire il mazzo, ogni carta può essere sostituita da un'altra versione della stessa.",
+      "",
+      header,
+    ]
+      .concat(rows, ["|}"])
+      .join("\n");
+  }
+
+  /**
+   * Sezione "In altre lingue": la riga italiana diventa quella inglese, il
+   * resto lo fa la macro "Traduci langtable".
+   */
+  function deckLangtable(text, info, types) {
+    const block = /\{\{langtable[\s\S]*?\n\}\}/.exec(text);
+    if (!block) return "";
+    let lt = block[0]
+      .replace(
+        /\{\{langtable[^\n]*\n/,
+        "{{langtable|" +
+          types
+            .slice(0, 2)
+            .map((t, i) => (i ? "type2=" : "type=") + t.toLowerCase() + "_gcc")
+            .join("|") +
+          "\n",
+      )
+      .replace(/^\|it=[^\n]*\n/m, `|en=${info.deckname} (${info.setname})\n`);
+    if (macros.langtable) lt = macros.langtable(lt);
+    return `==In altre lingue==\n${lt}`;
+  }
+
+  /** Interwiki di una pagina, senza quello italiano. */
+  function interwiki(str) {
+    const links = {};
+    str.replace(/^\[\[([a-z_]+):([^\]]*)\]\]\s*$/gm, (m, code, value) => {
+      if (code !== "it") links[code] = value.trim();
+      return m;
+    });
+    return links;
+  }
+
+  /**
+   * Categoria e interwiki in fondo alla pagina; quello inglese e' il titolo
+   * della pagina di Bulbapedia.
+   */
+  function deckFooter(body, set, links) {
+    const interwiki = Object.keys(links)
+      .sort()
+      .map((c) => `[[${c}:${links[c]}]]`)
+      .join("\n");
+    return (
+      body
+        .replace(/\{\{DoubleProjectTag[^\n]*\}\}\n?/g, "")
+        .replace(/\n+$/, "") +
+      `\n\n[[Categoria:Mazzi a tema ${set}]]\n\n${interwiki}\n`
+    );
+  }
+
+  /** Contenuto di una sezione "== Titolo ==", fino alla sezione successiva. */
+  function section(str, name) {
+    const m = new RegExp(
+      "^== " +
+        name +
+        " ==\\n([\\s\\S]*?)(?=\\n== |\\n\\{\\{DoubleProjectTag|$(?![\\s\\S]))",
+      "m",
+    ).exec(str);
+    return m ? m[1] : "";
+  }
+
+  /**
+   * Traduce una pagina intera di un mazzo di Bulbapedia ("X Deck (Set)"):
+   * infobox, introduzione, sezioni, tabella, langtable, categoria e
+   * interwiki. Se il testo non e' una pagina di mazzo resta invariato.
+   */
+  function deckPage(str) {
+    const box = /\{\{TCGPocketDeckInfobox\n([\s\S]*?)\n\}\}/.exec(str);
+    if (!box) return str;
+    const info = params(box[1]);
+    const title = deckTitle(str) || "Mazzo " + deckName(info.deckname);
+    const cards = cardRefs(info.caption);
+    const types = energyTypes(info.types);
+    const set = setIt(info.setname);
+    const rest = str.slice(box.index + box[0].length);
+    const intro = /^([\s\S]*?)(?=\n== Obtaining the deck ==)/.exec(rest);
+    const links = interwiki(str);
+    links.en = `${info.deckname} (${info.setname})`;
+    return deckFooter(
+      [
+        deckInfobox(info, cards, types, title) +
+          "\n" +
+          (intro ? deckIntro(intro[1].trim(), title, set) : ""),
+        deckObtaining(section(str, "Obtaining the deck"), cards.length),
+        deckListPage(section(str, "Deck list"), types),
+        deckLangtable(str, info, types),
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+      set,
+      links,
+    );
+  }
+
   /* -------------------------------------------------------- macro finale */
 
   function translate(str) {
@@ -1142,13 +1439,14 @@
   macros["lotte con CPU GCC Pocket"] = translate;
 
   /**
-   * Traduce una singola sezione "=== ... Deck (...) ===" (titolo, effetto
-   * della carta principale, elenco mazzo e obiettivi), senza toccare
-   * intestazioni di pagina, categorie e interwiki.
+   * Traduce una pagina di mazzo di Bulbapedia, intera oppure una singola
+   * sezione "=== ... Deck (...) ===" (titolo, effetto della carta principale,
+   * elenco mazzo e obiettivi).
    */
   macros["mazzo GCC Pocket"] = function (str) {
     str = normApos(str);
     return [
+      deckPage,
       deckTitles,
       flairs,
       deckList,
