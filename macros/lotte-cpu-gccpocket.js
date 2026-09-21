@@ -644,6 +644,16 @@
     return name;
   }
 
+  /**
+   * Nomi italiani in cui "-ex" non e' in fondo, come "Raticate-ex del Team
+   * Rocket": vanno spezzati nel nome base e nel resto del nome, da mostrare
+   * dopo l'icona ex.
+   */
+  function exSplit(it) {
+    const m = /^(.+?)-ex(\s+\S.*)$/.exec(it);
+    return m ? [m[1], m[2].trim()] : null;
+  }
+
   function cardItDeep(text) {
     // link a una carta specifica: "Lycanroc (Celestial Guardians 100)"
     text = text.replace(
@@ -1036,21 +1046,24 @@
   }
 
   function cards(str) {
-    return str
-      .replace(
-        /\{\{TCG ID\|([^|}]+)\|([^|}]+)\|(\d+)(\|[^|}]*)?\}\}/g,
-        (m, set, name, num, disp) => {
-          const display = disp ? "|" + cardIt(disp.slice(1)) : "";
-          return `{{GCC ID|${setIt(set)}|${cardIt(name)}|${num}${display}}}`;
-        },
-      )
-      .replace(
-        /\{\{TCG ID\|([^|}]+)\|([^|}]+)\|(\d+)(\|[^|}]*)?\}\}/g,
-        (m, set, name, num, disp) => {
-          const display = disp ? "|" + cardIt(disp.slice(1)) : "";
-          return `{{GCC ID|${setIt(set)}|${cardIt(name)}|${num}${display}}}`;
-        },
-      );
+    return str.replace(
+      /\{\{TCG ID\|([^|}]+)\|([^|}]+)\|(\d+)(\|[^|}]*)?\}\}(\{\{ex\|[^}]*\}\})?/g,
+      (m, set, name, num, disp, icon) => {
+        const s = setIt(set);
+        const card = cardIt(name);
+        const it = disp ? cardIt(disp.slice(1)) : "";
+        // "Raticate-ex del Team Rocket" va spezzato attorno all'icona ex,
+        // cosi' il resto del nome resta visibile (e cliccabile).
+        const split = it && icon ? exSplit(it) : null;
+        if (split)
+          return (
+            `{{GCC ID|${s}|${card}|${num}|${split[0]}}${icon}` +
+            ` {{GCC ID|${s}|${card}|${num}|${split[1]}}}`
+          );
+        const display = disp ? "|" + it : "";
+        return `{{GCC ID|${s}|${card}|${num}${display}}}${icon || ""}`;
+      },
+    );
   }
 
   function typesAndRarities(str) {
