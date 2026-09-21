@@ -142,8 +142,12 @@
       ["ru", "ru"],
       ["sr", "sr"],
     ];
+    // le parentesi a larghezza piena restano fuori dai template di lingua,
+    // altrimenti anche la parentesi di chiusura finisce in un template suo:
+    // {{yue|nome}}（{{yue|espansione}}ex） invece di
+    // {{yue|nome（espansione}}ex{{yue|）}}
     var regexNonstandardChar =
-      /([^\s\n\u0020-\u017E\u200B\u2714\u01C4-\u0233\u1E00-\u1EFF]+)/g;
+      /([^\s\n\u0020-\u017E\u200B\u2714\u01C4-\u0233\u1E00-\u1EFF\uFF08\uFF09]+)/g;
 
     for (const lang in languages) {
       str = str
