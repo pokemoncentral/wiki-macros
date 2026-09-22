@@ -1057,7 +1057,7 @@
         const split = it && icon ? exSplit(it) : null;
         if (split)
           return (
-            `{{GCC ID|${s}|${card}|${num}|${split[0]}}${icon}` +
+            `{{GCC ID|${s}|${card}|${num}|${split[0]}}}${icon}` +
             ` {{GCC ID|${s}|${card}|${num}|${split[1]}}}`
           );
         const display = disp ? "|" + it : "";
@@ -1273,16 +1273,18 @@
   }
 
   /** Sezione "Ottenere il mazzo": testo fisso, tranne casi particolari. */
-  function deckObtaining(text, n) {
+  function deckObtaining(text, n, set) {
     if (
       !/Players can obtain and use the[\s\S]*?Collect all 20 cards in the deck to obtain/.test(
         text,
       )
     )
       return text.replace(/^== Obtaining the deck ==/, "==Ottenere il mazzo==");
+    // le missioni mazzo sono quelle dell'espansione del mazzo
+    const missions = `[[${set} (GCC Pocket)#Missioni mazzo|missioni mazzo]]`;
     return [
       "==Ottenere il mazzo==",
-      "Il mazzo si può ottenere e usare completando una delle due [[Missione (GCC Pocket)|missioni mazzo]]:",
+      `Il mazzo si può ottenere e usare completando una delle due ${missions}:`,
       `* Ottenere ${
         n === 1 ? "la carta chiave" : "le carte chiave"
       } e ricevere il mazzo a nolo (utilizzabile solo per 10 lotte).`,
@@ -1404,7 +1406,7 @@
         deckInfobox(info, cards, types, title) +
           "\n" +
           (intro ? deckIntro(intro[1].trim(), title, set) : ""),
-        deckObtaining(section(str, "Obtaining the deck"), cards.length),
+        deckObtaining(section(str, "Obtaining the deck"), cards.length, set),
         deckListPage(section(str, "Deck list"), types),
         deckLangtable(str, info, types),
       ]
