@@ -24,6 +24,7 @@
     "Celestial Guardians": "Guardiani Astrali",
     "Crimson Blaze": "Fiamme Cremisi",
     "Deluxe Pack: ex": "Busta Deluxe ex",
+    "Deluxe Pack: Mega": "Busta Deluxe Mega",
     "Eevee Grove": "Il Bosco di Eevee",
     "Everyday Wonders": "Giorni Giocondi",
     "Extradimensional Crisis": "Crisi Ultradimensionale",
