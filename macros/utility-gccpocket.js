@@ -1067,6 +1067,136 @@
     );
   }
 
+  /* --------------------------------------------------------- elenco carte */
+
+  // categorie di carte Allenatore: nei setlist di PCW restano in inglese
+  const CARD_KINDS = {
+    Item: "Item",
+    Supporter: "Supporter",
+    Stadium: "Stadium",
+    Tool: "Pokémon Tool",
+    "Pokémon Tool": "Pokémon Tool",
+  };
+
+  // icona ex di PCW: Bulbapedia distingue "ex" e "Mega ex"
+  const EX_ICONS = { ex: "{{ex|pocket}}", "Mega ex": "{{ex|mega pocket}}" };
+
+  /**
+   * Riga dell'elenco carte di Bulbapedia, per esempio
+   *   | 001/155 || {{TCG ID|Fantastical Parade|Ledyba|1}} || {{TCG Icon|Grass}} || {{Rar/TCGP|Diamond|1}}
+   * oppure, per una carta ex,
+   *   | 003/155 || {{TCG ID|Fantastical Parade|Mega Swampert ex|36|Mega Swampert}}{{TCGP Icon|Mega ex}} || ...
+   * L'icona ex si trova come {{TCGP Icon|ex}}, {{TCGP Icon|Mega ex}} o
+   * {{Mega ex}}, e in alcune pagine (Deluxe Pack: ex, Promo-A) e' seguita
+   * da una nota ("[Professor Oak]"). Il tipo (terza colonna) va preso con
+   * [^}|]+ e non con \w+: "Pokémon Tool" contiene uno spazio e una lettera
+   * accentata, e con \w+ tutte le carte Oggetto Pokémon restavano non
+   * tradotte. Nei set con piu' buste la riga ha colonne in piu', con {{Yes}}
+   * nella busta in cui la carta compare; la rarita' di Corona non ha
+   * livello ("{{Rar/TCGP|Crown}}"). Il modello di Bulbapedia scrive i
+   * template indifferentemente con maiuscole e minuscole ({{rar/TCGP}}),
+   * per questo il confronto ignora le maiuscole.
+   */
+  const SETLIST_CELL = "(?:[^|\\n]|\\|(?!\\|))*";
+  const SETLIST_ROW = new RegExp(
+    "^[ \\t]*(?:\\|-[ \\t]*\\n)?[ \\t]*\\|[ \\t]*(\\d+\\/[\\w-]+)[ \\t]*\\|\\|[ \\t]*" +
+      "\\{\\{TCG ID\\|([^|}]+)\\|([^|}]+)\\|(\\d+)(?:\\|([^|}]*))?\\}\\}" +
+      "(" +
+      SETLIST_CELL +
+      ")[ \\t]*\\|\\|[ \\t]*" +
+      "\\{\\{TCG Icon\\|([^}|]+)\\}\\}[ \\t]*\\|\\|[ \\t]*" +
+      "\\{\\{Rar\\/TCGP\\|([^}|]+?)(?:\\|(\\d+))?\\}\\}" +
+      "((?:[ \\t]*\\|\\|" +
+      SETLIST_CELL +
+      ")*)[ \\t]*$",
+    "gim",
+  );
+
+  /** Voce di una tabella, senza distinguere maiuscole e minuscole. */
+  function lookup(table, key) {
+    if (table[key]) return table[key];
+    const k = Object.keys(table).find(
+      (x) => x.toLowerCase() === String(key).trim().toLowerCase(),
+    );
+    return k ? table[k] : undefined;
+  }
+
+  /** Note che seguono la carta nella stessa cella (es. "[Professor Oak]"). */
+  function cardCellTail(text) {
+    text = text.trim().replace(/^'''/, "").replace(/'''$/, "");
+    if (!text) return "";
+    return (
+      " " +
+      text.replace(
+        /<small>(?:<b>)?\[Professor Oak\](?:<\/b>)?<\/small>/g,
+        "<small>''[Professor Oak]''</small>",
+      )
+    );
+  }
+
+  /** Icona ex e note di una cella carta (tutto cio' che segue il TCG ID). */
+  function setlistCell(cell) {
+    const m =
+      /^[ \t]*(\{\{TCGP Icon\|([^}|]+)\}\}|\{\{[Mm]ega ex\}\})?([\s\S]*)$/.exec(
+        cell,
+      );
+    return {
+      icon: m[1] ? m[2] || "Mega ex" : "",
+      note: cardCellTail(m[3]),
+    };
+  }
+
+  /** Cella della carta: nome tradotto, nome mostrato e icona ex. */
+  function setlistCard(set, name, num, disp, icon, note) {
+    const s = setIt(set);
+    const card = cardIt(name);
+    const ex = icon
+      ? /mega/i.test(icon)
+        ? EX_ICONS["Mega ex"]
+        : EX_ICONS.ex
+      : "";
+    // nei nomi in cui "-ex" non e' in fondo (es. "Moltres-ex del Team
+    // Rocket") il nome va spezzato attorno all'icona ex
+    const split = exSplit(card);
+    if (split)
+      return (
+        `{{GCC ID|${s}|${card}|${num}|${split[0]}}}${ex}` +
+        ` {{GCC ID|${s}|${card}|${num}|${split[1]}}}${note}`
+      );
+    let shown = disp ? cardIt(disp) : "";
+    if (!shown && ex && /-ex$/i.test(card)) shown = card.slice(0, -3);
+    return `{{GCC ID|${s}|${card}|${num}${shown ? "|" + shown : ""}}}${ex}${note}`;
+  }
+
+  /**
+   * Elenco carte di un'espansione ("Card list" di Bulbapedia): ogni riga
+   * della tabella diventa un {{setlist/entry}} di PCW. I tipi di energia
+   * sono tradotti, le categorie di carte restano quelle di PCW, i nomi
+   * delle carte passano per le tabelle di traduzione e le colonne delle
+   * buste diventano pack1, pack2 e pack3. L'intestazione
+   * {{TCG Set List/header}} e la chiusura |} non vengono toccate: colori,
+   * titolo, immagine e buste del set vanno sistemati a mano.
+   */
+  function setlist(str) {
+    return str.replace(
+      SETLIST_ROW,
+      (m, num, set, name, n, disp, cell, kind, rar, lvl, packs) => {
+        const type = lookup(CARD_KINDS, kind) || lookup(TYPES, kind) || kind;
+        // la rarita' di Corona non ha livello: su PCW e' sempre "Corona 1"
+        const rarity =
+          (lookup(RARITIES, rar) || rar) + " " + (lvl === undefined ? 1 : lvl);
+        const packParams = (packs || "")
+          .split("||")
+          .slice(1)
+          .map((c, i) => `|pack${i + 1}=${/yes/i.test(c) ? "yes" : "no"}`)
+          .join("");
+        const { icon, note } = setlistCell(cell);
+        const card = setlistCard(set, name, n, disp, icon, note);
+        return `{{setlist/entry|${num}|${card}|${type}||${rarity}${packParams}}}`;
+      },
+    );
+  }
+
   function typesAndRarities(str) {
     str = str.replace(
       new RegExp(
@@ -1430,6 +1560,7 @@
       deckTitles,
       flairs,
       deckList,
+      setlist,
       items,
       missions,
       templates,
@@ -1440,6 +1571,17 @@
   }
 
   macros["lotte con CPU GCC Pocket"] = translate;
+
+  /**
+   * Traduce l'elenco carte ("Card list") di una pagina di espansione di
+   * Bulbapedia: le righe della tabella diventano {{setlist/entry}}. Si puo'
+   * usare anche sulla pagina intera, ma l'intestazione
+   * {{TCG Set List/header}} e il |} finale vanno poi sistemati a mano
+   * (colori, titolo e immagine del set).
+   */
+  macros["elenco carte GCC Pocket"] = function (str) {
+    return setlist(normApos(str));
+  };
 
   /**
    * Traduce una pagina di mazzo di Bulbapedia, intera oppure una singola
@@ -1466,6 +1608,6 @@
   }
 
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = { translate, SETS, CARDS, EFFECTS, TYPES };
+    module.exports = { translate, setlist, SETS, CARDS, EFFECTS, TYPES };
   }
 })(typeof utils === "undefined" ? { macros: {} } : utils);
