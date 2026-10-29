@@ -25,6 +25,7 @@
     "Crimson Blaze": "Fiamme Cremisi",
     "Deluxe Pack: ex": "Busta Deluxe ex",
     "Deluxe Pack: Mega": "Busta Deluxe Mega",
+    "Dual Fusion": "Fusione Duale",
     "Eevee Grove": "Il Bosco di Eevee",
     "Everyday Wonders": "Giorni Giocondi",
     "Extradimensional Crisis": "Crisi Ultradimensionale",
@@ -50,6 +51,7 @@
   // carte il cui nome italiano differisce da quello inglese
   const CARDS = {
     Acerola: "Malpi",
+    "Abandoned Station": "Distributore Abbandonato",
     Adaman: "Damon",
     "Aerodactyl ex": "Aerodactyl-ex",
     "Alolan Diglett": "Diglett di Alola",
@@ -94,6 +96,7 @@
     "Blastoise ex": "Blastoise-ex",
     "Blissey ex": "Blissey-ex",
     Blue: "Blu",
+    "Blue's Provocation": "Provocazione di Blu",
     "Bounded Field": "Campo Delimitato",
     "Brute Bonnet": "Fungofurioso",
     "Budding Expeditioner": "Esploratore in Erba",
@@ -138,6 +141,7 @@
     "Dusk Mane Necrozma": "Necrozma Criniera del Vespro",
     "Eevee Bag": "Borsa Eevee",
     "Eevee ex": "Eevee-ex",
+    "Eviolite": "Evolcondensa",
     "Electric Generator": "Generatore di Elettricità",
     "Electrical Cord": "Prolunga",
     "Elegant Cape": "Mantello Elegante",
@@ -158,6 +162,7 @@
     "Flygon ex": "Flygon-ex",
     "Fragrant Forest": "Foresta Profumata",
     "Frost Rotom": "Rotom Gelo",
+    "Full Heal": "Cura totale",
     "Future Booster Energy Capsule": "Capsula energetica Tempo Futuro",
     "Galarian Corsola": "Corsola di Galar",
     "Galarian Cursola": "Cursola di Galar",
@@ -238,6 +243,7 @@
     "Leafeon ex": "Leafeon-ex",
     Leftovers: "Avanzi",
     "Lickilicky ex": "Lickilicky-ex",
+    "Light Ball": "Elettropalla",
     Lillie: "Lylia",
     Lisia: "Orthilla",
     Looker: "Bellocchio",
@@ -258,6 +264,7 @@
     Marlon: "Ciprian",
     "Marowak ex": "Marowak-ex",
     Mars: "Martes",
+    "Max Repel": "Repellente max",
     May: "Vera",
     "Mega Absol ex": "Mega Absol-ex",
     "Mega Altaria ex": "Mega Altaria-ex",
@@ -330,6 +337,7 @@
     "Plume Fossil": "Fossilpiuma",
     "Poison Barb": "Velenaculeo",
     "Pokémon Center Lady": "Addetta del Centro Pokémon",
+    "Poké Mart Guy": "Commesso del Pokémon-Market",
     "Pokémon Communication": "Comunicazione Pokémon",
     "Pokémon Flute": "Pokéflauto",
     "Poliwrath ex": "Poliwrath-ex",
@@ -356,6 +364,8 @@
     "Red Card": "Cartelrosso",
     Repel: "Repellente",
     "Rescue Scarf": "Sciarpa Salvagente",
+    "Rika": "Capsi",
+    "Rising Star": "Giovane speranza",
     "Roaring Moon": "Lunaruggente",
     "Rocky Helmet": "Bitorzolelmo",
     "Root Fossil": "Radifossile",
@@ -364,6 +374,7 @@
     "Sail Fossil": "Fossilpinna",
     "Sandy Shocks": "Peldisabbia",
     "Scream Tail": "Codaurlante",
+    "Serena's Choice": "Scelta di Serena",
     "Shuckle ex": "Shuckle-ex",
     Sightseer: "Vacanziera",
     Silver: "Argento",
@@ -383,7 +394,9 @@
     "Starting Plains": "Pianura degli Esordi",
     "Steel Apron": "Corazza Metallica",
     "Suicune ex": "Suicune-ex",
+    "Super Potion": "Superpozione",
     "Swanna ex": "Swanna-ex",
+    "Sweet Honey": "Miele",
     "Sylveon ex": "Sylveon-ex",
     "Tapu Koko ex": "Tapu Koko-ex",
     "Tauros ex": "Tauros-ex",
@@ -1088,23 +1101,31 @@
    *   | 003/155 || {{TCG ID|Fantastical Parade|Mega Swampert ex|36|Mega Swampert}}{{TCGP Icon|Mega ex}} || ...
    * L'icona ex si trova come {{TCGP Icon|ex}}, {{TCGP Icon|Mega ex}} o
    * {{Mega ex}}, e in alcune pagine (Deluxe Pack: ex, Promo-A) e' seguita
-   * da una nota ("[Professor Oak]"). Il tipo (terza colonna) va preso con
-   * [^}|]+ e non con \w+: "Pokémon Tool" contiene uno spazio e una lettera
-   * accentata, e con \w+ tutte le carte Oggetto Pokémon restavano non
-   * tradotte. Nei set con piu' buste la riga ha colonne in piu', con {{Yes}}
-   * nella busta in cui la carta compare; la rarita' di Corona non ha
-   * livello ("{{Rar/TCGP|Crown}}"). Il modello di Bulbapedia scrive i
-   * template indifferentemente con maiuscole e minuscole ({{rar/TCGP}}),
-   * per questo il confronto ignora le maiuscole.
+   * da una nota ("[Professor Oak]"). La cella del tipo contiene una icona per
+   * una carta normale, ma le carte di doppio tipo ne hanno due
+   * ({{TCG Icon|Water}}{{TCG Icon|Darkness}}): la prima finisce nel parametro 3
+   * di {{setlist/entry}} e la seconda nel 4. Il tipo va preso con [^}|]+ e non
+   * con \w+: "Pokémon Tool" contiene uno spazio e una lettera accentata, e con
+   * \w+ tutte le carte Oggetto Pokémon restavano non tradotte. Nei set con
+   * piu' buste la riga ha colonne in piu', con {{Yes}} nella busta in cui la
+   * carta compare; la rarita' di Corona non ha livello
+   * ("{{Rar/TCGP|Crown}}"). Il modello di Bulbapedia scrive i template
+   * indifferentemente con maiuscole e minuscole ({{rar/TCGP}}), per questo il
+   * confronto ignora le maiuscole.
    */
   const SETLIST_CELL = "(?:[^|\\n]|\\|(?!\\|))*";
+  /** Cella del tipo: una o piu' icone di energia (le carte di doppio tipo ne hanno due). */
+  const SETLIST_TYPES =
+    "\\{\\{TCG Icon\\|[^}|]+\\}\\}(?:[ \\t]*\\{\\{TCG Icon\\|[^}|]+\\}\\})*";
   const SETLIST_ROW = new RegExp(
     "^[ \\t]*(?:\\|-[ \\t]*\\n)?[ \\t]*\\|[ \\t]*(\\d+\\/[\\w-]+)[ \\t]*\\|\\|[ \\t]*" +
       "\\{\\{TCG ID\\|([^|}]+)\\|([^|}]+)\\|(\\d+)(?:\\|([^|}]*))?\\}\\}" +
       "(" +
       SETLIST_CELL +
       ")[ \\t]*\\|\\|[ \\t]*" +
-      "\\{\\{TCG Icon\\|([^}|]+)\\}\\}[ \\t]*\\|\\|[ \\t]*" +
+      "(" +
+      SETLIST_TYPES +
+      ")[ \\t]*\\|\\|[ \\t]*" +
       "\\{\\{Rar\\/TCGP\\|([^}|]+?)(?:\\|(\\d+))?\\}\\}" +
       "((?:[ \\t]*\\|\\|" +
       SETLIST_CELL +
@@ -1180,8 +1201,13 @@
   function setlist(str) {
     return str.replace(
       SETLIST_ROW,
-      (m, num, set, name, n, disp, cell, kind, rar, lvl, packs) => {
-        const type = lookup(CARD_KINDS, kind) || lookup(TYPES, kind) || kind;
+      (m, num, set, name, n, disp, cell, typecell, rar, lvl, packs) => {
+        // una carta di doppio tipo ha due icone nella stessa cella: la prima e'
+        // il tipo, la seconda il tipo2 (parametro 4 di {{setlist/entry}})
+        const types = [...typecell.matchAll(/\{\{TCG Icon\|([^}|]+)\}\}/g)].map(
+          (x) => lookup(CARD_KINDS, x[1]) || lookup(TYPES, x[1]) || x[1],
+        );
+        const type = types.slice(0, 2).join("|") + (types.length < 2 ? "|" : "");
         // la rarita' di Corona non ha livello: su PCW e' sempre "Corona 1"
         const rarity =
           (lookup(RARITIES, rar) || rar) + " " + (lvl === undefined ? 1 : lvl);
@@ -1192,7 +1218,7 @@
           .join("");
         const { icon, note } = setlistCell(cell);
         const card = setlistCard(set, name, n, disp, icon, note);
-        return `{{setlist/entry|${num}|${card}|${type}||${rarity}${packParams}}}`;
+        return `{{setlist/entry|${num}|${card}|${type}|${rarity}${packParams}}}`;
       },
     );
   }
