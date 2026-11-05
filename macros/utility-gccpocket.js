@@ -13,6 +13,11 @@
  * Le tabelle di sostituzione (espansioni, carte, effetti) sono in fondo al
  * file e sono state ricavate confrontando i setlist di PCW con quelli di
  * Bulbapedia.
+ *
+ * Gli oggetti diventano chiamate a {{GCCPocketItem}}, che richiede sempre
+ * type= e ricava il nome dell'icona da tipologia e nome ("GCC Pocket <tipo>
+ * <nome>.png"): passano tutte da gccItem(), cosi' la regola sta in un punto
+ * solo.
  */
 (function (utils) {
   const macros = utils.macros;
@@ -692,9 +697,27 @@
     );
   }
 
+  /**
+   * Chiamata a {{GCCPocketItem}} nell'ordine dei parametri del template
+   * (1, 2, type, num). Il tipo e' obbligatorio: da solo sceglie il prefisso
+   * del file dell'icona ("GCC Pocket <tipo> <1>.png", senza ripetere il tipo
+   * quando 1 lo contiene gia' in testa) e la pagina collegata. 2 e' il nome
+   * mostrato, da usare quando il testo non e' quello che forma il nome del
+   * file; num e' la quantita'.
+   */
+  function gccItem(name, type, shown, num) {
+    return (
+      `{{GCCPocketItem|${name}` +
+      (shown && shown !== name ? `|${shown}` : "") +
+      `|type=${type}` +
+      (num ? `|num=${num}` : "") +
+      "}}"
+    );
+  }
+
   function effectTmpl(en, kind) {
     const it = EFFECTS[`${en}|${kind}`] || EFFECTS[`${en}|lotta`] || en;
-    return `{{GCCPocketItem|${it} (${kind})|${it} (${kind})|type=Effetto}}`;
+    return gccItem(`${it} (${kind})`, "Effetto");
   }
 
   /** Normalizza gli apostrofi tipografici usati da Bulbapedia. */
@@ -893,55 +916,64 @@
     return value.replace(/,/g, ".");
   }
 
+  /**
+   * Ricompense e oggetti di Bulbapedia ({{TCGPocketItem}}): ogni forma nota
+   * diventa la chiamata a {{GCCPocketItem}} con la tipologia che le
+   * corrisponde su PCW. Bulbapedia scrive la tipologia solo per le monete
+   * (type=Coin) e per il resto la ricava dal nome ("Pack Hourglass",
+   * "Shinedust"...): su PCW invece va sempre indicata, altrimenti la chiamata
+   * non trova ne' l'icona ne' la pagina collegata.
+   */
   function items(str) {
     return str
       .replace(
         /\{\{TCGPocketItem\|Poké Ball\|Poké Ball \(coin\)\|type=Coin\}\}/g,
-        "{{GCCPocketItem|Poké Ball|Poké Ball (moneta)|type=Moneta}}",
+        () => gccItem("Poké Ball", "Moneta", "Poké Ball (moneta)"),
       )
       .replace(
         /\{\{TCGPocketItem\|Special Set 0?(\d+)\|Special Set 0?\d+ \(coin\)\|type=Coin\}\}/g,
-        "{{GCCPocketItem|Set speciale $1|Set speciale $1 (moneta)|type=Moneta}}",
+        (m, n) =>
+          gccItem(`Set speciale ${n}`, "Moneta", `Set speciale ${n} (moneta)`),
       )
       .replace(
         /\{\{TCGPocketItem\|Sleeve Special Set 0?(\d+)\|Special Set 0?\d+ \(card sleeve\)\}\}/g,
-        "{{GCCPocketItem|Mini Set speciale $1|Set speciale $1 (bustine protettive)|type=Bustina protettiva}}",
+        (m, n) =>
+          gccItem(
+            `Mini Set speciale ${n}`,
+            "Bustina protettiva",
+            `Set speciale ${n} (bustine protettive)`,
+          ),
       )
       .replace(
         /\{\{TCGPocketItem\|Playmat Special Set 0?(\d+)\|Special Set 0?\d+ \(playmat\)\}\}/g,
-        "{{GCCPocketItem|Mini Set speciale $1|Set speciale $1 (tabellone)|type=Tabellone}}",
+        (m, n) =>
+          gccItem(
+            `Mini Set speciale ${n}`,
+            "Tabellone",
+            `Set speciale ${n} (tabellone)`,
+          ),
       )
       .replace(
         /\{\{TCGPocketItem\|EXP\|(?:type=Icon\|)?num=(\d+)\}\}/g,
-        "{{GCCPocketItem||Punti Esperienza|num=$1|type=EXP}}",
+        (m, n) => gccItem("EXP", "EXP", "Punti Esperienza", n),
       )
       .replace(
         /\{\{TCGPocketItem\|Pack Hourglass\|num=([\d.,]+)\}\}/g,
-        (m, n) =>
-          `{{GCCPocketItem|Clessidra buste|num=${itemNum(n)}|type=Clessidra}}`,
+        (m, n) => gccItem("Clessidra buste", "Clessidra", "", itemNum(n)),
       )
       .replace(
         /\{\{TCGPocketItem\|Wonder Hourglass\|num=([\d.,]+)\}\}/g,
-        (m, n) =>
-          `{{GCCPocketItem|Clessidra misteriosa|num=${itemNum(
-            n,
-          )}|type=Clessidra}}`,
+        (m, n) => gccItem("Clessidra misteriosa", "Clessidra", "", itemNum(n)),
       )
       .replace(
         /\{\{TCGPocketItem\|Trade Hourglass\|num=([\d.,]+)\}\}/g,
-        (m, n) =>
-          `{{GCCPocketItem|Clessidra scambio|num=${itemNum(
-            n,
-          )}|type=Clessidra}}`,
+        (m, n) => gccItem("Clessidra scambio", "Clessidra", "", itemNum(n)),
       )
-      .replace(
-        /\{\{TCGPocketItem\|Shinedust\|num=([\d.,]+)\}\}/g,
-        (m, n) => `{{GCCPocketItem|Sabbialuce|num=${itemNum(n)}}}`,
+      .replace(/\{\{TCGPocketItem\|Shinedust\|num=([\d.,]+)\}\}/g, (m, n) =>
+        gccItem("Sabbialuce", "Valuta", "", itemNum(n)),
       )
-      .replace(
-        /\{\{TCGPocketItem\|Shop Ticket\|num=([\d.,]+)\}\}/g,
-        (m, n) =>
-          `{{GCCPocketItem|Buono negozio|num=${itemNum(n)}|type=Buono}}`,
+      .replace(/\{\{TCGPocketItem\|Shop Ticket\|num=([\d.,]+)\}\}/g, (m, n) =>
+        gccItem("Buono negozio", "Buono", "", itemNum(n)),
       );
   }
 
