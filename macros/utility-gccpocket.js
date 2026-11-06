@@ -146,7 +146,7 @@
     "Dusk Mane Necrozma": "Necrozma Criniera del Vespro",
     "Eevee Bag": "Borsa Eevee",
     "Eevee ex": "Eevee-ex",
-    "Eviolite": "Evolcondensa",
+    Eviolite: "Evolcondensa",
     "Electric Generator": "Generatore di Elettricità",
     "Electrical Cord": "Prolunga",
     "Elegant Cape": "Mantello Elegante",
@@ -369,7 +369,7 @@
     "Red Card": "Cartelrosso",
     Repel: "Repellente",
     "Rescue Scarf": "Sciarpa Salvagente",
-    "Rika": "Capsi",
+    Rika: "Capsi",
     "Rising Star": "Giovane speranza",
     "Roaring Moon": "Lunaruggente",
     "Rocky Helmet": "Bitorzolelmo",
@@ -653,7 +653,7 @@
 
   /* ----------------------------------------------------------- funzioni */
 
-  const setIt = (name) => SETS[name.trim()] || name.trim();
+  const setIt = (name) => (name ? SETS[name.trim()] || name.trim() : "");
 
   function cardIt(name) {
     name = name.trim();
@@ -695,6 +695,13 @@
       ),
       (m, month, day, year) => `${day} ${MONTHS[month]} ${year}`,
     );
+  }
+
+  /** Data senza anno ("October 29") oppure con anno ("December 16, 2026"). */
+  function itDateShort(s) {
+    const m = /^\s*([A-Z][a-z]+) (\d{1,2})(?:, (\d{4}))?\s*$/.exec(s);
+    if (!m) return s.trim();
+    return `${m[2]} ${MONTHS[m[1]] || m[1]}${m[3] ? " " + m[3] : ""}`;
   }
 
   /**
@@ -1239,7 +1246,8 @@
         const types = [...typecell.matchAll(/\{\{TCG Icon\|([^}|]+)\}\}/g)].map(
           (x) => lookup(CARD_KINDS, x[1]) || lookup(TYPES, x[1]) || x[1],
         );
-        const type = types.slice(0, 2).join("|") + (types.length < 2 ? "|" : "");
+        const type =
+          types.slice(0, 2).join("|") + (types.length < 2 ? "|" : "");
         // la rarita' di Corona non ha livello: su PCW e' sempre "Corona 1"
         const rarity =
           (lookup(RARITIES, rar) || rar) + " " + (lvl === undefined ? 1 : lvl);
@@ -1395,10 +1403,18 @@
     return `${list}, ${kind}`;
   }
 
-  /** Titolo italiano del mazzo, ricavato dal nome nella langtable. */
-  function deckTitle(str) {
+  /**
+   * Titolo italiano del mazzo, ricavato dal nome nella langtable: la
+   * parentesi finale è quella dell'espansione ("Mazzo Pikachu-ex (Fusione
+   * Duale)") e va tolta. Bulbapedia la scrive a volte con spazi o tabulazioni
+   * in più.
+   */
+  function deckTitle(str, set) {
     const m = /\|it=([^\n]*)/.exec(str);
-    return m ? m[1].trim().replace(/\s*\([^()]*\)\s*$/, "") : "";
+    if (!m) return "";
+    const title = m[1].replace(/\s+/g, " ").trim();
+    const suffix = new RegExp("\\s*\\(\\s*" + escapeRe(set) + "\\s*\\)\\s*$");
+    return title.replace(suffix, "").trim();
   }
 
   /** Nome di una persona citata nell'introduzione, in link. */
@@ -1430,23 +1446,64 @@
   }
 
   /**
+   * Periodo in cui il mazzo si può usare a noleggio. Bulbapedia lo indica per
+   * i mazzi delle espansioni più recenti: "Players can use the X Deck from
+   * October 29 to December 16, 2026 as a rental deck in both Solo and Versus
+   * battles."
+   */
+  function rentalPeriod(intro) {
+    const m =
+      /Players can use the .+? Deck from (.+?) to (.+?) as a rental deck in both Solo and Versus battles\./.exec(
+        intro,
+      );
+    if (!m) return "";
+    return (
+      "Il mazzo si può usare a noleggio dal " +
+      itDateShort(m[1]) +
+      " al " +
+      itDateShort(m[2]) +
+      ", sia nelle lotte in solitaria sia in quelle contro altri giocatori."
+    );
+  }
+
+  /**
    * Introduzione della pagina. La riga sulle lotte con CPU presente su
-   * Bulbapedia non viene riportata, come nelle pagine di PCW.
+   * Bulbapedia non viene riportata, come nelle pagine di PCW; quella sul
+   * periodo di noleggio, che Bulbapedia scrive per i mazzi più recenti, viene
+   * tradotta e messa in fondo.
    */
   function deckIntro(intro, title, set) {
+    // "is a [[deck]]" oppure "is a rental [[deck]]"; nelle pagine dei mazzi
+    // più vecchi manca la frase sulla data di uscita
     const first =
-      /The '''.*?''' is a \[\[deck\]\] in \[\[Pokémon Trading Card Game Pocket\]\] that was added to the game alongside the \{\{TCGP\|[^}]+\}\} expansion\./;
+      /The '''.*?''' is a (?:rental )?\[\[deck\]\] in \[\[Pokémon Trading Card Game Pocket\]\](?: that was added to the game alongside the \{\{TCGP\|[^}]+\}\} expansion)?\./;
     if (!first.test(intro)) return intro;
-    const out = [
-      `Il '''${title}''' è un mazzo a tema del {{GCClink|pocket}} aggiunto`,
-      `insieme all'espansione {{GCCP|${set}}}.`,
-    ].join(" ");
+    const lines = [
+      [
+        `Il '''${title}''' è un mazzo a tema del {{GCClink|pocket}} aggiunto`,
+        `insieme all'espansione {{GCCP|${set}}}.`,
+      ].join(" "),
+    ];
     const focus = deckFocus(intro);
-    return focus ? `${out}\n${focus}` : out;
+    if (focus) lines.push(focus);
+    const rental = rentalPeriod(intro);
+    if (rental) lines.push(rental);
+    return lines.join("\n");
+  }
+
+  /**
+   * Testo dell'introduzione: quel che segue l'infobox, fino al primo titolo di
+   * sezione. Prima si aspettava la sezione "Obtaining the deck", che però
+   * manca nelle pagine dei mazzi a noleggio: lì l'introduzione spariva del
+   * tutto.
+   */
+  function deckIntroText(rest) {
+    const cut = rest.search(/\n==(?!=)/);
+    return (cut < 0 ? rest : rest.slice(0, cut)).trim();
   }
 
   /** Infobox {{DeckInfobox}} a partire da {{TCGPocketDeckInfobox}}. */
-  function deckInfobox(info, cards, types, title) {
+  function deckInfobox(info, cards, types, title, set) {
     const lines = ["{{DeckInfobox", `|title=${title}`];
     if (types[0]) lines.push(`|type=${types[0]}`);
     if (types[1]) lines.push(`|type2=${types[1]}`);
@@ -1454,7 +1511,7 @@
       lines.push(`|image${i ? i + 1 : ""}=${imageFile(c)}`),
     );
     lines.push(`|caption=${deckCaption(cards)}`);
-    lines.push(`|expansion={{GCCP|${setIt(info.setname)}}}`);
+    lines.push(`|expansion={{GCCP|${set}}}`);
     lines.push(`|release=${itDate(info.release || "")}`);
     lines.push(`|types=${energyText(info.types)}`);
     lines.push("}}");
@@ -1468,7 +1525,10 @@
         text,
       )
     )
-      return text.replace(/^== Obtaining the deck ==/, "==Ottenere il mazzo==");
+      return text.replace(
+        /^==[ \t]*Obtaining the deck[ \t]*==/m,
+        "==Ottenere il mazzo==",
+      );
     // le missioni mazzo sono quelle dell'espansione del mazzo
     const missions = `[[${set} (GCC Pocket)#Missioni mazzo|missioni mazzo]]`;
     return [
@@ -1562,12 +1622,16 @@
     );
   }
 
-  /** Contenuto di una sezione "== Titolo ==", fino alla sezione successiva. */
+  /**
+   * Contenuto di una sezione "== Titolo ==", fino alla sezione successiva.
+   * Bulbapedia scrive il titolo con o senza spazi ("== Deck list ==",
+   * "==Deck list=="): contano solo le lettere.
+   */
   function section(str, name) {
     const m = new RegExp(
-      "^== " +
-        name +
-        " ==\\n([\\s\\S]*?)(?=\\n== |\\n\\{\\{DoubleProjectTag|$(?![\\s\\S]))",
+      "^==[ \\t]*" +
+        escapeRe(name) +
+        "[ \\t]*==[ \\t]*\\n([\\s\\S]*?)(?=\\n==[ \\t]*[^=]|\\n\\{\\{DoubleProjectTag|$(?![\\s\\S]))",
       "m",
     ).exec(str);
     return m ? m[1] : "";
@@ -1582,19 +1646,22 @@
     const box = /\{\{TCGPocketDeckInfobox\n([\s\S]*?)\n\}\}/.exec(str);
     if (!box) return str;
     const info = params(box[1]);
-    const title = deckTitle(str) || "Mazzo " + deckName(info.deckname);
+    const set = setIt(info.setname);
+    // i Mazzi élite e i mazzi iniziali non indicano |setname= e su PCW seguono
+    // un modello tutto loro: la macro li lascia com'erano invece di rompersi
+    if (!set) return str;
+    const title = deckTitle(str, set) || "Mazzo " + deckName(info.deckname);
     const cards = cardRefs(info.caption);
     const types = energyTypes(info.types);
-    const set = setIt(info.setname);
     const rest = str.slice(box.index + box[0].length);
-    const intro = /^([\s\S]*?)(?=\n== Obtaining the deck ==)/.exec(rest);
+    const intro = deckIntroText(rest);
     const links = interwiki(str);
     links.en = `${info.deckname} (${info.setname})`;
     return deckFooter(
       [
-        deckInfobox(info, cards, types, title) +
+        deckInfobox(info, cards, types, title, set) +
           "\n" +
-          (intro ? deckIntro(intro[1].trim(), title, set) : ""),
+          deckIntro(intro, title, set),
         deckObtaining(section(str, "Obtaining the deck"), cards.length, set),
         deckListPage(section(str, "Deck list"), types),
         deckLangtable(str, info, types),
@@ -1648,6 +1715,10 @@
    */
   macros["mazzo GCC Pocket"] = function (str) {
     str = normApos(str);
+    // i Mazzi élite e i mazzi iniziali non indicano |setname= e su PCW seguono
+    // un modello tutto loro: la pagina resta com'è, senza traduzioni a metà
+    const box = /\{\{TCGPocketDeckInfobox\n([\s\S]*?)\n\}\}/.exec(str);
+    if (box && !params(box[1]).setname) return str;
     return [
       deckPage,
       deckTitles,
