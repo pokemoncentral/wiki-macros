@@ -791,17 +791,18 @@
 
   /**
    * Chiamata a {{GCCPocketItem}} nell'ordine dei parametri del template
-   * (1, 2, type, num). Il tipo e' obbligatorio: da solo sceglie il prefisso
-   * del file dell'icona ("GCC Pocket <tipo> <1>.png", senza ripetere il tipo
-   * quando 1 lo contiene gia' in testa) e la pagina collegata. 2 e' il nome
-   * mostrato, da usare quando il testo non e' quello che forma il nome del
-   * file; num e' la quantita'.
+   * (1, 2, type, set, num). Il tipo e' obbligatorio: da solo sceglie il
+   * prefisso del file dell'icona ("GCC Pocket <tipo> <1>.png", senza ripetere
+   * il tipo quando 1 lo contiene gia' in testa) e la pagina collegata. 2 e' il
+   * nome mostrato, da usare quando il testo non e' quello che forma il nome
+   * del file; set e' l'espansione collegata dalle buste, num la quantita'.
    */
-  function gccItem(name, type, shown, num) {
+  function gccItem(name, type, shown, num, set) {
     return (
       `{{GCCPocketItem|${name}` +
       (shown && shown !== name ? `|${shown}` : "") +
       `|type=${type}` +
+      (set ? `|set=${set}` : "") +
       (num ? `|num=${num}` : "") +
       "}}"
     );
@@ -838,19 +839,67 @@
       .replace(/^\{\{DoubleProjectTag\|[^\n]*\}\}\s*\n?/gm, "");
   }
 
+  /** Data di Bulbapedia ("October 29, 2026", anche senza anno), a pezzi. */
+  function parseDay(str) {
+    const m = /^\s*([A-Z][a-z]+) (\d{1,2})(?:,\s*(\d{4}))?\s*$/.exec(str);
+    return m ? { d: m[2], m: MONTHS[m[1]] || m[1], y: m[3] } : null;
+  }
+
+  /** "29 ottobre 2026": l'anno si omette quando lo dice gia' il periodo. */
+  function itDay(x, year) {
+    const y = x.y || year;
+    return `${x.d} ${x.m}${y ? " " + y : ""}`;
+  }
+
+  /**
+   * Periodo di validita' delle lotte, come lo scrive Bulbapedia dopo
+   * "expansion": "on October 29, 2026 worldwide", "on October 29, 2025
+   * worldwide (October 26, 2025 in New Zealand)" oppure, per le lotte a
+   * tempo, "on October 29, 2026 worldwide and available until December 16,
+   * 2026". Su PCW diventa "il 29 ottobre 2026 in tutto il mondo", oppure
+   * "dal 29 ottobre al 16 dicembre 2026 in tutto il mondo" con l'anno una
+   * volta sola quando inizio e fine cadono nello stesso anno.
+   */
+  function availability(text) {
+    let t = String(text).trim();
+    let nz = "";
+    const mNz = /\(([^()]+?) in New Zealand\)/.exec(t);
+    if (mNz) {
+      nz = ` (il ${itDate(mNz[1])} in Nuova Zelanda)`;
+      t = t.replace(mNz[0], " ");
+    }
+    const worldwide = /\bworldwide\b/.test(t) ? " in tutto il mondo" : "";
+    t = t
+      .replace(/\bworldwide\b/, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+
+    // "on X ... and available until Y", "from X to Y", "X - Y"
+    const range =
+      /^(?:(?:from|on)\s+)?(.+?)\s+(?:and available until|to|until|[–-])\s+(.+)$/.exec(
+        t,
+      );
+    const a = range && parseDay(range[1]);
+    const b = range && parseDay(range[2]);
+    if (a && b) {
+      const y = a.y || b.y;
+      if (y && y === (b.y || a.y))
+        return `dal ${a.d} ${a.m} al ${b.d} ${b.m} ${y}${worldwide}${nz}`;
+      return `dal ${itDay(a)} al ${itDay(b)}${worldwide}${nz}`;
+    }
+    const one = parseDay(t);
+    if (one) return `il ${itDay(one)}${worldwide}${nz}`;
+    return `il ${itDate(t)}${worldwide}${nz}`;
+  }
+
   function intro(str) {
     const re =
-      /The following battles related to the \{\{TCGP\|([^}|]+)\}\} expansion are available to \[\[Pokémon Trading Card Game Pocket\]\] players\.(?:\n+All battles were added to the game alongside the .+? expansion on (.+?)\.)?/;
-    return str.replace(re, (m, set, date) => {
+      /The following battles related to the \{\{TCGP\|([^}|]+)\}\} expansion are available to \[\[Pokémon Trading Card Game Pocket\]\] players\.(?:\n+All battles were added to the game alongside the [^\n]*? expansion (?:on|from) ([^\n]+?)[ \t]*\.?[ \t]*$)?/m;
+    return str.replace(re, (m, set, when) => {
       let out = `Le seguenti lotte sono relative all'espansione {{GCCP|${setIt(
         set,
       )}}} del {{GCClink|pocket}}`;
-      if (date) {
-        const d = date
-          .replace(/ worldwide/, " in tutto il mondo")
-          .replace(/\((.+?) in New Zealand\)/, "(il $1 in Nuova Zelanda)");
-        out += " e sono state rese disponibili il " + itDate(d);
-      }
+      if (when) out += " e sono state rese disponibili " + availability(when);
       return out + ".";
     });
   }
@@ -883,7 +932,7 @@
       )
       .replace(
         /^==\s*Expert (?:solo|step-up) battles\s*==\s*$/gm,
-        "==Lotta con CPU pro==",
+        "==Lotta per gradi - Pro==",
       )
       .replace(
         /All opponents use the following accessories in battle:/g,
@@ -909,6 +958,21 @@
     str = str.replace(
       /\|title=(.+?) Deck \((.+?)\)\}\}/g,
       (m, name, set) => `|title=Mazzo ${deckName(name)} (${setIt(set)})}}`,
+    );
+    // titoli senza espansione: il gioco non la mette piu' nel nome del mazzo,
+    // quindi resta solo la traduzione del nome ("Wartortle Deck" -> "Mazzo
+    // Wartortle"), senza aggiungere "(Set)"
+    str = str.replace(
+      /^===\s*(.+?) Deck\s*===\s*$/gm,
+      (m, name) => `=== Mazzo ${deckName(name)} ===`,
+    );
+    str = str.replace(
+      /\{\{main\|(.+?) Deck\}\}/g,
+      (m, name) => `{{principale|Mazzo ${deckName(name)}}}`,
+    );
+    str = str.replace(
+      /\|title=(?!Mazzo)(.+?) Deck\}\}/g,
+      (m, name) => `|title=Mazzo ${deckName(name)}}}`,
     );
     // casi in cui Bulbapedia omette la parola "Deck"
     str = str.replace(
@@ -1018,7 +1082,12 @@
     str = str.replace(
       /(\{\{TCGPocketDeckList\/Header[^\n]*\}\}\n)((?:\{\{TCGPocketDeckList\/Entry[^\n]*\}\}\n)+)\{\{TCGPocketDeckList\/Footer[^\n]*\}\}/g,
       (m, header, entries) => {
-        const lines = entries.replace(/\n+$/, "").split("\n");
+        // Bulbapedia a volte attacca due voci sulla stessa riga: su PCW ognuna
+        // va sulla sua
+        const lines = entries
+          .replace(/\n+$/, "")
+          .replace(/\}\}[ \t]*(?=\{\{TCGPocketDeckList\/Entry)/g, "}}\n")
+          .split("\n");
         return (
           '<div class="flex flex-row flex-wrap">\n' +
           '<div class="max-width-xl-50 min-width-sm-100" style="padding: 0.1em;">\n' +
@@ -1049,6 +1118,20 @@
    */
   function items(str) {
     return str
+      .replace(
+        /\{\{TCGPocketItem\|C\d+ Booster ([^|}]+)(?:\|(?:\{\{TCGP\|([^}|]+)\}\}|([^|}]+?)): ([^|}]+?) booster pack)?\}\}/g,
+        (m, name, tmplSet, plainSet, card) => {
+          const s = setIt(tmplSet || plainSet || "");
+          const c = card || name;
+          return gccItem(
+            `Mini ${s ? s + " " : ""}${c}`,
+            "Busta",
+            `${s ? s + ": " : ""}${c}`,
+            "1",
+            s,
+          );
+        },
+      )
       .replace(
         /\{\{TCGPocketItem\|Poké Ball\|Poké Ball \(coin\)\|type=Coin\}\}/g,
         () => gccItem("Poké Ball", "Moneta", "Poké Ball (moneta)"),
@@ -1420,7 +1503,24 @@
         str =
           str.slice(0, it.index) +
           str.slice(it.index + it[0].length).replace(/^\n+/, "");
-      str = str.replace(/^\[\[de:[^\]]+\]\]\s*$/m, (m) => m + "\n" + en);
+      // una sola riga [[en:...]], in mezzo agli altri interwiki e in ordine
+      // alfabetico; se non ce ne sono, in fondo dopo le categorie
+      str = str.replace(/^\[\[en:[^\]]+\]\][ \t]*\n?/gm, "");
+      const links = [];
+      const reLink = /^\[\[([a-z-]+):[^\]]+\]\][ \t]*$/gm;
+      let m;
+      while ((m = reLink.exec(str)))
+        links.push({ code: m[1], index: m.index, len: m[0].length });
+      const before = links.filter((l) => l.code < "en").pop();
+      if (before) {
+        const at = before.index + before.len;
+        str = str.slice(0, at) + "\n" + en + str.slice(at);
+      } else if (links.length) {
+        str =
+          str.slice(0, links[0].index) + en + "\n" + str.slice(links[0].index);
+      } else {
+        str = str.replace(/\s*$/, "") + "\n\n" + en + "\n";
+      }
     }
     return str.replace(
       /\[\[Category:([^\]|]+) \(TCG Pocket\)\|\*\*\*\]\]\n\[\[Category:Pokémon TCG Pocket solo battles\|[^\]]*\]\]/,
