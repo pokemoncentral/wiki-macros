@@ -483,49 +483,99 @@
 
   // effetti (flair): "Nome inglese|cosmetic|battle" -> nome italiano
   const EFFECTS = {
+    "Big Hearts (Pink)|decorazione": "Cuore grande rosa",
     "Big Rings (Blue)|lotta": "Cerchi rotanti blu",
     "Big Rings (Light Blue)|lotta": "Cerchi rotanti blu",
+    "Big Rings (Pink)|lotta": "Cerchi rotanti rosa",
     "Big Rings (Purple)|lotta": "Cerchi rotanti viola",
     "Big Rings (Yellow)|lotta": "Cerchi rotanti gialli",
     "Big Rings (Yellow-Green)|lotta": "Cerchi rotanti giallo-verdi",
+    "Big Stars (Yellow)|decorazione": "Stella grande gialla",
+    "Bright Stars (Light Blue)|lotta": "Stelle splendenti azzurre",
+    "Bright Stars (Pink)|lotta": "Stelle splendenti rosa",
     "Bubbles (Light Blue)|decorazione": "Bolle azzurre",
     "Bubbles (Light Blue)|lotta": "Bolle azzurre",
+    "Bubbles (Pink)|decorazione": "Bolle rosa",
+    "Bubbles (Pink)|lotta": "Bolle rosa",
+    "Bubbles (Yellow)|lotta": "Bolle gialle",
     "Bursts (Blue)|decorazione": "Scoppi blu",
     "Bursts (Orange)|decorazione": "Scoppi arancioni",
     "Bursts (Orange)|lotta": "Scoppi arancioni",
     "Bursts (Purple)|decorazione": "Scoppi viola",
     "Bursts (Purple)|lotta": "Scoppi viola",
     "Circles (Light Blue)|lotta": "Cerchi azzurri",
+    "Circles (Pink)|lotta": "Cerchi rosa",
+    "Circles (Purple)|lotta": "Cerchi viola",
     "Circles (Yellow)|lotta": "Cerchi gialli",
     "Clovers|lotta": "Quadrifogli",
+    "Colorless Energy|decorazione": "Energia Incolore",
     "Darkness Energy|decorazione": "Energia Oscurità",
+    "Decorated Stars (Light Blue)|decorazione": "Stelle decorate azzurre",
+    "Decorated Stars (Pink)|decorazione": "Stelle decorate rosa",
+    "Decorated Stars (Yellow)|decorazione": "Stelle decorate gialle",
+    "Decorated Stars (Yellow-Green)|decorazione": "Stelle decorate giallo-verdi",
     "Diamonds (Orange)|battle": "Rombi arancioni",
     "Diamonds (Orange)|cosmetic": "Rombi arancioni",
     "Diamonds (Orange)|decorazione": "Rombi arancioni",
     "Diamonds (Orange)|lotta": "Rombi arancioni",
+    "Digital Squares (Light Blue)|decorazione": "Quadrati digitali azzurri",
+    "Digital Squares (Light Blue)|lotta": "Quadrati digitali azzurri",
     "Digital Squares (Orange)|lotta": "Quadrati digitali arancioni",
+    "Digital Squares (Purple)|decorazione": "Quadrati digitali viola",
+    "Digital Squares (Purple)|lotta": "Quadrati digitali viola",
+    "Digital Squares (Yellow-Green)|decorazione": "Quadrati digitali giallo-verdi",
+    "Digital Squares (Yellow-Green)|lotta": "Quadrati digitali giallo-verdi",
+    "Dragon Energy|decorazione": "Energia Drago",
+    "Eevee Silhouettes|lotta": "Silhouette Eevee",
+    "Feathers (Gray)|decorazione": "Piume grigie",
     "Feathers (Gray)|lotta": "Piume grigie",
     "Feathers (Orange)|decorazione": "Piume arancioni",
     "Feathers (Orange)|lotta": "Piume arancioni",
+    "Feathers (White)|decorazione": "Piume bianche",
     "Feathers (White)|lotta": "Piume bianche",
     "Fighting Energy|decorazione": "Energia Lotta",
     "Fire Energy|decorazione": "Energia Fuoco",
     "Flame Trail (Orange)|decorazione": "Scie di fuoco arancioni",
+    "Flames (Green)|lotta": "Vampe verdi",
     "Flames (Light Blue)|lotta": "Vampe azzurre",
     "Flames (Orange)|lotta": "Vampe arancioni",
+    "Flash of Lightning (Light Blue)|lotta": "Fulmine globulare azzurro",
+    "Flash of Lightning (Yellow)|lotta": "Fulmine globulare giallo",
+    "Flowers (Light Blue)|decorazione": "Fiori azzurri",
+    "Flowers (Light Blue)|lotta": "Fiori azzurri",
     "Flowers (Orange)|lotta": "Fiori arancioni",
+    "Flowers (Pink)|decorazione": "Fiori rosa",
     "Flowers (Pink)|lotta": "Fiori rosa",
+    "Flowers (Purple)|decorazione": "Fiori viola",
     "Flowers (Purple)|lotta": "Fiori viola",
+    "Flowers (Yellow)|decorazione": "Fiori gialli",
+    "Fluffy Clouds (Pink)|decorazione": "Nuvole soffici rosa",
+    "Fluffy Clouds (White)|decorazione": "Nuvole soffici bianche",
+    "Foliage|decorazione": "Foglie",
     "Foliage|lotta": "Foglie",
     "Gale (Yellow-Green)|decorazione": "Folate di vento giallo-verdi",
+    "Glowing Ring (Light Blue)|decorazione": "Anello di luce azzurro",
+    "Glowing Ring (Light Blue)|lotta": "Anello di luce azzurro",
+    "Glowing Ring (Purple)|decorazione": "Anello di luce viola",
     "Glowing Ring (Purple)|lotta": "Anello di luce viola",
+    "Glowing Ring (Yellow)|decorazione": "Anello di luce giallo",
     "Glowing Ring (Yellow)|lotta": "Anello di luce giallo",
+    "Glowing Ring (Yellow-Green)|decorazione": "Anello di luce giallo-verde",
     "Glowing Ring (Yellow-Green)|lotta": "Anello di luce giallo-verde",
     "Grass Energy|decorazione": "Energia Erba",
+    "Heart Bubbles (Light Blue)|lotta": "Bolle a cuore azzurre",
+    "Heart Bubbles (Pink)|lotta": "Bolle a cuore rosa",
     "Heart Outlines (Light Blue)|lotta": "Cuori azzurri",
     "Heart Outlines (Pink)|decorazione": "Cuori rosa",
     "Heart Outlines (Pink)|lotta": "Cuori rosa",
+    "Heart Outlines (Red)|lotta": "Cuori rossi",
+    "Ink Splatters (Light Blue)|lotta": "Macchie d'inchiostro azzurre",
+    "Ink Splatters (Purple)|lotta": "Macchie d'inchiostro viola",
+    "Ink Splatters (Red)|lotta": "Macchie d'inchiostro rosse",
+    "Ink Splatters (Yellow)|lotta": "Macchie d'inchiostro gialle",
+    "Ink Splatters (Yellow-Green)|lotta": "Macchie d'inchiostro giallo-verdi",
     "Lightning Energy|decorazione": "Energia Lampo",
+    "Lightning Surge (Green)|lotta": "Saette verdi",
     "Lightning Surge (Light Blue)|decorazione": "Saette azzurre",
     "Lightning Surge (Light Blue)|lotta": "Saette azzurre",
     "Lightning Surge (Yellow)|decorazione": "Saette gialle",
@@ -533,17 +583,28 @@
     "Linked Sparkles|decorazione": "Luccichio della simbiosi",
     "Linked Sparkles|lotta": "Luccichio della simbiosi",
     "Mega Evolution|decorazione": "Megaevoluzione",
+    "Mega Evolution|lotta": "Megaevoluzione",
     "Metal Energy|decorazione": "Energia Metallo",
+    "Mini Triangles (Blue)|decorazione": "Triangolini blu",
     "Mini Triangles (Blue)|lotta": "Triangolini blu",
+    "Mini Triangles (Gray)|decorazione": "Triangolini grigi",
     "Mini Triangles (Gray)|lotta": "Triangolini grigi",
+    "Mini Triangles (Green)|lotta": "Triangolini verdi",
     "Mini Triangles (Light Blue)|decorazione": "Triangolini blu",
+    "Mini Triangles (Purple)|lotta": "Triangolini viola",
     "Music Notes (Pink)|decorazione": "Note musicali rosa",
+    "Music Notes (Pink)|lotta": "Note musicali rosa",
+    "Paper Streamers (Blue)|lotta": "Stelle filanti blu",
+    "Paper Streamers (Orange)|lotta": "Stelle filanti arancioni",
+    "Paper Streamers (Purple)|lotta": "Stelle filanti viola",
+    "Paper Streamers (Red)|lotta": "Stelle filanti rosse",
     "Petals (Red)|decorazione": "Petali rossi",
     "Petals (Red)|lotta": "Petali rossi",
     "Petals (White)|lotta": "Petali bianchi",
     "Pikachu Silhouettes|lotta": "Silhouette Pikachu",
     "Poké Ball|decorazione": "Poké Ball",
     "Poké Ball|lotta": "Poké Ball",
+    "Psychic Energy|decorazione": "Energia Psico",
     "Puffs (Gray)|lotta": "Nuvole di polvere grigie",
     "Puffs (White)|lotta": "Nuvole di polvere bianche",
     "Ripples (Light Blue)|decorazione": "Increspature azzurre",
@@ -551,26 +612,49 @@
     "Ripples (Purple)|decorazione": "Increspature viola",
     "Rounded Squares (Blue)|lotta": "Quadrati smussati blu",
     "Rounded Squares (Brown)|lotta": "Quadrati smussati marroni",
+    "Rounded Squares (Purple)|lotta": "Quadrati smussati viola",
+    "Rounded Squares (Red)|lotta": "Quadrati smussati rossi",
+    "Shining Star Dust (Gold)|lotta": "Polvere di stelle dorata",
+    "Shining Star Dust (Light Blue)|lotta": "Polvere di stelle azzurra",
+    "Shining Star Dust (Purple)|lotta": "Polvere di stelle viola",
+    "Shiny Sparkles|lotta": "Luccichio cromatico",
+    "Shooting Stars (Light Blue)|decorazione": "Stelle cadenti azzurre",
+    "Shooting Stars (Purple)|decorazione": "Stelle cadenti viola",
+    "Shooting Stars (Yellow)|decorazione": "Stelle cadenti gialle",
+    "Shooting Stars (Yellow-Green)|decorazione": "Stelle cadenti giallo-verdi",
     "Small Hearts (Blue)|decorazione": "Cuoricini blu",
     "Small Hearts (Blue)|lotta": "Cuoricini blu",
+    "Small Hearts (Orange)|lotta": "Cuoricini arancioni",
+    "Small Hearts (Pink)|decorazione": "Cuoricini rosa",
     "Small Hearts (Pink)|lotta": "Cuoricini rosa",
     "Small Hexagons (Brown)|lotta": "Esagoni piccoli marroni",
     "Small Hexagons (Gray)|lotta": "Esagoni piccoli grigi",
     "Small Hexagons (Light Blue)|lotta": "Esagoni piccoli azzurri",
+    "Small Hexagons (Purple)|lotta": "Esagoni piccoli viola",
     "Small Rocks (Brown)|lotta": "Pietre marroni",
     "Small Stars (Gray)|lotta": "Stelline grigie",
+    "Small Stars (Pink)|lotta": "Stelline rosa",
+    "Small Stars (Purple)|lotta": "Stelline viola",
     "Small Stars (Yellow)|decorazione": "Stelline gialle",
     "Small Stars (Yellow)|lotta": "Stelline gialle",
+    "Snowflakes|decorazione": "Fiocchi di neve",
     "Snowflakes|lotta": "Fiocchi di neve",
     "Sparkles (Gold)|decorazione": "Luccichio dorato",
+    "Special Shiny Sparkles|lotta": "Luccichio cromatico speciale",
+    "Special Ultra Beast|lotta": "Ultracreatura speciale",
     "Spinning Rings (Blue)|lotta": "Cerchi vorticanti azzurri",
+    "Spinning Rings (Brown)|lotta": "Cerchi vorticanti marroni",
+    "Spinning Rings (Light Blue)|lotta": "Cerchi vorticanti azzurri",
+    "Spinning Rings (Purple)|lotta": "Cerchi vorticanti viola",
     "Spinning Rings (Yellow)|lotta": "Cerchi vorticanti gialli",
     "Star Outlines (Light Blue)|lotta": "Stelle azzurre",
+    "Star Outlines (Purple)|decorazione": "Stelle viola",
     "Star Outlines (Purple)|lotta": "Stelle viola",
     "Star Outlines (Yellow)|decorazione": "Stelle gialle",
     "Star Outlines (Yellow)|lotta": "Stelle gialle",
     "Stars Outline (Yellow)|decorazione": "Stelle gialle",
     "Sunshine Sparkles (Light Blue)|lotta": "Luccichio solare azzurro",
+    "Sunshine Sparkles (Purple)|lotta": "Luccichio solare viola",
     "Sunshine Sparkles (Yellow)|lotta": "Luccichio solare giallo",
     "Sword Flash (Green)|lotta": "Fendenti di luce verdi",
     "Sword Flash (Light Blue)|lotta": "Fendenti di luce azzurri",
@@ -579,6 +663,7 @@
     "Sword Flash (Yellow)|lotta": "Fendenti di luce gialli",
     "Tiny Twinkles (Blue)|decorazione": "Luci soffuse blu",
     "Tiny Twinkles (Blue)|lotta": "Scintillio blu",
+    "Tiny Twinkles (Pink)|lotta": "Scintillio rosa",
     "Tiny Twinkles (Purple)|lotta": "Scintillio viola",
     "Tiny Twinkles (Yellow)|lotta": "Scintillio giallo",
     "Tiny Twinkles (Yellow-Green)|lotta": "Scintillio giallo-verde",
@@ -587,7 +672,7 @@
     "Twinkles (Purple)|decorazione": "Luci soffuse viola",
     "Ultra Beast|decorazione": "Ultracreatura",
     "Ultra Beast|lotta": "Ultracreatura",
-    "Water Energy|decorazione": "Energia Acqua",
+    "Water Energy|decorazione": "Energia Acqua"
   };
 
   const TYPES = {
@@ -722,8 +807,21 @@
     );
   }
 
+  /**
+   * Cerca un effetto nella tabella senza distinguere maiuscole e minuscole:
+   * Bulbapedia scrive i colori in minuscolo ("Bubbles (Light blue)"), la
+   * tabella li ha con l'iniziale maiuscola ("Bubbles (Light Blue)").
+   */
+  function effectKey(key) {
+    if (EFFECTS[key]) return EFFECTS[key];
+    const k = Object.keys(EFFECTS).find(
+      (x) => x.toLowerCase() === key.trim().toLowerCase(),
+    );
+    return k ? EFFECTS[k] : undefined;
+  }
+
   function effectTmpl(en, kind) {
-    const it = EFFECTS[`${en}|${kind}`] || EFFECTS[`${en}|lotta`] || en;
+    const it = effectKey(`${en}|${kind}`) || effectKey(`${en}|lotta`) || en;
     return gccItem(`${it} (${kind})`, "Effetto");
   }
 
@@ -892,6 +990,28 @@
         return out.join(" ");
       })
       .join("\n");
+  }
+
+  /**
+   * Bulbapedia scrive le carte di doppio tipo come righe di tabella grezze
+   * ("|-" e celle con style="background: #FFF"): su PCW lasciano la tabella
+   * aperta e rompono l'elenco. Diventano una chiamata a
+   * {{TCGPocketDeckList/Entry}}, con il secondo tipo nel parametro 4; il resto
+   * del wikitesto lo sistemano poi typesAndRarities e cards.
+   */
+  const DECK_RAW_ROW =
+    /^\|-?[ \t]*\n\|\s*style="[^"]*"\s*\|\s*(\d+)×[ \t]*\n\|\s*style="[^"]*"\s*\|\s*(.+?)[ \t]*\n\|\s*style="[^"]*"\s*\|\s*((?:\{\{TCG Icon\|[^}]+\}\}[ \t]*)+)\n\|\s*style="[^"]*"\s*\|\s*\{\{rar\/TCGP\|([^}|]+)\|(\d+)\}\}[ \t]*$/gm;
+
+  function deckRawRows(str) {
+    return str.replace(DECK_RAW_ROW, (m, n, card, typecell, rar, lvl) => {
+      const types = [...typecell.matchAll(/\{\{TCG Icon\|([^}|]+)\}\}/g)]
+        .map((x) => TYPES[x[1]] || x[1])
+        .slice(0, 2);
+      return (
+        `{{TCGPocketDeckList/Entry|${n}|${card}|${types.join("|")}` +
+        `|rarity=${rar}|rarity count=${lvl}}}`
+      );
+    });
   }
 
   function deckList(str) {
@@ -1679,6 +1799,7 @@
       headings,
       deckTitles,
       flairs,
+      deckRawRows,
       deckList,
       setlist,
       items,
@@ -1715,6 +1836,7 @@
     const box = /\{\{TCGPocketDeckInfobox\n([\s\S]*?)\n\}\}/.exec(str);
     if (box && !params(box[1]).setname) return str;
     return [
+      deckRawRows,
       deckPage,
       deckTitles,
       flairs,
