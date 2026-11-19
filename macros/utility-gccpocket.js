@@ -899,10 +899,6 @@
       /(\{\{TCGPocketDeckList\/Header[^\n]*\}\}\n)((?:\{\{TCGPocketDeckList\/Entry[^\n]*\}\}\n)+)\{\{TCGPocketDeckList\/Footer[^\n]*\}\}/g,
       (m, header, entries) => {
         const lines = entries.replace(/\n+$/, "").split("\n");
-        lines[lines.length - 1] = lines[lines.length - 1].replace(
-          /\}\}$/,
-          "|lastcard=yes}}",
-        );
         return (
           '<div class="flex flex-row flex-wrap">\n' +
           '<div class="max-width-xl-50 min-width-sm-100" style="padding: 0.1em;">\n' +
@@ -1551,7 +1547,6 @@
     const rows = entries.map((line, i) => {
       const pars = [];
       if (i === 0) pars.push("firstcard");
-      if (i === entries.length - 1) pars.push("lastcard");
       if (!pars.length) return line;
       return line.replace(
         /\s*\}\}$/,
